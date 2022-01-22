@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/usuarios', 'UserController@index')->name('usuarios');
+Route::post('/usuarios/adicionar', 'UserController@adicionarUsuarios')->name('adicionar_usuarios');

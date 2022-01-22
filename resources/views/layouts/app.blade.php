@@ -194,6 +194,9 @@
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Usuários</span></a>
               <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{url('usuarios')}}">Todos os usuários</a></li>
+              </ul>
+               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="alert.html">Adicionar usuário</a></li>
               </ul>
             </li>
