@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.login');
-});
+
+
+Route::get('/', 'LoginController@index')->name('login');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/usuarios', 'UserController@index')->name('usuarios');
 Route::post('/usuarios/adicionar', 'UserController@adicionarUsuarios')->name('adicionar_usuarios');
+
+// Função sair
+Route::get('sair', 'TopoController@sair')->name('sair');

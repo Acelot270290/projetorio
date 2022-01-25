@@ -156,20 +156,18 @@
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{url('assets/img/users/'.Auth::user()->image)}}"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-              <div class="dropdown-title">Hello Sarah Smith</div>
+              <div class="dropdown-title">Olá {{Auth::user()->name}}</div>
               <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Profile
-              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                Activities
+										fa-user"></i> Perfil
               </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                Settings
+                Configurações
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                Logout
+              <a href="{{route('sair')}}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+                Sair
               </a>
             </div>
           </li>
@@ -188,7 +186,7 @@
           <ul class="sidebar-menu">
             <li class="menu-header">Painel</li>
             <li class="dropdown active">
-              <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="{{route('home')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Páginas</li>
             <li class="dropdown">
@@ -214,15 +212,9 @@
 	  
 	  <!--conteudo -->
      
-	 <footer class="main-footer">
-        <div class="footer-left">
-          <a href="templateshub.net">Templateshub</a></a>
-        </div>
-        <div class="footer-right">
-        </div>
+	  <footer>
 		
 		<!-- rodape-->
-      </footer>
     </div>
   </div>
   <!-- General JS Scripts -->
