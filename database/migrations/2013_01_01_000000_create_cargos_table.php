@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFuncaosTable extends Migration
+class CreateCargosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateFuncaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('funcoes', function (Blueprint $table) {
+        Schema::create('cargos', function (Blueprint $table) {
             $table->id()->unique();
-            $table->string('nome_funcao');
+            $table->string('nome_cargo');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateFuncaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funcoes');
+        Schema::dropIfExists('cargos');
     }
 }

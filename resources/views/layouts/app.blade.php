@@ -192,15 +192,23 @@
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Usuários</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{url('usuarios')}}">Todos os usuários</a></li>
-              </ul>
-               <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{route('usuarios')}}">Listar usuários</a></li>
                 <li><a class="nav-link" href="alert.html">Adicionar usuário</a></li>
+                <li><a class="nav-link" href="alert.html">Listar cargos</a></li>
+                <li><a class="nav-link" href="alert.html">Adicionar cargo</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="archive"></i><span>Acervos</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="alert.html">Listar acervos</a></li>
+                <li><a class="nav-link" href="alert.html">Adicionar acervo</a></li>
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="archive"></i><span>Obras</span></a>
               <ul class="dropdown-menu">
+                <li><a class="nav-link" href="alert.html">Listar obras</a></li>
                 <li><a class="nav-link" href="alert.html">Adicionar obra</a></li>
               </ul>
             </li>
