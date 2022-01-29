@@ -17,7 +17,7 @@ class CreateMateriaisTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('titulo_material');
-            $table->string('descricao_material');
+            $table->string('descricao_material')->nullable();
         });
     }
 

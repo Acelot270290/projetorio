@@ -17,7 +17,7 @@ class CreateTesaurosTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('titulo_tesauro');
-            $table->string('descricao_tesauro');
+            $table->string('descricao_tesauro')->nullable();
         });
     }
 

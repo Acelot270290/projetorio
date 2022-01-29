@@ -22,10 +22,10 @@ class CreateObjetosTable extends Migration
 
             $table->string('titulo_objeto'); // Nome do objeto
 
-            $table->string('foto_frontal_objeto', 250);// Foto principal (Destaque)
-            $table->string('foto_lateral_1_objeto', 250);
-            $table->string('foto_lateral_2_objeto', 250);
-            $table->string('foto_posterior_objeto', 250);
+            $table->string('foto_frontal_objeto', 250)->nullable();// Foto principal (Destaque)
+            $table->string('foto_lateral_1_objeto', 250)->nullable();
+            $table->string('foto_lateral_2_objeto', 250)->nullable();
+            $table->string('foto_posterior_objeto', 250)->nullable();
 
             $table->unsignedBigInteger('tesauro_id'); // Chave estrangeira para tesauro
             $table->foreign('tesauro_id')->references('id')->on('tesauros');

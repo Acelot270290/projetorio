@@ -17,7 +17,7 @@ class CreateTombamentosTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('titulo_tombamento');
-            $table->string('descricao_tombamento');
+            $table->string('descricao_tombamento')->nullable();
         });
     }
 

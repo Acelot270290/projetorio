@@ -22,14 +22,21 @@ class CreateAcervosTable extends Migration
             $table->string('numero_endereco_acervo', 50);
             $table->string('bairro_acervo', 50);
             $table->string('cidade_acervo', 50);
-            $table->string('estado_acervo', 2);
+            $table->string('UF_acervo', 2);
             $table->string('descricao_fachada_planta_acervo', 250);
-            $table->string('foto_frontal_acervo', 250);// Foto principal (Destaque)
-            $table->string('foto_lateral_1_acervo', 250);
-            $table->string('foto_lateral_2_acervo', 250);
-            $table->string('foto_posterior_acervo', 250);
-            $table->string('foto_cobertura_acervo', 250);
-            $table->set('estado_conservacao_acervo', ["Excelente", "Bom", "Regular", "Péssimo"]);
+            $table->string('foto_frontal_acervo', 250)->nullable();// Foto principal (Destaque)
+            $table->string('foto_lateral_1_acervo', 250)->nullable();
+            $table->string('foto_lateral_2_acervo', 250)->nullable();
+            $table->string('foto_posterior_acervo', 250)->nullable();
+            $table->string('foto_cobertura_acervo', 250)->nullable();
+            $table->string('plantas_situacao_acervo', 250)->nullable();
+            //$table->set('estado_conservacao_acervo', ["Excelente", "Bom", "Regular", "Péssimo"]);
+
+            // Estado de conservação
+            $table->unsignedBigInteger('estado_conservacao_acervo_id'); // Chave estrangeira para estado de conservação do acervo
+            $table->foreign('estado_conservacao_acervo_id')->references('id')->on('estado_conservacao_acervos');
+
+            $table->unsignedSmallInteger('ano_construcao_acervo');
 
             // Tombamento
             $table->unsignedBigInteger('tombamento_id'); // Chave estrangeira para tombamento
@@ -40,7 +47,10 @@ class CreateAcervosTable extends Migration
             $table->foreign('seculo_id')->references('id')->on('seculos');
 
             // Esse abaixo é 1:N
-            $table->set('especificacao_acervo', ["Sujidades", "Demolições", "Rachaduras", "Desgastes e marcas de intempéries", "Substituição de partes", "Acréscimos", "Perda de material", "Perfurações", "Pragas", "Repintura", "Respingos", "Descaracterizações", "Outros"]);
+            #$table->set('especificacao_acervo', ["Sujidades", "Demolições", "Rachaduras", "Desgastes e marcas de intempéries", "Substituição de partes", "Acréscimos", "Perda de material", "Perfurações", "Pragas", "Repintura", "Respingos", "Descaracterizações", "Outros"]);
+            // Especificações
+            $table->unsignedBigInteger('especificacao_acervo_id'); // Chave estrangeira para estado de conservação do acervo
+            $table->foreign('especificacao_acervo_id')->references('id')->on('especificacao_acervos');
 
         });
     }

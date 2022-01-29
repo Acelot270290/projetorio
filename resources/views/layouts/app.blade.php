@@ -202,7 +202,7 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="archive"></i><span>Acervos</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="alert.html">Listar acervos</a></li>
-                <li><a class="nav-link" href="alert.html">Adicionar acervo</a></li>
+                <li><a class="nav-link" href="{{route('criar_acervo')}}">Adicionar acervo</a></li>
               </ul>
             </li>
             <li class="dropdown">

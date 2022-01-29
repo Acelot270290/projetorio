@@ -21,8 +21,17 @@ Route::get('/', 'LoginController@index')->name('login');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Usuários
 Route::get('/usuarios', 'UserController@index')->name('usuarios');
-Route::post('/usuarios/adicionar', 'UserController@adicionarUsuarios')->name('adicionar_usuarios');
+Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuarios');
+Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuarios');
+
+// Acervos
+//Route::get('/acervo/listar', 'AcervoController@index')->name('acervo');
+Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
+Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
+
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');

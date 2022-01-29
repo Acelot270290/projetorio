@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTecnicasTable extends Migration
+class CreateEspecificacaoAcervosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTecnicasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tecnicas', function (Blueprint $table) {
+        Schema::create('especificacao_acervos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo_tecnica');
-            $table->string('descricao_tecnica')->nullable();
+            $table->string('titulo_especificacao_acervo');
+            $table->string('descricao_especificacao_acervo')->nullable();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateTecnicasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tecnicas');
+        Schema::dropIfExists('especificacao_acervos');
     }
 }
