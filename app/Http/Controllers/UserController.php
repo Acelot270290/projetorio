@@ -25,8 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_funcao','nome_funcao', 'estado')
-        ->join('funcoes as f', 'f.id', '=', 'id_funcao')
+        $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')
+        ->join('cargos as f', 'f.id', '=', 'id_cargo')
         ->get();
        // print_r($usuarios);die;
         

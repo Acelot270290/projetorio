@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSeculosTable extends Migration
+class CreateEstadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateSeculosTable extends Migration
      */
     public function up()
     {
-        Schema::create('seculos', function (Blueprint $table) {
+        Schema::create('estados', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo_seculo'); // O "nome" do século (Ex: XX)
-            $table->unsignedSmallInteger('ano_inicio_seculo'); // Primeiro ano do século (Ex: 1901)
-            $table->unsignedSmallInteger('ano_fim_seculo'); // Último ano do século (Ex: 2000)
+            $table->string('nome_estado');
+            $table->string('uf_estado', 2);
+            $table->string('regiao_estado');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateSeculosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seculos');
+        Schema::dropIfExists('estados');
     }
 }
