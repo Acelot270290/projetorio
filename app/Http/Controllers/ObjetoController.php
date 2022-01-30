@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Acervos;
-use App\Models\EspecificacaoAcervos;
-use App\Models\EstadoConservacaoAcervos;
+use App\Models\CondicaoSegurancaObras;
+use App\Models\EstadoConservacaoObras;
+use App\Models\EspecificacaoObras;
+use App\Models\EspecificacaoSegurancaObras;
+use App\Models\Materiais;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
 
-class AcervoController extends Controller
+class ObjetoController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,16 +31,21 @@ class AcervoController extends Controller
      */
     public function index()
     {
-        return view('admin.acervo');
+        return view('admin.objeto');
     }
 
     public function criar(Request $request)
     {
-        $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->get();
-        $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
+        $acervos = Acervos::select('id')->get();
+        $especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->get();
+        $estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obras', 'is_default_estado_conservacao_obras')->get();
+        $condicoesSeg = CondicaoSegurancaObras::select('id','titulo_condicao_seguranca_obras','is_default_condicao_seguranca_obras')->get();
+        $especificacoesSeg = EspecificacaoSegurancaObras::select('id','titulo_especificacao_seguranca_obras')->get();
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
-        return view('admin.criar_acervo',['especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos]);
+        $materiais = Materiais::select('id', 'titulo_material')->get();
+
+        return view('admin.criar_objeto',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais]);
     }
 
     public function adicionar(Request $request)
@@ -61,10 +69,6 @@ class AcervoController extends Controller
             'descricao_fachada_planta_acervo'=> $request->descricao_acervo,
             'usuario_insercao_id'=> $usuario->id
         ]);
-
-        // consulta pra saber o id baseado nas infos passadas (last id)
-        //cria pasta com o id
-        // coloca fotos lá
 
         if($adicionandoAcervo){
             echo'Acervo enviando com sucesso';

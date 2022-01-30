@@ -32,6 +32,10 @@ Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_
 Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 
+// Acervos
+//Route::get('/objeto/listar', 'AcervoController@index')->name('objeto');
+Route::get('/objeto/criar', 'ObjetoController@criar')->name('criar_objeto');
+Route::post('/objeto/adicionar', 'ObjetoController@adicionar')->name('adicionar_objeto');
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');

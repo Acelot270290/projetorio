@@ -46,11 +46,15 @@ class CreateAcervosTable extends Migration
             $table->unsignedBigInteger('seculo_id'); // Chave estrangeira para século
             $table->foreign('seculo_id')->references('id')->on('seculos');
 
-            // Esse abaixo é 1:N
-            #$table->set('especificacao_acervo', ["Sujidades", "Demolições", "Rachaduras", "Desgastes e marcas de intempéries", "Substituição de partes", "Acréscimos", "Perda de material", "Perfurações", "Pragas", "Repintura", "Respingos", "Descaracterizações", "Outros"]);
-            // Especificações
             $table->unsignedBigInteger('especificacao_acervo_id'); // Chave estrangeira para estado de conservação do acervo
             $table->foreign('especificacao_acervo_id')->references('id')->on('especificacao_acervos');
+
+            //Informação do user
+
+            $table->unsignedBigInteger('usuario_insercao_id');
+            $table->foreign('usuario_insercao_id')->references('id')->on('users');
+            $table->unsignedBigInteger('usuario_atualizacao_id')->nullable();
+            $table->foreign('usuario_atualizacao_id')->references('id')->on('users');
 
         });
     }

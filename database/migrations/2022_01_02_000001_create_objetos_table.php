@@ -78,6 +78,11 @@ class CreateObjetosTable extends Migration
 
             $table->string('observacoes_objeto', 2000);
 
+            $table->unsignedBigInteger('usuario_insercao_id');
+            $table->foreign('usuario_insercao_id')->references('id')->on('users');
+            $table->unsignedBigInteger('usuario_atualizacao_id')->nullable();
+            $table->foreign('usuario_atualizacao_id')->references('id')->on('users');
+
         });
     }
 

@@ -11,95 +11,85 @@
             <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
             @csrf
               <div class="card-header">
-                <h4> Adicionar Acervo </h4>
+                <h4> Adicionar Objeto </h4>
               </div>
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label>Nome do monumento</label>
+                    <label>Títulos</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_acervo" value="">
+                      <input type="text" class="form-control" name="nome_objeto" value="">
                     </div>
                   </div>
                 </div>
                 <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Dimensões (cm)</label>
+                  </div>
+                </div>
+                <div class="form-row">
                   <div class="form-group col-md-2">
-                    <label>CEP</label>
+                    <label>Altura</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control cep" name="cep_acervo"
-                        value="" maxlength="9">
+                      <input type="number" class="form-control" name="altura_objeto"
+                        value="">
                     </div>
-                    <div id="acervo_cep"></div>
                   </div>
-                  <div class="form-group col-md-8">
-                    <label>Endereço</label>
+                  <div class="form-group col-md-2">
+                    <label>Largura</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="endereco_acervo"
-                        value="Camboatá" readonly="">
+                      <input type="number" class="form-control" name="largura_objeto"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Profundidade</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-road text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="profundidade_objeto"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Comprimento</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-road text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="comprimento_objeto"
+                        value="">
                     </div>
                   </div>
                   <div class="form-group col-md-2">
-                    <label>Número</label>
+                    <label>Diâmetro</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="numero_endereco_acervo"
-                        value="288">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label>Bairro</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-directions text-info"></i>
-                        </div>
-                      </div>
-                      <input type="text" class="form-control" name="bairro_acervo" value="">
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label>Cidade</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-location-arrow text-info"></i>
-                        </div>
-                      </div>
-                      <input type="text" class="form-control" name="cidade_acervo"
-                        value="">
-                    </div>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label>Estado</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-map text-info"></i>
-                        </div>
-                      </div>
-                      <input type="text" class="form-control uf" name="UF_acervo" value="{{old('UF_acervo')}}"
-                       maxlength="2">
+                      <input type="number" class="form-control" name="diâmetro_objeto">
                     </div>
                   </div>
                 </div>
@@ -127,7 +117,7 @@
                     </select>
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Ano de Construção</label>
+                    <label>Ano</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -141,11 +131,40 @@
                     <label>Estado de Conservação</label>
                     <select name="estado_de_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->is_default_estado_conservacao_acervo)
-                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                        @if($estado->is_default_estado_conservacao_obras)
+                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obras}}</option>
                         @else
-                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obras}}</option>
                         @endif
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                 <div class="form-group col-md-4">
+                    <label>Material 1</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Material 2</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Material 3</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -158,7 +177,7 @@
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                               <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}">
                               <div class="state p-success">
-                                  <label style="margin-left: 10px;">{{$especificacao->titulo_especificacao_acervo}}</label>
+                                  <label style="margin-left: 10px;">{{$especificacao->titulo_especificacao_obras}}</label>
                               </div>
                           </div>
                          @endforeach
