@@ -16,7 +16,7 @@
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label>Títulos</label>
+                    <label>Título</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -94,16 +94,37 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                <div class="form-group col-md-6">
+                    <label>Tesauro</label>
+                    <select name="tombamento_acervo" class="form-control">
+                    @foreach ($tesauros as $tesauro)
+                        <option value="{{$tesauro->id}}">{{$tesauro->titulo_tesauro}}</option>
+                    @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Condições de Segurança</label>
+                    <select name="tombamento_acervo" class="form-control">
+                     @foreach ($condicoes as $condicao)
+                      @if($condicao->is_default_condicao_seguranca_obras)
+                        <option value="{{$condicao->id}}" selected>{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                      @else
+                        <option value="{{$condicao->id}}">{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                      @endif
+                    @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-2">
                     <label>Tombamento</label>
                     <select name="tombamento_acervo" class="form-control">
                     @foreach ($tombamentos as $tombamento)
                         <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
                     @endforeach
-                      
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-2">
                     <label>Século</label>
                     <select name="seculo_acervo" class="form-control">
                     @foreach ($seculos as $seculo)
@@ -113,10 +134,9 @@
                         <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
                       @endif
                     @endforeach
-                      
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-2">
                     <label>Ano</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -138,6 +158,17 @@
                         @endif
                       @endforeach
                     </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Autoria</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-check-circle text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="ano_acervo" value="">
+                    </div>
                   </div>
                 </div>
                 <div class="form-row">
@@ -169,6 +200,35 @@
                     </select>
                   </div>
                 </div>
+                                <div class="form-row">
+                 <div class="form-group col-md-4">
+                    <label>Técnica 1</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Técnica 2</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Técnica 3</label>
+                    <select name="estado_de_conservacao_acervo" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label>Especificações</label>
@@ -185,8 +245,29 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Especificações de segurança</label>
+                        <div style="display: flex; flex-wrap: wrap;">
+                         @foreach ($especificacoesSeg as $especificacaoSeg)
+                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                              <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}">
+                              <div class="state p-success">
+                                  <label style="margin-left: 10px;">{{$especificacaoSeg->titulo_especificacao_seguranca_obras}}</label>
+                              </div>
+                          </div>
+                         @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label>Breve descrição da fachada e planta</label>
+                    <label>Características estilísticas/iconográficas e ornamentais</label>
+                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;"></textarea>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Observações</label>
                     <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;"></textarea>
                   </div>
                 </div>
@@ -282,52 +363,7 @@
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-md-3">
-                    <label>Avatar</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-image text-info"></i>
-                        </div>
-                      </div>
-                      <input type="file" class="form-control" name="user_foto_file">
-                    </div>
-                    <div id="user_foto"></div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
-                    </div>
-                    <input type="hidden" name="usuario_id" value="3">
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label>Avatar</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-image text-info"></i>
-                        </div>
-                      </div>
-                      <input type="file" class="form-control" name="user_foto_file">
-                    </div>
-                    <div id="user_foto"></div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
-                    </div>
-                    <input type="hidden" name="usuario_id" value="3">
-                  </div>
-                </div>
+
               </div>
               <!-- Finalizar forms Acervos (estado de conservação e século (combombox), especificação (checkbox)) -->
               <div class="card-footer">

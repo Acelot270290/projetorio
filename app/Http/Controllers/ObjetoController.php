@@ -10,6 +10,8 @@ use App\Models\EspecificacaoObras;
 use App\Models\EspecificacaoSegurancaObras;
 use App\Models\Materiais;
 use App\Models\Seculos;
+use App\Models\Tecnicas;
+use App\Models\Tesauros;
 use App\Models\Tombamentos;
 
 class ObjetoController extends Controller
@@ -44,8 +46,11 @@ class ObjetoController extends Controller
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
         $materiais = Materiais::select('id', 'titulo_material')->get();
+        $tecnicas = Tecnicas::select('id', 'titulo_tecnica')->get();
+        $tesauros = Tesauros::select('id', 'titulo_tesauro')->get();
+        $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
 
-        return view('admin.criar_objeto',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais]);
+        return view('admin.criar_objeto',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros,'condicoes'=>$condicoes]);
     }
 
     public function adicionar(Request $request)
