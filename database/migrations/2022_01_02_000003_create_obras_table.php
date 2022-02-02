@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObjetosTable extends Migration
+class CreateObrasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateObjetosTable extends Migration
      */
     public function up()
     {
-        Schema::create('objetos', function (Blueprint $table) {
+        Schema::create('obras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
             $table->unsignedBigInteger('categoria_id'); // Chave estrangeira para categoria
             $table->foreign('categoria_id')->references('id')->on('categorias');
+
+            $table->unsignedBigInteger('acervo_id'); // Chave estrangeira para seculo
+            $table->foreign('acervo_id')->references('id')->on('acervos');
 
             $table->string('titulo_objeto'); // Nome do objeto
 
@@ -45,13 +48,13 @@ class CreateObjetosTable extends Migration
             $table->foreign('material_id_2')->references('id')->on('materiais');
             $table->foreign('material_id_3')->references('id')->on('materiais');
 
-            // Tesauro (até 3)
-            $table->unsignedBigInteger('tesauro_id_1'); // Chave estrangeira para tesauro 1
-            $table->unsignedBigInteger('tesauro_id_2'); // Chave estrangeira para tesauro 2
-            $table->unsignedBigInteger('tesauro_id_3'); // Chave estrangeira para tesauro 3
-            $table->foreign('tesauro_id_1')->references('id')->on('tesauros');
-            $table->foreign('tesauro_id_2')->references('id')->on('tesauros');
-            $table->foreign('tesauro_id_3')->references('id')->on('tesauros');
+            // Tecnica (até 3)
+            $table->unsignedBigInteger('tecnica_id_1'); // Chave estrangeira para Tecnica 1
+            $table->unsignedBigInteger('tecnica_id_2'); // Chave estrangeira para Tecnica 2
+            $table->unsignedBigInteger('tecnica_id_3'); // Chave estrangeira para Tecnica 3
+            $table->foreign('tecnica_id_1')->references('id')->on('tecnicas');
+            $table->foreign('tecnica_id_2')->references('id')->on('tecnicas');
+            $table->foreign('tecnica_id_3')->references('id')->on('tecnicas');
 
             // Século
             $table->unsignedBigInteger('seculo_id'); // Chave estrangeira para seculo
@@ -64,25 +67,35 @@ class CreateObjetosTable extends Migration
             $table->unsignedBigInteger('tombamento_id'); // Chave estrangeira para seculo
             $table->foreign('tombamento_id')->references('id')->on('tombamentos');
 
-            $table->set('estado_conservacao_objeto', ["Excelente", "Bom", "Regular", "Precisa de restauração"]);
+             //Estado de conservação da Obra
+            $table->unsignedBigInteger('estado_conservacao_obras_id'); // Chave estrangeira para
+            $table->foreign('estado_conservacao_obras_id')->references('id')->on('estado_conservacao_obras');
 
-            // Esse abaixo é 1:N
-            $table->set('especificacao_objeto', ["Sujidades", "Manchas", "Perda de material", "Manchas de cupim", "Substituição de partes", "Perda de policromia", "Oxidações", "Uso de abrasivos", "Redouramento", "Rachaduras", "Craquelados", "Perfurações", "Repintura", "Respingos", "Recarnação", "Mossas", "Outros"]);
+            //Esécificação de Obras
+            // Esse abaixo é 1:1
+            $table->unsignedBigInteger('especificacao_obras_id'); // Chave estrangeira para 
+            $table->foreign('especificacao_obras_id')->references('id')->on('especificacao_obras');
 
-            $table->set('condicoes_de_seguranca_objeto', ["Bom", "Regular", "Ruim"]);
-            // Esse abaixo é 1:N
-            $table->set('especificacao_de_seguranca_objeto', ["Exposto à umidade", "Mal acondicionado", "Perigo de contato manual", "Perigo de furto/roubo", "Perigo de inundação", "Exposto à luz", "Perigo de goteira", "Abandonado", "Outros"]);
+            // Esse abaixo é 1:1
 
+            $table->unsignedBigInteger('condicoes_de_seguranca_obras_id'); // Chave estrangeira para 
+            $table->foreign('condicoes_de_seguranca_obras_id')->references('id')->on('condicao_seguranca_obras');
+            
+
+            // Esse abaixo é 1:1
+            $table->unsignedBigInteger('especificacao_seguranca_obras_id'); // Chave estrangeira para 
+            $table->foreign('especificacao_seguranca_obras_id')->references('id')->on('especificacao_seguranca_obras');
+
+                        
             // Características estilísticas/iconográficas e ornamentais
-            $table->string('caracteristicas_est_ico_orna_objeto', 2000);
+            $table->string('caracteristicas_est_icono_orna_obra', 2000);
 
-            $table->string('observacoes_objeto', 2000);
+            $table->string('observacoes_obra', 2000);
 
             $table->unsignedBigInteger('usuario_insercao_id');
             $table->foreign('usuario_insercao_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_atualizacao_id')->nullable();
             $table->foreign('usuario_atualizacao_id')->references('id')->on('users');
-
         });
     }
 
@@ -93,6 +106,6 @@ class CreateObjetosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objetos');
+        Schema::dropIfExists('obras');
     }
 }

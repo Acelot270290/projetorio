@@ -8,7 +8,8 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" name="form_core" accept-charset="utf-8" enctype="multipart/form-data">
+            <form method="POST" name="form_core" id="form_core" accept-charset="utf-8"  enctype="multipart/form-data">
+            @crsf
               <div class="card-header">
                 <h4> Adicionar Acervo </h4>
               </div>
@@ -151,6 +152,24 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
+                    <label>Foto Frontal</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_frontal_acervo" form="form_core">
+                    </div>
+                    <div id="user_foto"></div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <input type="hidden" name="usuario_id" value="3">
+                  </div>
+
+                </div>
+              <!--  <div class="form-row">
+                  <div class="form-group col-md-3">
                     <label>Avatar</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -241,53 +260,7 @@
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-md-3">
-                    <label>Avatar</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-image text-info"></i>
-                        </div>
-                      </div>
-                      <input type="file" class="form-control" name="user_foto_file">
-                    </div>
-                    <div id="user_foto"></div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
-                    </div>
-                    <input type="hidden" name="usuario_id" value="3">
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label>Avatar</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fas fa-image text-info"></i>
-                        </div>
-                      </div>
-                      <input type="file" class="form-control" name="user_foto_file">
-                    </div>
-                    <div id="user_foto"></div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
-                    </div>
-                    <input type="hidden" name="usuario_id" value="3">
-                  </div>
-                </div>
-              </div>
+              </div>-->
               <!-- Finalizar forms Acervos (estado de conservação e século (combombox), especificação (checkbox)) -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>

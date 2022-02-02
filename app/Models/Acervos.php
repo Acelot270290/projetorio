@@ -12,4 +12,6 @@ class Acervos extends Model
     public $timestamps    = false;
     protected $connection = "u868320945_projetorio";
     protected $table = "u868320945_projetorio.acervos";  
+
+    protected $fillable = ['id','nome_acervo', 'cep_acervo','endereco_acervo','numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'tombamento_id', 'seculo_id', 'ano_construcao_acervo', 'estado_conservacao_acervo_id', 'especificacao_acervo_id', 'descricao_fachada_planta_acervo', 'usuario_insercao_id', 'foto_frontal_acervo' ];
 }
