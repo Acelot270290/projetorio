@@ -39,6 +39,28 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
+        $request->validate([
+            'nome_acervo' => 'required|max:191',
+            'cep_acervo' => 'required|max:9',
+            'endereco_acervo' => 'required|max:250',
+            'numero_endereco_acervo' => 'max:6',
+            'bairro_acervo' => 'required|max:50',
+            'cidade_acervo' => 'required|max:50',
+            'UF_acervo' => 'required|max:2',
+            'tombamento_id' => 'required|max:21',
+            'seculo_id' => 'required|max:21',
+            'ano_construcao_acervo' => 'required|max:4',
+            'estado_conservacao_acervo_id' => 'required|max:21',
+            'especificacao_acervo_id' => 'required|max:21',
+            'descricao_fachada_planta_acervo' => 'required|max:10000',
+            'usuario_insercao_id' => 'required|max:21',
+            'foto_frontal_acervo' => 'max:250',
+            'foto_lateral_1_acervo' => 'max:250',
+            'foto_lateral_2_acervo' => 'max:250',
+            'foto_posterior_acervo' => 'max:250',
+            'foto_cobertura_acervo' => 'max:250',
+            'plantas_situacao_acervo' => 'max:250'
+        ]);
         //pPegando os dados do user
         $usuario = auth()->user('id');
 
@@ -82,37 +104,55 @@ class AcervoController extends Controller
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
-        /*if ($request->file('foto_frontal_acervo')) {
+        if ($request->file('foto_lateral_1_acervo')) {
 
-            $image = $request->foto_frontal_acervo;
+            $image = $request->foto_lateral_1_acervo;
             $extension = $image->extension();
-            $imageName = 'Frontal_Acervo.' . $extension;
+            $imageName = 'Lateral_Esquerda_Acervo.' . $extension;
             $uploadImage = $image->move(public_path($imagemacervo), $imageName);
 
-            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
-        if ($request->file('foto_frontal_acervo')) {
+        if ($request->file('foto_lateral_2_acervo')) {
 
-            $image = $request->foto_frontal_acervo;
+            $image = $request->foto_lateral_2_acervo;
             $extension = $image->extension();
-            $imageName = 'Frontal_Acervo.' . $extension;
+            $imageName = 'Lateral_Direita_Acervo.' . $extension;
             $uploadImage = $image->move(public_path($imagemacervo), $imageName);
 
-            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
-        if ($request->file('foto_frontal_acervo')) {
+        if ($request->file('foto_posterior_acervo')) {
 
-            $image = $request->foto_frontal_acervo;
+            $image = $request->foto_posterior_acervo;
             $extension = $image->extension();
-            $imageName = 'Frontal_Acervo.' . $extension;
+            $imageName = 'Posterior_Acervo.' . $extension;
             $uploadImage = $image->move(public_path($imagemacervo), $imageName);
 
-            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
-        }*/
+            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
+        }
 
+        if ($request->file('foto_cobertura_acervo')) {
 
+            $image = $request->foto_cobertura_acervo;
+            $extension = $image->extension();
+            $imageName = 'Cobertura_Acervo.' . $extension;
+            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+
+            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
+        }
+
+        if ($request->file('plantas_situacao_acervo')) {
+
+            $image = $request->plantas_situacao_acervo;
+            $extension = $image->extension();
+            $imageName = 'Plantas_Situacao_Acervo.' . $extension;
+            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+
+            $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
+        }
 
         if ($adicionandoAcervoId) {
             return view('admin.criar_acervo', ['alert_message' => 'Acervo cadastrado com sucesso!', 'alert_type' => 'success']);

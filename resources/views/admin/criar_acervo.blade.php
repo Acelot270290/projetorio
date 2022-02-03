@@ -61,7 +61,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control cep" name="cep_acervo"
+                      <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
                         value="" maxlength="9">
                     </div>
                     <div id="acervo_cep"></div>
@@ -74,8 +74,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="endereco_acervo"
-                        value="Camboatá" readonly="">
+                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="" >
                     </div>
                   </div>
                   <div class="form-group col-md-2">
@@ -86,8 +85,8 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="numero_endereco_acervo"
-                        value="288">
+                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
+                        value="">
                     </div>
                   </div>
                   <div class="form-row">
@@ -100,7 +99,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-directions text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="bairro_acervo" value="">
+                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="">
                     </div>
                   </div>
                   <div class="form-group col-md-6">
@@ -111,7 +110,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-location-arrow text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="cidade_acervo"
+                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
                         value="">
                     </div>
                   </div>
@@ -123,7 +122,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-map text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control uf" name="UF_acervo" value="{{old('UF_acervo')}}"
+                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{old('UF_acervo')}}"
                        maxlength="2">
                     </div>
                   </div>
@@ -213,118 +212,90 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                  <div  id="image_holder_frontal_acervo"></div>
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Avatar</label>
+                    <label>Foto Lateral Esquerda</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="user_foto_file">
+                      <input type="file" class="form-control" name="foto_lateral_1_acervo">
                     </div>
-                    <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
+                      <div  id="image_holder_lateral1_acervo"></div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <label>Avatar</label>
+                    <label>Foto Lateral Direita</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="user_foto_file">
+                      <input type="file" class="form-control" name="foto_lateral_2_acervo">
                     </div>
-                    <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
+                      <div  id="image_holder_lateral2_acervo"></div>
                     </div>
-                    <input type="hidden" name="usuario_id" value="3">
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Avatar</label>
+                    <label>Foto Posterior</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="user_foto_file">
+                      <input type="file" class="form-control" name="foto_posterior_acervo">
                     </div>
-                    <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
+                      <div  id="image_holder_posterior_acervo"></div>
+                      
                     </div>
-                    <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <label>Avatar</label>
+                    <label>Foto Cobertura</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="user_foto_file">
+                      <input type="file" class="form-control" name="foto_cobertura_acervo">
                     </div>
-                    <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
+                      <div  id="image_holder_cobertura_acervo"></div>
                     </div>
-                    <input type="hidden" name="usuario_id" value="3">
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Avatar</label>
+                    <label>Foto Planta/Situação</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="user_foto_file">
+                      <input type="file" class="form-control" name="plantas_situacao_acervo">
                     </div>
-                    <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <input type="hidden" name="user_foto"
-                        value="8db47dc2764e22fae2e36627d4f3abdd.jpg">
-                      <img width="100" alt="Usuário imagem"
-                        src="https://infoanuncios.com.br/uploads/usuarios/8db47dc2764e22fae2e36627d4f3abdd.jpg"
-                        class="rounded-circle">
+                      <div  id="image_holder_plantas_situcao_acervo"></div>
                     </div>
-                    <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
               </div>
@@ -343,11 +314,68 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 </div>      
 
 <script>
+
+ $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#endereco_acervo").val("");
+                $("#bairro_acervo").val("");
+                $("#cidade_acervo").val("");
+                $("#UF_acervo").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep_acervo").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#endereco_acervo").val(dados.logradouro);
+                                $("#bairro_acervo").val(dados.bairro);
+                                $("#cidade_acervo").val(dados.localidade);
+                                $("#UF_acervo").val(dados.uf);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
 // Parametrização de variáveis
   @foreach ($seculos as $seculo)
     @if ($seculo['is_default_seculo'])
       var min = {{$seculo['ano_inicio_seculo']}};
       var max = {{$seculo['ano_fim_seculo']}};
+      var anoOk = false;
     @endif
   @endforeach
 
@@ -386,8 +414,10 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
           <div id="notification-warn-mini"></div>`;
           $("#anoerror").html("");
           $("#anoerror").append(errorBox);
+          window.anoOk = true;
    	    } else {
    			  $("#anoerror").html("");
+          window.anoOk = False;
    	    }
    	}
    });
@@ -416,17 +446,34 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                 reader.readAsDataURL(control[0].files[i]);
               }
             } else {
-              alert("This browser does not support FileReader.");
+              alert("Este navegador não suporta FileReader.");
             }
           } else {
-            alert("Pls select only images");
+            alert("Por favor, selecione apenas com formatos válidos.");
           }
         }
 
         $("input[name='foto_frontal_acervo']").on('change', function() {
           ajax_sub($("input[name='foto_frontal_acervo']"), $("#image_holder_frontal_acervo"));
         });
+        $("input[name='foto_lateral_1_acervo']").on('change', function() {
+          ajax_sub($("input[name='foto_lateral_1_acervo']"), $("#image_holder_lateral1_acervo"));
+        });
+         $("input[name='foto_lateral_2_acervo']").on('change', function() {
+          ajax_sub($("input[name='foto_lateral_2_acervo']"), $("#image_holder_lateral2_acervo"));
+        });
+         $("input[name='foto_posterior_acervo']").on('change', function() {
+          ajax_sub($("input[name='foto_posterior_acervo']"), $("#image_holder_posterior_acervo"));
+        });
+        $("input[name='foto_cobertura_acervo']").on('change', function() {
+          ajax_sub($("input[name='foto_cobertura_acervo']"), $("#image_holder_cobertura_acervo"));
+        });
+         $("input[name='plantas_situacao_acervo']").on('change', function() {
+          ajax_sub($("input[name='plantas_situacao_acervo']"), $("#image_holder_plantas_situcao_acervo"));
+        });
       });
+
+      
 </script>
 
 @endsection

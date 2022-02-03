@@ -19,11 +19,11 @@ class CreateAcervosTable extends Migration
             $table->string('nome_acervo');
             $table->string('cep_acervo', 9);
             $table->string('endereco_acervo', 250);
-            $table->string('numero_endereco_acervo', 50);
+            $table->string('numero_endereco_acervo', 6)->nullable();
             $table->string('bairro_acervo', 50);
             $table->string('cidade_acervo', 50);
             $table->string('UF_acervo', 2);
-            $table->string('descricao_fachada_planta_acervo', 250);
+            $table->string('descricao_fachada_planta_acervo', 10000);
             $table->string('foto_frontal_acervo', 250)->nullable();// Foto principal (Destaque)
             $table->string('foto_lateral_1_acervo', 250)->nullable();
             $table->string('foto_lateral_2_acervo', 250)->nullable();
