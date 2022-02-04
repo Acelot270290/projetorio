@@ -48,8 +48,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_acervo" value="">
+                      <input type="text" class="form-control" name="nome_acervo" value="{{old('nome_acervo')}}">
                     </div>
+                    <small class="text-danger">{{ $errors->first('nome_acervo') }}</small>
                   </div>
                 </div>
                 <div class="form-row">
@@ -62,9 +63,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
-                        value="" maxlength="9">
+                        value="{{old('cep_acervo')}}" maxlength="9">
                     </div>
-                    <div id="acervo_cep"></div>
+                    <small class="text-danger">{{ $errors->first('cep_acervo') }}</small>
                   </div>
                   <div class="form-group col-md-8">
                     <label>Endereço</label>
@@ -74,8 +75,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="" >
+                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{old('endereco_acervo')}}" >
                     </div>
+                     <small class="text-danger">{{ $errors->first('endereco_acervo') }}</small>
                   </div>
                   <div class="form-group col-md-2">
                     <label>Número</label>
@@ -86,8 +88,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
-                        value="">
+                        value="{{old('numero_endereco_acervo')}}">
                     </div>
+                    <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
                   <div class="form-row">
                   </div>
@@ -99,8 +102,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-directions text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="">
+                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{old('bairro_acervo')}}">
                     </div>
+                    <small class="text-danger">{{ $errors->first('bairro_acervo') }}</small>
                   </div>
                   <div class="form-group col-md-6">
                     <label>Cidade</label>
@@ -111,8 +115,10 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
-                        value="">
+                        value="{{old('cidade_acervo')}}">
                     </div>
+                    <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
+
                   </div>
                   <div class="form-group col-md-2">
                     <label>Estado</label>
@@ -125,6 +131,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                       <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{old('UF_acervo')}}"
                        maxlength="2">
                     </div>
+                      <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
                   </div>
                 </div>
                 <div class="form-row">
@@ -158,12 +165,12 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="ano_acervo" value="">
+                      <input type="number" class="form-control" name="ano_acervo" value="{{old('ano_acervo')}}">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Estado de Conservação</label>
-                    <select name="estado_de_conservacao_acervo" class="form-control">
+                    <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
                         @if($estado->is_default_estado_conservacao_acervo)
                           <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
@@ -186,13 +193,18 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                               </div>
                           </div>
                          @endforeach
+                         <small class="text-danger">{{ $errors->first('especificacao_acervo') }}</small>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Breve descrição da fachada e planta</label>
-                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;"></textarea>
+                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;">{{old('descricao_acervo')}}</textarea>
+                    <div>
+                     <small class="text-danger">{{ $errors->first('descricao_acervo') }}</small>
+                    </div>
+    
                   </div>
                 </div>
                 <div class="form-row">
@@ -226,7 +238,6 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <div id="box-foto-usuario">
                       <div  id="image_holder_lateral1_acervo"></div>
                     </div>
-                    <input type="hidden" name="usuario_id" value="3">
                   </div>
                 </div>
                 <div class="form-row">

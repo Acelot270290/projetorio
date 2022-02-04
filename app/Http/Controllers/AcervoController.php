@@ -39,29 +39,26 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
+        // Descobre quais anos são os limites do século escolhido
+        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
+
         $request->validate([
-            'nome_acervo' => 'required|max:191',
+            'nome_acervo' => 'required|min:2|max:191',
             'cep_acervo' => 'required|max:9',
             'endereco_acervo' => 'required|max:250',
             'numero_endereco_acervo' => 'max:6',
             'bairro_acervo' => 'required|max:50',
             'cidade_acervo' => 'required|max:50',
             'UF_acervo' => 'required|max:2',
-            'tombamento_id' => 'required|max:21',
-            'seculo_id' => 'required|max:21',
-            'ano_construcao_acervo' => 'required|max:4',
-            'estado_conservacao_acervo_id' => 'required|max:21',
-            'especificacao_acervo_id' => 'required|max:21',
-            'descricao_fachada_planta_acervo' => 'required|max:10000',
-            'usuario_insercao_id' => 'required|max:21',
-            'foto_frontal_acervo' => 'max:250',
-            'foto_lateral_1_acervo' => 'max:250',
-            'foto_lateral_2_acervo' => 'max:250',
-            'foto_posterior_acervo' => 'max:250',
-            'foto_cobertura_acervo' => 'max:250',
-            'plantas_situacao_acervo' => 'max:250'
+            'tombamento_acervo' => 'required|max:21',
+            'seculo_acervo' => 'required|max:21',
+            'ano_acervo' => 'required|max:4|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
+            'estado_conservacao_acervo' => 'required|max:21',
+            'especificacao_acervo' => 'max:21',
+            'descricao_acervo' => 'required|max:10000',
         ]);
-        //pPegando os dados do user
+
+        //Pegando os dados do user
         $usuario = auth()->user('id');
 
         $adicionandoAcervoId =   Acervos::insertGetId([
@@ -76,7 +73,7 @@ class AcervoController extends Controller
             'tombamento_id' => $request->tombamento_acervo,
             'seculo_id' => $request->seculo_acervo,
             'ano_construcao_acervo' => $request->ano_acervo,
-            'estado_conservacao_acervo_id' => $request->estado_de_conservacao_acervo,
+            'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
             'especificacao_acervo_id' => $request->especificacao_acervo,
             'descricao_fachada_planta_acervo' => $request->descricao_acervo,
             'usuario_insercao_id' => $usuario->id,
@@ -155,9 +152,12 @@ class AcervoController extends Controller
         }
 
         if ($adicionandoAcervoId) {
-            return view('admin.criar_acervo', ['alert_message' => 'Acervo cadastrado com sucesso!', 'alert_type' => 'success']);
+            $alertMsg = 'Acervo cadastrado com sucesso!';
+            $alertType = 'success';
         } else {
-            return view('admin.criar_acervo', ['alert_message' => 'Falha ao cadastrar o acervo!', 'alert_type' => 'danger']);
+            $alertMsg = 'Falha ao cadastrar o acervo!';
+            $alertType = 'danger';
         }
+        return redirect('/acervo/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 }
