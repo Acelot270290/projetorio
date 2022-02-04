@@ -23,22 +23,22 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('acervo_id'); // Chave estrangeira para seculo
             $table->foreign('acervo_id')->references('id')->on('acervos');
 
-            $table->string('titulo_objeto'); // Nome do objeto
+            $table->string('titulo_obra'); // Nome da obra
 
-            $table->string('foto_frontal_objeto', 250)->nullable();// Foto principal (Destaque)
-            $table->string('foto_lateral_1_objeto', 250)->nullable();
-            $table->string('foto_lateral_2_objeto', 250)->nullable();
-            $table->string('foto_posterior_objeto', 250)->nullable();
+            $table->string('foto_frontal_obra', 250)->nullable();// Foto principal (Destaque)
+            $table->string('foto_lateral_1_obra', 250)->nullable();
+            $table->string('foto_lateral_2_obra', 250)->nullable();
+            $table->string('foto_posterior_obra', 250)->nullable();
 
             $table->unsignedBigInteger('tesauro_id'); // Chave estrangeira para tesauro
             $table->foreign('tesauro_id')->references('id')->on('tesauros');
 
             //Dimensões (em centímetros sempre)
-            $table->decimal('altura_objeto');
-            $table->decimal('largura_objeto');
-            $table->decimal('profundidade_objeto');
-            $table->decimal('comprimento_objeto');
-            $table->decimal('diametro_objeto');
+            $table->decimal('altura_obra');
+            $table->decimal('largura_obra');
+            $table->decimal('profundidade_obra');
+            $table->decimal('comprimento_obra');
+            $table->decimal('diametro_obra');
 
             // Material (até 3)
             $table->unsignedBigInteger('material_id_1'); // Chave estrangeira para material 1
@@ -60,8 +60,8 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('seculo_id'); // Chave estrangeira para seculo
             $table->foreign('seculo_id')->references('id')->on('seculos');
 
-            $table->integer('ano_objeto');
-            $table->string('autoria_objeto', 250);
+            $table->integer('ano_obra');
+            $table->string('autoria_obra', 250);
 
             // Tombamento
             $table->unsignedBigInteger('tombamento_id'); // Chave estrangeira para seculo

@@ -20,9 +20,9 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">
-      @if(isset($alert_type))
-        <div id="msg" class="alert alert-{{$alert_type}} alert-dismissible fade show" role="alert">
-          {{$alert_message}}
+      @if(session()->has('alert_type'))
+        <div id="msg" class="alert alert-{{session()->pull('alert_type')}} alert-dismissible fade show" role="alert">
+          {{session()->pull('alert_message')}}
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

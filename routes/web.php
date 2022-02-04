@@ -28,14 +28,14 @@ Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuarios');
 Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuarios');
 
 // Acervos
-//Route::get('/acervo/listar', 'AcervoController@index')->name('acervo');
+Route::get('/acervo', 'AcervoController@index')->name('acervo');
 Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 
-// Acervos
-//Route::get('/objeto/listar', 'AcervoController@index')->name('objeto');
-Route::get('/objeto/criar', 'ObjetoController@criar')->name('criar_objeto');
-Route::post('/objeto/adicionar', 'ObjetoController@adicionar')->name('adicionar_objeto');
+// Obras
+//Route::get('/obra', 'ObraController@index')->name('obra');
+Route::get('/obra/criar', 'ObraController@criar')->name('criar_obra');
+Route::post('/obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra');
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');

@@ -14,7 +14,7 @@ use App\Models\Tecnicas;
 use App\Models\Tesauros;
 use App\Models\Tombamentos;
 
-class ObjetoController extends Controller
+class ObraController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -33,7 +33,7 @@ class ObjetoController extends Controller
      */
     public function index()
     {
-        return view('admin.objeto');
+        return view('admin.obra');
     }
 
     public function criar(Request $request)
@@ -50,7 +50,7 @@ class ObjetoController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->get();
         $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
 
-        return view('admin.criar_objeto',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros,'condicoes'=>$condicoes]);
+        return view('admin.criar_obra',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros,'condicoes'=>$condicoes]);
     }
 
     public function adicionar(Request $request)

@@ -12,7 +12,7 @@
                       <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search">
                         <div class="input-group-btn">
-                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                          <button class="btn btn-primary" style="height: 31px;"><i class="fas fa-search"></i></button>
                         </div>
                       </div>
                     </form>

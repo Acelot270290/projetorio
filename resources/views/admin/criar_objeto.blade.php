@@ -11,7 +11,7 @@
             <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
             @csrf
               <div class="card-header">
-                <h4> Adicionar Objeto </h4>
+                <h4> Adicionar Obra </h4>
               </div>
               <div class="card-body">
                 <div class="form-row">
@@ -23,7 +23,7 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_objeto" value="">
+                      <input type="text" class="form-control" name="nome_obra" value="">
                     </div>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="altura_objeto"
+                      <input type="number" class="form-control" name="altura_obra"
                         value="">
                     </div>
                   </div>
@@ -53,7 +53,7 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="largura_objeto"
+                      <input type="number" class="form-control" name="largura_obra"
                         value="">
                     </div>
                   </div>
@@ -65,7 +65,7 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="profundidade_objeto"
+                      <input type="number" class="form-control" name="profundidade_obra"
                         value="">
                     </div>
                   </div>
@@ -77,7 +77,7 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="comprimento_objeto"
+                      <input type="number" class="form-control" name="comprimento_obra"
                         value="">
                     </div>
                   </div>
@@ -89,7 +89,7 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="diâmetro_objeto">
+                      <input type="number" class="form-control" name="diâmetro_obra">
                     </div>
                   </div>
                 </div>
