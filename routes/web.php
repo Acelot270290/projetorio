@@ -30,6 +30,8 @@ Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_
 // Acervos
 Route::get('/acervo', 'AcervoController@index')->name('acervo');
 Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
+Route::get('/acervo/detalha/{id}', 'AcervoController@detalhar')->name('detalhar_acervo');
+
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 
 // Obras
