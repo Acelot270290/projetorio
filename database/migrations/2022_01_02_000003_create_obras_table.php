@@ -62,7 +62,7 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('seculo_id'); // Chave estrangeira para seculo
             $table->foreign('seculo_id')->references('id')->on('seculos');
 
-            $table->integer('ano_obra');
+            $table->integer('ano_obra')->nullable();
             $table->string('autoria_obra', 250);
 
             // Tombamento
@@ -90,9 +90,9 @@ class CreateObrasTable extends Migration
 
                         
             // Características estilísticas/iconográficas e ornamentais
-            $table->string('caracteristicas_est_icono_orna_obra', 9000);
+            $table->string('caracteristicas_est_icono_orna_obra', 9000)->nullable();
 
-            $table->string('observacoes_obra', 4000);
+            $table->string('observacoes_obra', 4000)->nullable();
 
             $table->unsignedBigInteger('usuario_insercao_id');
             $table->foreign('usuario_insercao_id')->references('id')->on('users');
