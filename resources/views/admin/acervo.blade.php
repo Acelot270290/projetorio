@@ -25,7 +25,7 @@
                         <th class="text-center">
                         </th>
                         <th class="text-center">Id</th>
-                        <th class="text-center">Foto frontal</th>
+                        <th class="text-center">Fachada Principal</th>
                         <th>Nome</th>
                         <th>Cidade</th>
                         <th>UF</th>

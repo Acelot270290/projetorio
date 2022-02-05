@@ -29,6 +29,8 @@ class CreateObrasTable extends Migration
             $table->string('foto_lateral_1_obra', 250)->nullable();
             $table->string('foto_lateral_2_obra', 250)->nullable();
             $table->string('foto_posterior_obra', 250)->nullable();
+            $table->string('foto_superior_objeto', 250)->nullable();
+            $table->string('foto_inferior_objeto', 250)->nullable();
 
             $table->unsignedBigInteger('tesauro_id'); // Chave estrangeira para tesauro
             $table->foreign('tesauro_id')->references('id')->on('tesauros');
@@ -88,9 +90,9 @@ class CreateObrasTable extends Migration
 
                         
             // Características estilísticas/iconográficas e ornamentais
-            $table->string('caracteristicas_est_icono_orna_obra', 2000);
+            $table->string('caracteristicas_est_icono_orna_obra', 9000);
 
-            $table->string('observacoes_obra', 2000);
+            $table->string('observacoes_obra', 4000);
 
             $table->unsignedBigInteger('usuario_insercao_id');
             $table->foreign('usuario_insercao_id')->references('id')->on('users');

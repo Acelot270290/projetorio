@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriasTable extends Migration
+class CreateLocalizacoesObrasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('localizacoes_obras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo_categoria');
-            $table->string('descricao_categoria')->nullable();
-            $table->boolean('is_default_categoria'); // Se é ou não default (APENAS UM CAMPO)
+            $table->string('nome_localizacao');
+            $table->string('descricao_localizacao')->nullable();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('localizacoes_obras');
     }
 }

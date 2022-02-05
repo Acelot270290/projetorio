@@ -1,0 +1,601 @@
+@extends('layouts.app')
+
+@section('content')
+
+@php
+
+use App\Models\Acervos;
+use App\Models\Categorias;
+use App\Models\CondicaoSegurancaObras;
+use App\Models\EspecificacaoObras;
+use App\Models\EspecificacaoSegurancaObras;
+use App\Models\EstadoConservacaoObras;
+use App\Models\LocalizacoesObras;
+use App\Models\Materiais;
+use App\Models\Seculos;
+use App\Models\Tecnicas;
+use App\Models\Tesauros;
+use App\Models\Tombamentos;
+use App\Models\User;
+
+$acervos = Acervos::select('id', 'nome_acervo')->get();
+$categorias = Categorias::select('id', 'titulo_categoria')->get();
+$condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
+$especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->get();
+$especificacoesSeg = EspecificacaoSegurancaObras::select('id', 'titulo_especificacao_seguranca_obras')->get();
+$estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obras', 'is_default_estado_conservacao_obras')->get();
+$localizacoes = LocalizacoesObras::select('id', 'nome_localizacao')->get();
+$materiais = Materiais::select('id', 'titulo_material')->get();
+$seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
+$tecnicas = Tecnicas::select('id', 'titulo_tecnica')->get();
+$tesauros = Tesauros::select('id', 'titulo_tesauro')->get();
+$tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
+
+@endphp
+
+<div class="main-content" style="min-height: 562px;">
+  <section class="section">
+    <div class="section-body">
+      @if(session()->has('alert_type'))
+        <div id="msg" class="alert alert-{{session()->pull('alert_type')}} alert-dismissible fade show" role="alert">
+          {{session()->pull('alert_message')}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      @endif
+      <div id="anoerror">
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="card">
+            <form method="POST" action="{{route('adicionar_obra')}}" name="criar_obra"  accept-charset="utf-8" enctype="multipart/form-data">
+            @csrf
+              <div class="card-header">
+                <h4> Adicionar Obra </h4>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Categoria da obra</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <select name="categoria_obra" class="form-control">
+                      @foreach ($categorias as $categoria)
+                        @if($categoria->is_default_categoria)
+                          <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
+                        @else
+                          <option value="{{$categoria->id}}">{{$categoria->titulo_categoria}}</option>
+                        @endif
+                      @endforeach
+                      </select>
+                    </div>
+                    <small class="text-danger">{{ $errors->first('categoria_obra') }}</small>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Acervo da obra</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <select name="acervo_obra" class="form-control">
+                      @foreach ($acervos as $acervo)
+                        @if($acervo->is_default_acervo)
+                          <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
+                        @else
+                          <option value="{{$acervo->id}}">{{$acervo->nome_acervo}}</option>
+                        @endif
+                      @endforeach
+                      </select>
+                    </div>
+                    <small class="text-danger">{{ $errors->first('acervo_obra') }}</small>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Título</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="titulo_obra" value="">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Dimensões (cm)</label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label>Altura</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-map-marker-alt text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="altura_obra"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Largura</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-road text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="largura_obra"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Profundidade</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-road text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="profundidade_obra"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Comprimento</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-road text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="comprimento_obra"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Diâmetro</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-street-view text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="diâmetro_obra">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label>Tesauro</label>
+                    <select name="tesauro_obra" class="form-control">
+                    @foreach ($tesauros as $tesauro)
+                        <option value="{{$tesauro->id}}">{{$tesauro->titulo_tesauro}}</option>
+                    @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Localização da obra</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <select name="localizacao_obra" class="form-control">
+                      @foreach ($localizacoes as $localizacao)
+                        @if($localizacao->is_default_localizacao)
+                          <option value="{{$localizacao->id}}" selected>{{$localizacao->titulo_localizacao}}</option>
+                        @else
+                          <option value="{{$localizacao->id}}">{{$localizacao->nome_localizacao}}</option>
+                        @endif
+                      @endforeach
+                      </select>
+                    </div>
+                    <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Condições de Segurança</label>
+                    <select name="condicao_seguranca_obra" class="form-control">
+                     @foreach ($condicoes as $condicao)
+                      @if($condicao->is_default_condicao_seguranca_obras)
+                        <option value="{{$condicao->id}}" selected>{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                      @else
+                        <option value="{{$condicao->id}}">{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                      @endif
+                    @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label>Tombamento</label>
+                    <select name="tombamento_obra" class="form-control">
+                    @foreach ($tombamentos as $tombamento)
+                        <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
+                    @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Século</label>
+                    <select name="seculo_obra" class="form-control">
+                    @foreach ($seculos as $seculo)
+                      @if($seculo->is_default_seculo)
+                        <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                      @else
+                        <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                      @endif
+                    @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Ano</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-check-circle text-info"></i>
+                        </div>
+                      </div>
+                      <input type="number" class="form-control" name="ano_obra" value="">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Estado de Conservação</label>
+                    <select name="estado_de_conservacao_obra" class="form-control">
+                      @foreach ($estados as $estado)
+                        @if($estado->is_default_estado_conservacao_obras)
+                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obras}}</option>
+                        @else
+                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obras}}</option>
+                        @endif
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Autoria</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-check-circle text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="autoria_obra" value="">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                 <div class="form-group col-md-4">
+                    <label>Material 1</label>
+                    <select name="material_1_obra" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Material 2</label>
+                    <select name="material_2_obra" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Material 3</label>
+                    <select name="material_3_obra" class="form-control">
+                      <option value="">Selecione um Material</option>
+                      @foreach ($materiais as $material)
+                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                 <div class="form-group col-md-4">
+                    <label>Técnica 1</label>
+                    <select name="tecnica_1_obra" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Técnica 2</label>
+                    <select name="tecnica_2_obra" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Técnica 3</label>
+                    <select name="tecnica_3_obra" class="form-control">
+                      <option value="">Selecione uma Técnica</option>
+                      @foreach ($tecnicas as $tecnica)
+                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Especificações</label>
+                        <div style="display: flex; flex-wrap: wrap;">
+                         @foreach ($especificacoes as $especificacao)
+                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                              <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}">
+                              <div class="state p-success">
+                                  <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obras}}</label>
+                              </div>
+                          </div>
+                         @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Especificações de segurança</label>
+                        <div style="display: flex; flex-wrap: wrap;">
+                         @foreach ($especificacoesSeg as $especificacaoSeg)
+                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                              <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}">
+                              <div class="state p-success">
+                                  <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obras}}</label>
+                              </div>
+                          </div>
+                         @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Características estilísticas/iconográficas e ornamentais</label>
+                    <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;"></textarea>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Observações</label>
+                    <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;"></textarea>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label>Foto Frontal</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_frontal_obras">
+                    </div>
+                    
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                     <div  id="image_holder_frontal_obras"></div>
+                    </div>
+                    <input type="hidden" name="usuario_id" value="3">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Foto Lateral Esquerdo</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_lateral_esquerdo_obras">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                      <input type="hidden" name="user_foto">
+                        
+                     <div  id="image_holder_lateral_esquerdo_obras"></div>
+                     
+                    </div>
+                    <input type="hidden" name="usuario_id" value="3">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label>Foto Lateral Direito</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_lateral_direito_obras">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                     <div  id="image_holder_lateral_direito_obras"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Foto Posterior</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_posterior_obras">
+                    </div>
+                    <div id="user_foto"></div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                     <div  id="image_holder_posterior_obras"></div>
+                     
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Foto Superior</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_cobertura_obras">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                     <div  id="image_holder_cobertura_obras"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Foto Inferior</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-image text-info"></i>
+                        </div>
+                      </div>
+                      <input type="file" class="form-control" name="foto_inferior_obras">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <div id="box-foto-usuario">
+                     <div  id="image_holder_inferior_obras"></div>
+                     
+                    </div>
+                    <input type="hidden" name="usuario_id" value="3">
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Home da área restrita -->
+      </div>
+    </div>
+  </section>
+</div> 
+
+<script>
+  // Parametrização de variáveis
+  @foreach ($seculos as $seculo)
+    @if ($seculo['is_default_seculo'])
+      var min = {{$seculo['ano_inicio_seculo']}};
+      var max = {{$seculo['ano_fim_seculo']}};
+    @endif
+  @endforeach
+  $(document).ready(function() {
+    
+
+    function minMaxAno(){
+    // Checa o valor do século e seta o minimo e o máximo
+    @foreach ($seculos as $seculo)
+        @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_obra"]').val() == '{{$seculo['id']}}'){
+            window.min = {{$seculo['ano_inicio_seculo']}};
+            window.max = {{$seculo['ano_fim_seculo']}};
+            }
+    @endforeach
+
+        // Seta os valores
+        $('input[name="ano_obra"]').attr('max', window.max);
+        $('input[name="ano_obra"]').attr('min', window.min);
+   }
+
+   $('select[name="seculo_obra"]').change(function() {
+        minMaxAno();
+   });
+
+   $('input[name="ano_obra"]').bind('keyup mouseup', function (e) {
+        if(e.keyCode !== 46 && e.keyCode !== 8 ){
+            if (((parseInt($('input[name="ano_obra"]').val()) > window.max) || (parseInt($('input[name="ano_obra"]').val()) < window.min)) && ($('input[name="ano_obra"]').val() != "")) {
+                e.preventDefault();
+                var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+                    O ano não corresponde ao século selecionado.<br>
+                    <span style="margin-left:10px;">Ano mínimo: <b>` + window.min + `</b></span><br>
+                    <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div id="notification-warn-mini"></div>`;
+            $("#anoerror").html("");
+            $("#anoerror").append(errorBox);
+            } else {
+                $("#anoerror").html("");
+            }
+        }
+    });
+    function ajax_sub(control, image_holder){
+        //Get count of selected files
+        var countFiles = control[0].files.length;
+        var imgPath = control[0].value;
+        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+        image_holder.empty();
+        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+            if (typeof(FileReader) != "undefined") {
+                //loop for each file selected for uploaded.
+                for (var i = 0; i < countFiles; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "thumb-image",
+                            "style": "width:100px; max-height: 200px;"
+                        }).appendTo(image_holder);
+                    }
+                    image_holder.show();
+                    reader.readAsDataURL(control[0].files[i]);
+                }
+            } else {
+                alert("Este navegador não suporta FileReader.");
+            }
+        } else {
+        alert("Por favor, selecione apenas com formatos válidos.");
+        }
+    }
+
+    $("input[name='foto_frontal_obras']").on('change', function() {
+        ajax_sub($("input[name='foto_frontal_obras']"), $("#image_holder_frontal_obras"));
+    });
+    $("input[name='foto_lateral_esquerdo_obras']").on('change', function() {
+        ajax_sub($("input[name='foto_lateral_esquerdo_obras']"), $("#image_holder_lateral_esquerdo_obras"));
+    });
+    $("input[name='foto_lateral_direito_obras']").on('change', function() {
+        ajax_sub($("input[name='foto_lateral_direito_obras']"), $("#image_holder_lateral_direito_obras"));
+    });
+      $("input[name='foto_posterior_obras']").on('change', function() {
+      ajax_sub($("input[name='foto_posterior_obras']"), $("#image_holder_posterior_obras"));
+    });
+    $("input[name='foto_cobertura_obras']").on('change', function() {
+      ajax_sub($("input[name='foto_cobertura_obras']"), $("#image_holder_cobertura_obras"));
+    });
+    $("input[name='foto_inferior_obras']").on('change', function() {
+      ajax_sub($("input[name='foto_inferior_obras']"), $("#image_holder_inferior_obras"));
+    });
+  });
+
+</script>
+
+@endsection

@@ -313,7 +313,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
               <!-- Finalizar forms Acervos (estado de conservação e século (combombox), especificação (checkbox)) -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="https://infoanuncios.com.br/restrita/usuarios" class=" btn btn-dark">voltar</a>
+                <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
           </div>

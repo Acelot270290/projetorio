@@ -9,6 +9,7 @@ use App\Models\EstadoConservacaoObras;
 use App\Models\EspecificacaoObras;
 use App\Models\EspecificacaoSegurancaObras;
 use App\Models\Materiais;
+use App\Models\Obras;
 use App\Models\Seculos;
 use App\Models\Tecnicas;
 use App\Models\Tesauros;
@@ -33,11 +34,12 @@ class ObraController extends Controller
      */
     public function index()
     {
-        return view('admin.obra');
+        return view('criar_obra');
     }
 
     public function criar(Request $request)
     {
+        /*
         $acervos = Acervos::select('id')->get();
         $especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->get();
         $estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obras', 'is_default_estado_conservacao_obras')->get();
@@ -49,8 +51,10 @@ class ObraController extends Controller
         $tecnicas = Tecnicas::select('id', 'titulo_tecnica')->get();
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->get();
         $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
+        */
 
-        return view('admin.criar_obra',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros,'condicoes'=>$condicoes]);
+        #return view('admin.criar_obra',['acervos'=>$acervos,'especificacoes'=>$especificacoes, 'estados'=>$estados, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoesSeg'=>$condicoesSeg, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros,'condicoes'=>$condicoes]);
+        return view('admin.criar_obra');
     }
 
     public function adicionar(Request $request)
@@ -58,28 +62,46 @@ class ObraController extends Controller
         //pPegando os dados do user
         $usuario =  auth()->user('id');
        
-        $adicionandoAcervo =   Acervos::insert([
-            'nome_acervo' => $request->nome_acervo,
-            'cep_acervo' => $request->cep_acervo,
-            'endereco_acervo' => $request->endereco_acervo,
-            'numero_endereco_acervo' => $request->numero_endereco_acervo,
-            'bairro_acervo' => $request->bairro_acervo,
-            'cidade_acervo' => $request->cidade_acervo,
-            'UF_acervo' => $request->UF_acervo,
-            'tombamento_id' => $request->tombamento_acervo,
-            'seculo_id' => $request->seculo_acervo,
-            'ano_construcao_acervo' => $request->ano_acervo,
-            'estado_conservacao_acervo_id' => $request->estado_de_conservacao_acervo,
-            'especificacao_acervo_id' => $request->especificacao_acervo,
-            'descricao_fachada_planta_acervo'=> $request->descricao_acervo,
-            'usuario_insercao_id'=> $usuario->id
+        $adicionandoObra = Obras::insertGetId([
+            'acervo_id'=> $request->acervo_obra,
+            'created_at'=> new \DateTime(),
+            'usuario_insercao_id'=> $usuario->id,
+            'categoria_id' => $request->categoria_obra,
+            'titulo_obra' => $request->titulo_obra,
+            'altura_obra' => $request->altura_obra,
+            'largura_obra' => $request->largura_obra,
+            'profundidade_obra' => $request->profundidade_obra,
+            'comprimento_obra' => $request->comprimento_obra,
+            'diametro_obra' => $request->diâmetro_obra,
+            'tesauro_id' => $request->tesauro_obra,
+            'localizacao_obra_id' => $request->localizacao_obra,
+            'condicoes_de_seguranca_obras_id' => $request->condicao_seguranca_obra,
+            'tombamento_id' => $request->tombamento_obra,
+            'seculo_id' => $request->seculo_obra,
+            'ano_obra'=> $request->ano_obra,
+            'autoria_obra'=> $request->autoria_obra,
+            'estado_conservacao_obras_id'=> $request->estado_de_conservacao_obra,
+            'material_id_1'=> $request->material_1_obra,
+            'material_id_2'=> $request->material_2_obra,
+            'material_id_3'=> $request->material_3_obra,
+            'tecnica_id_1'=> $request->tecnica_1_obra,
+            'tecnica_id_2'=> $request->tecnica_2_obra,
+            'tecnica_id_3'=> $request->tecnica_3_obra,
+            'especificacao_obras_id'=> $request->especificacao_obra,
+            'especificacao_seguranca_obras_id'=> $request->especificacao_seg_obra,
+            'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
+            'observacoes_obra'=> $request->observacoes_obra,
+            'usuario_insercao_id' => $usuario->id,
+            
         ]);
 
-        if($adicionandoAcervo){
+        var_dump($adicionandoObra);die();
+
+        if($adicionandoObra){
             echo'Acervo enviando com sucesso';
         }else{
             echo'Erro';
-            var_dump($adicionandoAcervo);
+            var_dump($adicionandoObra);
         }
 
         return view('admin.adicionar_acervo');

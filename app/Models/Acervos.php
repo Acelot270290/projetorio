@@ -9,7 +9,7 @@ class Acervos extends Model
 {
     use HasFactory;
 
-    public $timestamps    = false;
+    public $timestamps    = true;
     protected $connection = "u868320945_projetorio";
     protected $table = "u868320945_projetorio.acervos";  
 

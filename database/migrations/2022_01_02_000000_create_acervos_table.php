@@ -30,7 +30,6 @@ class CreateAcervosTable extends Migration
             $table->string('foto_posterior_acervo', 250)->nullable();
             $table->string('foto_cobertura_acervo', 250)->nullable();
             $table->string('plantas_situacao_acervo', 250)->nullable();
-            //$table->set('estado_conservacao_acervo', ["Excelente", "Bom", "Regular", "Péssimo"]);
 
             // Estado de conservação
             $table->unsignedBigInteger('estado_conservacao_acervo_id'); // Chave estrangeira para estado de conservação do acervo
@@ -49,8 +48,10 @@ class CreateAcervosTable extends Migration
             $table->unsignedBigInteger('especificacao_acervo_id')->nullable(); // Chave estrangeira para estado de conservação do acervo
             $table->foreign('especificacao_acervo_id')->references('id')->on('especificacao_acervos');
 
-            //Informação do user
+            $table->unsignedBigInteger('localizacao_id'); // Chave estrangeira para tombamento
+            $table->foreign('localizacao_id')->references('id')->on('localicacoes_obras');
 
+            //Informação do user
             $table->unsignedBigInteger('usuario_insercao_id');
             $table->foreign('usuario_insercao_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_atualizacao_id')->nullable();
