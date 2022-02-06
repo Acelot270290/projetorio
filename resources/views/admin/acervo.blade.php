@@ -57,7 +57,7 @@
                         <td>{{$acervo->ano_construcao_acervo}}</td>
                         <td>
                           <a href="{{route('detalhar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-success">Visualizar</a>
-                          <a href="#" class="btn btn-outline-primary">Editar</a>
+                          <a href="{{route('editar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-primary">Editar</a>
                           <a href="#" class="btn btn-outline-danger">Deletar</a>
                         </td>
                       </tr>

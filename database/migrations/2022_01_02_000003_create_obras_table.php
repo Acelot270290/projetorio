@@ -26,11 +26,11 @@ class CreateObrasTable extends Migration
             $table->string('titulo_obra'); // Nome da obra
 
             $table->string('foto_frontal_obra', 250)->nullable();// Foto principal (Destaque)
-            $table->string('foto_lateral_1_obra', 250)->nullable();
-            $table->string('foto_lateral_2_obra', 250)->nullable();
+            $table->string('foto_lateral_esquerda_obra', 250)->nullable();
+            $table->string('foto_lateral_direita_obra', 250)->nullable();
             $table->string('foto_posterior_obra', 250)->nullable();
-            $table->string('foto_superior_objeto', 250)->nullable();
-            $table->string('foto_inferior_objeto', 250)->nullable();
+            $table->string('foto_superior_obra', 250)->nullable();
+            $table->string('foto_inferior_obra', 250)->nullable();
 
             $table->unsignedBigInteger('tesauro_id'); // Chave estrangeira para tesauro
             $table->foreign('tesauro_id')->references('id')->on('tesauros');
@@ -64,6 +64,7 @@ class CreateObrasTable extends Migration
 
             $table->integer('ano_obra')->nullable();
             $table->string('autoria_obra', 250);
+            $table->string('procedencia_obra', 250);
 
             // Tombamento
             $table->unsignedBigInteger('tombamento_id'); // Chave estrangeira para seculo

@@ -42,6 +42,7 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
+
         // Descobre quais anos são os limites do século escolhido
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
 
@@ -173,8 +174,16 @@ class AcervoController extends Controller
         ->leftJoin('especificacao_acervos as ea', 'ea.id', '=', 'especificacao_acervo_id')
         ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
         ->leftJoin('users as u2', 'u2.id', '=', 'usuario_atualizacao_id')
-        ->get();
+        ->first();
 
         return view('admin.detalhar_acervo', ['acervo' => $acervo]);
+    }
+
+    public function editar(Request $request, $id){
+        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'usuario_insercao_id', 'usuario_atualizacao_id')
+        ->where('acervos.id', '=', intval($id))
+        ->first();
+
+        return view('admin.editar_acervo', ['acervo' => $acervo]);
     }
 }

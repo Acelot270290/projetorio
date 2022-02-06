@@ -33,7 +33,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
+            <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
             @csrf
               <div class="card-header">
                 <h4> Adicionar Acervo </h4>
@@ -48,7 +48,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_acervo" value="{{old('nome_acervo')}}">
+                      <input type="text" class="form-control" name="nome_acervo" value="{{ (old('nome_acervo') !== null ? old('nome_acervo') : $acervo['nome_acervo'] ) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('nome_acervo') }}</small>
                   </div>
@@ -63,7 +63,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
-                        value="{{old('cep_acervo')}}" maxlength="9">
+                        value="{{ (old('cep_acervo') !== null ? old('cep_acervo') : $acervo['cep_acervo']) }}" maxlength="9">
                     </div>
                     <small class="text-danger">{{ $errors->first('cep_acervo') }}</small>
                   </div>
@@ -75,7 +75,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{old('endereco_acervo')}}" >
+                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{ (old('endereco_acervo') !== null ? old('endereco_acervo') : $acervo['endereco_acervo']) }}" >
                     </div>
                      <small class="text-danger">{{ $errors->first('endereco_acervo') }}</small>
                   </div>
@@ -88,7 +88,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
-                        value="{{old('numero_endereco_acervo')}}">
+                        value="{{ (old('numero_endereco_acervo') !== null ? old('numero_endereco_acervo') : $acervo['numero_endereco_acervo']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
@@ -102,7 +102,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-directions text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{old('bairro_acervo')}}">
+                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{ (old('bairro_acervo') !== null ? old('bairro_acervo') : $acervo['bairro_acervo']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('bairro_acervo') }}</small>
                   </div>
@@ -115,7 +115,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         </div>
                       </div>
                       <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
-                        value="{{old('cidade_acervo')}}">
+                        value="{{ (old('cidade_acervo') !== null ? old('cidade_acervo') : $acervo['cidade_acervo']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
 
@@ -128,7 +128,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-map text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{old('UF_acervo')}}"
+                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{ (old('UF_acervo') !== null ? old('UF_acervo') : $acervo['UF_acervo']) }}"
                        maxlength="2">
                     </div>
                       <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
@@ -139,19 +139,26 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Tombamento</label>
                     <select name="tombamento_acervo" class="form-control">
                     @foreach ($tombamentos as $tombamento)
+                      @if($tombamento->id == $acervo['tombamento_id'])
+                        <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                      @else
                         <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
+                      @endif
                     @endforeach
-                      
                     </select>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Século</label>
                     <select name="seculo_acervo" class="form-control">
                     @foreach ($seculos as $seculo)
-                      @if($seculo->is_default_seculo)
+                      @if($seculo->id == $acervo['seculo_id'])
                         <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
                       @else
-                        <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @if($seculo->is_default_seculo and !isset($acervo['seculo_id']))
+                          <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                        @else
+                          <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @endif
                       @endif
                     @endforeach
                       
@@ -165,17 +172,21 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="ano_acervo" value="{{old('ano_acervo')}}">
+                      <input type="number" class="form-control" name="ano_acervo" value="{{ (old('ano_acervo') !== null ? old('ano_acervo') : $acervo['ano_construcao_acervo']) }}">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Estado de Conservação</label>
                     <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->is_default_estado_conservacao_acervo)
+                        @if($estado->id == $acervo['estado_conservacao_acervo_id'])
                           <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
                         @else
-                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @if($estado->is_default_estado_conservacao_acervo and !isset($acervo['estado_conservacao_acervo_id']))
+                            <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @else
+                            <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -187,9 +198,13 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}">
+                              @if($especificacao->id == $acervo['especificacao_acervo_id'])
+                                <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}" checked>
+                              @else
+                                <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}">
+                              @endif
                               <div class="state p-success">
-                                  <label style="margin-left: 10px;" for="{{$especificacao->id}}">{{$especificacao->titulo_especificacao_acervo}}</label>
+                                <label style="margin-left: 10px;" for="{{$especificacao->id}}">{{$especificacao->titulo_especificacao_acervo}}</label>
                               </div>
                           </div>
                          @endforeach
@@ -200,11 +215,10 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Breve descrição da fachada e planta</label>
-                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;">{{old('descricao_acervo')}}</textarea>
+                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;">{{ (old('descricao_acervo') !== null ? old('descricao_acervo') : $acervo['descricao_fachada_planta_acervo']) }}</textarea>
                     <div>
                      <small class="text-danger">{{ $errors->first('descricao_acervo') }}</small>
                     </div>
-    
                   </div>
                 </div>
                 <div class="form-row">
@@ -218,10 +232,13 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                       </div>
                       <input type="file" class="form-control" name="foto_frontal_acervo">
                     </div>
-                    
                   </div>
                   <div class="form-group col-md-3">
-                 <div  id="image_holder_frontal_acervo"></div>
+                 <div  id="image_holder_frontal_acervo">
+                   @if($acervo['foto_frontal_acervo'])
+                    <img src="{{ asset($acervo['foto_frontal_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                   @endif
+                 </div>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Foto Lateral Esquerda</label>
@@ -236,7 +253,11 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_lateral1_acervo"></div>
+                      <div  id="image_holder_lateral1_acervo">
+                        @if($acervo['foto_lateral_esquerda_acervo'])
+                          <img src="{{ asset($acervo['foto_lateral_esquerda_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -254,7 +275,11 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_lateral2_acervo"></div>
+                      <div  id="image_holder_lateral2_acervo">
+                        @if($acervo['foto_lateral_direita_acervo'])
+                          <img src="{{ asset($acervo['foto_lateral_direita_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -270,8 +295,11 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_posterior_acervo"></div>
-                      
+                      <div  id="image_holder_posterior_acervo">
+                        @if($acervo['foto_posterior_acervo'])
+                          <img src="{{$acervo['foto_posterior_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -289,7 +317,11 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_cobertura_acervo"></div>
+                      <div id="image_holder_cobertura_acervo">
+                        @if($acervo['foto_cobertura_acervo'])
+                          <img src="{{$acervo['foto_cobertura_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -305,12 +337,15 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_plantas_situcao_acervo"></div>
+                      <div id="image_holder_plantas_situcao_acervo">
+                        @if($acervo['plantas_situacao_acervo'])
+                          <img src="{{$acervo['plantas_situacao_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- Finalizar forms Acervos (estado de conservação e século (combombox), especificação (checkbox)) -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
                 <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
