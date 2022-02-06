@@ -10,7 +10,7 @@ use App\Models\EstadoConservacaoAcervos;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
 
-$especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->get();
+$especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->sortBy('titulo_especificacao_acervo')->get();
 $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
 $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
 $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
@@ -62,8 +62,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
-                        value="{{ (old('cep_acervo') !== null ? old('cep_acervo') : $acervo['cep_acervo']) }}" maxlength="9">
+                      <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo" value="{{ (old('cep_acervo') !== null ? old('cep_acervo') : $acervo['cep_acervo']) }}" maxlength="9">
                     </div>
                     <small class="text-danger">{{ $errors->first('cep_acervo') }}</small>
                   </div>
@@ -87,8 +86,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
-                        value="{{ (old('numero_endereco_acervo') !== null ? old('numero_endereco_acervo') : $acervo['numero_endereco_acervo']) }}">
+                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo" value="{{ (old('numero_endereco_acervo') !== null ? old('numero_endereco_acervo') : $acervo['numero_endereco_acervo']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
@@ -114,8 +112,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-location-arrow text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
-                        value="{{ (old('cidade_acervo') !== null ? old('cidade_acervo') : $acervo['cidade_acervo']) }}">
+                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo" value="{{ (old('cidade_acervo') !== null ? old('cidade_acervo') : $acervo['cidade_acervo']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
 
@@ -128,8 +125,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-map text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{ (old('UF_acervo') !== null ? old('UF_acervo') : $acervo['UF_acervo']) }}"
-                       maxlength="2">
+                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{ (old('UF_acervo') !== null ? old('UF_acervo') : $acervo['UF_acervo']) }}" maxlength="2">
                     </div>
                       <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
                   </div>
@@ -139,10 +135,18 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Tombamento</label>
                     <select name="tombamento_acervo" class="form-control">
                     @foreach ($tombamentos as $tombamento)
-                      @if($tombamento->id == $acervo['tombamento_id'])
-                        <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                      @if (old('tombamento_acervo') == $tombamento->id)
+                        <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
                       @else
-                        <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
+                        @if($tombamento->id == $acervo['tombamento_id'])
+                          <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                        @else
+                          @if($tombamento->is_default_tombamento)
+                            <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                          @else
+                            <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
+                          @endif
+                        @endif
                       @endif
                     @endforeach
                     </select>
@@ -151,17 +155,21 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Século</label>
                     <select name="seculo_acervo" class="form-control">
                     @foreach ($seculos as $seculo)
-                      @if($seculo->id == $acervo['seculo_id'])
-                        <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                      
+                      @if (old('seculo_acervo') == $seculo->id)
+                        <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                       @else
-                        @if($seculo->is_default_seculo and !isset($acervo['seculo_id']))
+                        @if($seculo->id == $acervo['seculo_id'])
                           <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
                         @else
-                          <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                          @if($seculo->is_default_seculo and !isset($acervo['seculo_id']))
+                            <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                          @else
+                            <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                          @endif
                         @endif
                       @endif
                     @endforeach
-                      
                     </select>
                   </div>
                   <div class="form-group col-md-3">
@@ -179,13 +187,17 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Estado de Conservação</label>
                     <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->id == $acervo['estado_conservacao_acervo_id'])
+                        @if (old('estado_conservacao_acervo') == $estado->id)
                           <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
                         @else
-                          @if($estado->is_default_estado_conservacao_acervo and !isset($acervo['estado_conservacao_acervo_id']))
+                          @if($estado->id == $acervo['estado_conservacao_acervo_id'])
                             <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
                           @else
-                            <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                            @if($estado->is_default_estado_conservacao_acervo and !isset($acervo['estado_conservacao_acervo_id']))
+                              <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                            @else
+                              <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                            @endif
                           @endif
                         @endif
                       @endforeach

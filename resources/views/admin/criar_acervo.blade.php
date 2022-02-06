@@ -10,10 +10,10 @@ use App\Models\EstadoConservacaoAcervos;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
 
-$especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->get();
-$estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
+$especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->sortBy('titulo_especificacao_acervo')->get();
+$estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')get();
 $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
-$tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
+$tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
 @endphp
 
@@ -87,8 +87,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
-                        value="{{old('numero_endereco_acervo')}}">
+                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo" value="{{old('numero_endereco_acervo')}}">
                     </div>
                     <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
@@ -114,8 +113,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-location-arrow text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
-                        value="{{old('cidade_acervo')}}">
+                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo" value="{{old('cidade_acervo')}}">
                     </div>
                     <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
 
@@ -139,22 +137,32 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Tombamento</label>
                     <select name="tombamento_acervo" class="form-control">
                     @foreach ($tombamentos as $tombamento)
-                        <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
+                      @if (old('tombamento_acervo') == $tombamento->id)
+                        <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                      @else
+                        @if($tombamento->is_default_tombamento)
+                          <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                        @else
+                          <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
+                        @endif
+                      @endif
                     @endforeach
-                      
                     </select>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Século</label>
                     <select name="seculo_acervo" class="form-control">
                     @foreach ($seculos as $seculo)
-                      @if($seculo->is_default_seculo)
-                        <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                      @if (old('seculo_acervo') == $seculo->id)
+                        <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                       @else
-                        <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @if($seculo->is_default_seculo)
+                          <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                        @else
+                          <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @endif
                       @endif
                     @endforeach
-                      
                     </select>
                   </div>
                   <div class="form-group col-md-3">
@@ -172,10 +180,14 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Estado de Conservação</label>
                     <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->is_default_estado_conservacao_acervo)
+                        @if (old('estado_conservacao_acervo') == $estado->id)
                           <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
                         @else
-                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @if($estado->is_default_estado_conservacao_acervo)
+                            <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @else
+                            <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>

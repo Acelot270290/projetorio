@@ -18,6 +18,8 @@ class CreateTombamentosTable extends Migration
             $table->timestamps();
             $table->string('titulo_tombamento');
             $table->string('descricao_tombamento')->nullable();
+            $table->boolean('is_default_tombamento'); // Se é ou não default (APENAS UM CAMPO)
+
         });
     }
 
