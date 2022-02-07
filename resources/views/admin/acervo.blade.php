@@ -34,6 +34,7 @@
                         <th>Ações</th>
                       </tr>
                       <tr>
+                      
                       @foreach ($acervos as $acervo)
                         <td> </td>
                         <td class="text-center">{{$acervo->id}}</td>
