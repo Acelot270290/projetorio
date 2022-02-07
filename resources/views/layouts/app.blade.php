@@ -160,7 +160,7 @@
 	 <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html"> <img style="margin-top:5%" alt="image" src="assets/img/logo.png" class="header-logo" /> 
+            <a href="{{route('home')}}"> <img style="margin-top:5%" alt="image" src="{{assets('/img/logo.png')}} class="header-logo" /> 
             </a>
           </div>
           <ul class="sidebar-menu">
