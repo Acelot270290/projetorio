@@ -67,11 +67,11 @@ class ObraController extends Controller
 
             'categoria_obra'=>'required',
             'titulo_obra'=>'required|max:250',
-            'altura_obra'=>'required',
-            'largura_obra'=>'required',
-            'profundidade_obra'=>'required',
-            'comprimento_obra'=>'required',
-            'diâmetro_obra'=>'required',
+            'altura_obra'=>'',
+            'largura_obra'=>'',
+            'profundidade_obra'=>'',
+            'comprimento_obra'=>'',
+            'diâmetro_obra'=>'',
             'tesauro_obra'=>'required',
             'localizacao_obra'=>'required',
             'condicao_seguranca_obra'=>'required',
@@ -86,7 +86,7 @@ class ObraController extends Controller
         ]);
 
 
-        //pPegando os dados do user
+        //Pegando os dados do user
         $usuario =  auth()->user('id');
        
         $adicionandoObra = Obras::insertGetId([
@@ -103,12 +103,12 @@ class ObraController extends Controller
             'diametro_obra' => $request->diâmetro_obra,
             'tesauro_id' => $request->tesauro_obra,
             'localizacao_obra_id' => $request->localizacao_obra,
-            'condicoes_de_seguranca_obras_id' => $request->condicao_seguranca_obra,
+            'condicoes_de_seguranca_obra_id' => $request->condicao_seguranca_obra,
             'tombamento_id' => $request->tombamento_obra,
             'seculo_id' => $request->seculo_obra,
             'ano_obra'=> $request->ano_obra,
             'autoria_obra'=> $request->autoria_obra,
-            'estado_conservacao_obras_id'=> $request->estado_de_conservacao_obra,
+            'estado_conservacao_obra_id'=> $request->estado_de_conservacao_obra,
             'material_id_1'=> $request->material_1_obra,
             'material_id_2'=> $request->material_2_obra,
             'material_id_3'=> $request->material_3_obra,
@@ -116,7 +116,7 @@ class ObraController extends Controller
             'tecnica_id_2'=> $request->tecnica_2_obra,
             'tecnica_id_3'=> $request->tecnica_3_obra,
             'especificacao_obras_id'=> $request->especificacao_obra,
-            'especificacao_seguranca_obras_id'=> $request->especificacao_seg_obra,
+            'especificacao_seguranca_obra_id'=> $request->especificacao_seg_obra,
             'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
             'observacoes_obra'=> $request->observacoes_obra,
             
@@ -138,71 +138,65 @@ class ObraController extends Controller
             mkdir(public_path($imagemaobra));
         }
 
-       
-
-        if ($request->file('foto_frontal_obras')) {
+        if ($request->file('foto_frontal_obra')) {
 
             $image = $request->foto_frontal_obras;
             $extension = $image->extension();
             $imageName = 'Frontal_obra.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_frontal_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
         }
-        
 
-        
-        if ($request->file('foto_lateral_esquerda_obras')) {
+        if ($request->file('foto_lateral_esquerda_obra')) {
 
             $image = $request->foto_lateral_esquerda_obras;
             $extension = $image->extension();
             $imageName = 'Lateral_esquerda_obra.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id',$IdObra)->update(['foto_lateral_esquerda_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id',$IdObra)->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
         }
-        
 
-        if ($request->file('foto_lateral_direita_obras')) {
+        if ($request->file('foto_lateral_direita_obra')) {
 
             $image = $request->foto_lateral_direita_obras;
             $extension = $image->extension();
             $imageName = 'foto_lateral_direita_obras.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_lateral_direita_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
         }
 
-        if ($request->file('foto_posterior_obras')) {
+        if ($request->file('foto_posterior_obra')) {
 
             $image = $request->foto_posterior_obras;
             $extension = $image->extension();
             $imageName = 'Posterior_obra.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_posterior_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
-        if ($request->file('foto_superior_obras')) {
+        if ($request->file('foto_superior_obra')) {
 
             $image = $request->foto_superior_obras;
             $extension = $image->extension();
             $imageName = 'Superior_obra.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_superior_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
-        if ($request->file('foto_inferior_obras')) {
+        if ($request->file('foto_inferior_obra')) {
 
             $image = $request->foto_inferior_obras;
             $extension = $image->extension();
             $imageName = 'Inferior_obra.' . $extension;
             $uploadImage = $image->move(public_path($imagemaobra), $imageName);
 
-            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_inferior_obras' => $imagemaobra . '/' . $imageName]);
+            $adicionandoObra =   Obras::where('id', $IdObra)->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
         }
-
 
         if ($adicionandoObra) {
             $alertMsg = 'Obra cadastrada com sucesso!';

@@ -209,8 +209,10 @@
   <script src="{{url('assets/js/app.min.js')}}"></script>
   <!-- JS Libraies -->
   <script src="{{url('assets/bundles/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{url('assets/bundles/owlcarousel2/dist/owl.carousel.min.js')}}"></script>
   <!-- Page Specific JS File -->
   <script src="{{url('assets/js/page/index.js')}}"></script>
+  <script src="{{url('assets/js/page/owl-carousel.js')}}"></script>
   <!-- Template JS File -->
   <script src="{{url('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
