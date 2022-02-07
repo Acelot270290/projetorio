@@ -21,7 +21,7 @@ use App\Models\User;
 $acervos = Acervos::select('id', 'nome_acervo')->get();
 $categorias = Categorias::select('id', 'titulo_categoria')->get();
 $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
-$especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->sortBy('titulo_especificacao_obras')->get();
+$especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->orderBy('titulo_especificacao_obras', 'ASC')->get();
 $especificacoesSeg = EspecificacaoSegurancaObras::select('id', 'titulo_especificacao_seguranca_obras')->get();
 $estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obras', 'is_default_estado_conservacao_obras')->get();
 $localizacoes = LocalizacoesObras::select('id', 'nome_localizacao')->get();

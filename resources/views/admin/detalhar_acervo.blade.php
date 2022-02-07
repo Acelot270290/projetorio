@@ -15,42 +15,42 @@
                                     <div class="owl-stage-outer">
                                         <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0.25s ease 0s; width: 100%;">
                                             @if(!is_null($acervo->foto_frontal_acervo))
-                                                <div class="owl-item active" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item active" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_frontal_acervo) }}">
                                                     </div>
                                                 </div>
                                             @endif
                                             @if(!is_null($acervo->foto_lateral_1_acervo))
-                                                <div class="owl-item" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_lateral_1_acervo) }}">
                                                     </div>
                                                 </div>
                                             @endif
                                             @if(!is_null($acervo->foto_lateral_2_acervo))
-                                                <div class="owl-item" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_lateral_2_acervo) }}">
                                                     </div>
                                                 </div>
                                             @endif
                                             @if(!is_null($acervo->foto_posterior_acervo))
-                                                <div class="owl-item" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_posterior_acervo) }}">
                                                     </div>
                                                 </div>
                                             @endif
                                             @if(!is_null($acervo->foto_cobertura_acervo))
-                                                <div class="owl-item" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_cobertura_acervo) }}">
                                                     </div>
                                                 </div>
                                             @endif
                                             @if(!is_null($acervo->plantas_situacao_acervo))
-                                                <div class="owl-item" style="width: inherit; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                                <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
                                                         <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->plantas_situacao_acervo) }}">
                                                     </div>

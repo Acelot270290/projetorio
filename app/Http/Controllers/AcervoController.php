@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Acervos;
 use App\Models\EspecificacaoAcervos;
 use App\Models\EstadoConservacaoAcervos;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
-//use Illuminate\Support\Facades\Storage;
+use Image;
 
 class AcervoController extends Controller
 {
@@ -83,8 +84,13 @@ class AcervoController extends Controller
             'usuario_insercao_id' => $usuario->id,
         ]);
 
-        $basePath =  'imagem/acervos';
-        if (!is_dir($basePath)) {
+
+        $preBasePath =  'imagem';
+        $basePath =  $preBasePath . '/acervos';
+        if (!is_dir($preBasePath)) {
+            mkdir(public_path($preBasePath));
+            mkdir(public_path($basePath));
+        }else if (!is_dir($basePath)) {
             mkdir(public_path($basePath));
         }
 
@@ -99,10 +105,31 @@ class AcervoController extends Controller
 
             $image = $request->foto_frontal_acervo;
             $extension = $image->extension();
-            $imageName = 'Frontal_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            //$imageName = 'Frontal_Acervo.' . $extension;
+            $imageName = 'Frontal_Acervo.webp';
+
+            $img = Image::make($request->foto_frontal_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+            //$uploadImage = $image->move(public_path($imagemacervo), $imageName);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+
+             /* $img = Image::make($_FILES['imagemDesktop']['tmp_name']);
+                    $outFile = public_path() . implode(DIRECTORY_SEPARATOR, ['','storage','profile_images', pathinfo($desktopName)["filename"]]) . ".webp";
+                   $img->resize(149, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });*/
+    
+                    
+                   /* $img->save($outFile)->encode('webp', 90);
+    
+                     \Storage::put('/visao/girafa/img/banners/Home/'.pathinfo($desktopName)["filename"] . ".webp",   file_get_contents($outFile), );
+    
+                    unlink(public_path() . implode(DIRECTORY_SEPARATOR, ['','storage','profile_images', pathinfo($desktopName)["filename"]]) . ".webp");*/
         }
 
         if ($request->file('foto_lateral_1_acervo')) {
