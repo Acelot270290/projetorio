@@ -38,7 +38,12 @@ class AcervoController extends Controller
 
     public function criar(Request $request)
     {
-        return view('admin.criar_acervo');
+        $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
+        $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
+        $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
+        $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
+
+        return view('admin.criar_acervo', ['especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
     }
 
     public function adicionar(Request $request)
@@ -103,9 +108,6 @@ class AcervoController extends Controller
 
         if ($request->file('foto_frontal_acervo')) {
 
-            $image = $request->foto_frontal_acervo;
-            $extension = $image->extension();
-            //$imageName = 'Frontal_Acervo.' . $extension;
             $imageName = 'Frontal_Acervo.webp';
 
             $img = Image::make($request->foto_frontal_acervo);
@@ -114,70 +116,70 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            //$uploadImage = $image->move(public_path($imagemacervo), $imageName);
-
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
-
-             /* $img = Image::make($_FILES['imagemDesktop']['tmp_name']);
-                    $outFile = public_path() . implode(DIRECTORY_SEPARATOR, ['','storage','profile_images', pathinfo($desktopName)["filename"]]) . ".webp";
-                   $img->resize(149, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });*/
-    
-                    
-                   /* $img->save($outFile)->encode('webp', 90);
-    
-                     \Storage::put('/visao/girafa/img/banners/Home/'.pathinfo($desktopName)["filename"] . ".webp",   file_get_contents($outFile), );
-    
-                    unlink(public_path() . implode(DIRECTORY_SEPARATOR, ['','storage','profile_images', pathinfo($desktopName)["filename"]]) . ".webp");*/
         }
 
         if ($request->file('foto_lateral_1_acervo')) {
 
-            $image = $request->foto_lateral_1_acervo;
-            $extension = $image->extension();
-            $imageName = 'Lateral_Esquerda_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            $imageName = 'Lateral_Esquerda_Acervo.webp';
+            
+            $img = Image::make($request->foto_lateral_1_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_lateral_2_acervo')) {
 
-            $image = $request->foto_lateral_2_acervo;
-            $extension = $image->extension();
-            $imageName = 'Lateral_Direita_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            $imageName = 'Lateral_Direita_Acervo.webp';
+
+            $img = Image::make($request->foto_lateral_2_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_posterior_acervo')) {
 
-            $image = $request->foto_posterior_acervo;
-            $extension = $image->extension();
-            $imageName = 'Posterior_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            $imageName = 'Posterior_Acervo.webp';
+            
+            $img = Image::make($request->foto_posterior_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_cobertura_acervo')) {
 
-            $image = $request->foto_cobertura_acervo;
-            $extension = $image->extension();
-            $imageName = 'Cobertura_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            $imageName = 'Cobertura_Acervo.webp';
+            
+            $img = Image::make($request->foto_cobertura_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('plantas_situacao_acervo')) {
 
-            $image = $request->plantas_situacao_acervo;
-            $extension = $image->extension();
-            $imageName = 'Plantas_Situacao_Acervo.' . $extension;
-            $uploadImage = $image->move(public_path($imagemacervo), $imageName);
+            $imageName = 'Plantas_Situacao_Acervo.webp';
+            
+            $img = Image::make($request->plantas_situacao_acervo);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
             $adicionandoAcervoId =   Acervos::where('id', $adicionandoAcervoId)->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
         }
@@ -210,7 +212,12 @@ class AcervoController extends Controller
         $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'usuario_insercao_id', 'usuario_atualizacao_id')
         ->where('acervos.id', '=', intval($id))
         ->first();
+        
+        $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
+        $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
+        $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
+        $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
-        return view('admin.editar_acervo', ['acervo' => $acervo]);
+        return view('admin.editar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
     }
 }

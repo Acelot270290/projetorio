@@ -25,6 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Usuários
 Route::get('/usuarios', 'UserController@index')->name('usuarios');
 Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuarios');
+
 Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuarios');
 
 // Acervos
@@ -36,8 +37,11 @@ Route::get('/acervo/edita/{id}', 'AcervoController@editar')->name('editar_acervo
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 
 // Obras
-//Route::get('/obra', 'ObraController@index')->name('obra');
+Route::get('/obra', 'ObraController@index')->name('obra');
 Route::get('/obra/criar', 'ObraController@criar')->name('criar_obra');
+Route::get('/obra/detalhar/{id}', 'ObraController@detalhar')->name('detalhar_obra');
+Route::get('/obra/edita/{id}', 'ObraController@editar')->name('editar_obra');
+
 Route::post('/obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra');
 
 // Função sair

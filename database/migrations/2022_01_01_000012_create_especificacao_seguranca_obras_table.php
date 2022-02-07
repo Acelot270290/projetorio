@@ -16,8 +16,8 @@ class CreateEspecificacaoSegurancaObrasTable extends Migration
         Schema::create('especificacao_seguranca_obras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo_especificacao_seguranca_obras');
-            $table->string('descricao_especificacao_seguranca_obras')->nullable();
+            $table->string('titulo_especificacao_seguranca_obra');
+            $table->string('descricao_especificacao_seguranca_obra')->nullable();
         });
     }
 

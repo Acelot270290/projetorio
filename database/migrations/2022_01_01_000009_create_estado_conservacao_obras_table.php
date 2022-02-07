@@ -16,9 +16,9 @@ class CreateEstadoConservacaoObrasTable extends Migration
         Schema::create('estado_conservacao_obras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo_estado_conservacao_obras');
-            $table->string('descricao_estado_conservacao_obras')->nullable();
-            $table->boolean('is_default_estado_conservacao_obras'); // Se é ou não default (APENAS UM CAMPO)
+            $table->string('titulo_estado_conservacao_obra');
+            $table->string('descricao_estado_conservacao_obra')->nullable();
+            $table->boolean('is_default_estado_conservacao_obra'); // Se é ou não default (APENAS UM CAMPO)
         });
     }
 

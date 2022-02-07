@@ -2,37 +2,6 @@
 
 @section('content')
 
-@php
-
-use App\Models\Acervos;
-use App\Models\Categorias;
-use App\Models\CondicaoSegurancaObras;
-use App\Models\EspecificacaoObras;
-use App\Models\EspecificacaoSegurancaObras;
-use App\Models\EstadoConservacaoObras;
-use App\Models\LocalizacoesObras;
-use App\Models\Materiais;
-use App\Models\Seculos;
-use App\Models\Tecnicas;
-use App\Models\Tesauros;
-use App\Models\Tombamentos;
-use App\Models\User;
-
-$acervos = Acervos::select('id', 'nome_acervo')->get();
-$categorias = Categorias::select('id', 'titulo_categoria')->get();
-$condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obras', 'is_default_condicao_seguranca_obras')->get();
-$especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obras')->orderBy('titulo_especificacao_obras', 'ASC')->get();
-$especificacoesSeg = EspecificacaoSegurancaObras::select('id', 'titulo_especificacao_seguranca_obras')->get();
-$estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obras', 'is_default_estado_conservacao_obras')->get();
-$localizacoes = LocalizacoesObras::select('id', 'nome_localizacao')->get();
-$materiais = Materiais::select('id', 'titulo_material')->get();
-$seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
-$tecnicas = Tecnicas::select('id', 'titulo_tecnica')->get();
-$tesauros = Tesauros::select('id', 'titulo_tesauro')->get();
-$tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
-
-@endphp
-
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">
@@ -230,12 +199,12 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <select name="condicao_seguranca_obra" class="form-control">
                      @foreach ($condicoes as $condicao)
                       @if(old('condicao_seguranca_obra') !== null)
-                        <option value="{{$condicao->id}}" {{ (old("condicao_seguranca_obra") == $condicao->id ? "selected" : "") }}>{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                        <option value="{{$condicao->id}}" {{ (old("condicao_seguranca_obra") == $condicao->id ? "selected" : "") }}>{{$condicao->titulo_condicao_seguranca_obra}}</option>
                       @else
-                        @if($condicao->is_default_condicao_seguranca_obras)
-                          <option value="{{$condicao->id}}" selected>{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                        @if($condicao->is_default_condicao_seguranca_obra)
+                          <option value="{{$condicao->id}}" selected>{{$condicao->titulo_condicao_seguranca_obra}}</option>
                         @else
-                          <option value="{{$condicao->id}}">{{$condicao->titulo_condicao_seguranca_obras}}</option>
+                          <option value="{{$condicao->id}}">{{$condicao->titulo_condicao_seguranca_obra}}</option>
                         @endif
                       @endif
                     @endforeach
@@ -281,10 +250,10 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                     <label>Estado de Conservação</label>
                     <select name="estado_de_conservacao_obra" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->is_default_estado_conservacao_obras)
-                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obras}}</option>
+                        @if($estado->is_default_estado_conservacao_obra)
+                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obra}}</option>
                         @else
-                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obras}}</option>
+                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obra}}</option>
                         @endif
                       @endforeach
                     </select>
@@ -373,7 +342,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                               <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}">
                               <div class="state p-success">
-                                  <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obras}}</label>
+                                  <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obra}}</label>
                               </div>
                           </div>
                          @endforeach
@@ -390,7 +359,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                               <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}">
                               <div class="state p-success">
-                                  <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obras}}</label>
+                                  <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obra}}</label>
                               </div>
                           </div>
                          @endforeach
@@ -421,13 +390,13 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_frontal_obras">
+                      <input type="file" class="form-control" name="foto_frontal_obra">
                     </div>
                     
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_frontal_obras"></div>
+                     <div  id="image_holder_frontal_obra"></div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -439,14 +408,14 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_lateral_esquerda_obras">
+                      <input type="file" class="form-control" name="foto_lateral_esquerda_obra">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <input type="hidden" name="user_foto">
                         
-                     <div  id="image_holder_lateral_esquerda_obras"></div>
+                     <div  id="image_holder_lateral_esquerda_obra"></div>
                      
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
@@ -461,12 +430,12 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_lateral_direita_obras">
+                      <input type="file" class="form-control" name="foto_lateral_direita_obra">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_lateral_direita_obras"></div>
+                     <div  id="image_holder_lateral_direita_obra"></div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -477,13 +446,13 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_posterior_obras">
+                      <input type="file" class="form-control" name="foto_posterior_obra">
                     </div>
                     <div id="user_foto"></div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_posterior_obras"></div>
+                     <div  id="image_holder_posterior_obra"></div>
                      
                     </div>
                   </div>
@@ -495,12 +464,12 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_superior_obras">
+                      <input type="file" class="form-control" name="foto_superior_obra">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_superior_obras"></div>
+                     <div  id="image_holder_superior_obra"></div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -511,12 +480,12 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
                           <i class="fas fa-image text-info"></i>
                         </div>
                       </div>
-                      <input type="file" class="form-control" name="foto_inferior_obras">
+                      <input type="file" class="form-control" name="foto_inferior_obra">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_inferior_obras"></div>
+                     <div  id="image_holder_inferior_obra"></div>
                      
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
@@ -614,23 +583,23 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
         }
     }
 
-    $("input[name='foto_frontal_obras']").on('change', function() {
-        ajax_sub($("input[name='foto_frontal_obras']"), $("#image_holder_frontal_obras"));
+    $("input[name='foto_frontal_obra']").on('change', function() {
+        ajax_sub($("input[name='foto_frontal_obra']"), $("#image_holder_frontal_obra"));
     });
-    $("input[name='foto_lateral_esquerda_obras']").on('change', function() {
-        ajax_sub($("input[name='foto_lateral_esquerda_obras']"), $("#image_holder_lateral_esquerda_obras"));
+    $("input[name='foto_lateral_esquerda_obra']").on('change', function() {
+        ajax_sub($("input[name='foto_lateral_esquerda_obra']"), $("#image_holder_lateral_esquerda_obra"));
     });
-    $("input[name='foto_lateral_direita_obras']").on('change', function() {
-        ajax_sub($("input[name='foto_lateral_direita_obras']"), $("#image_holder_lateral_direita_obras"));
+    $("input[name='foto_lateral_direita_obra']").on('change', function() {
+        ajax_sub($("input[name='foto_lateral_direita_obra']"), $("#image_holder_lateral_direita_obra"));
     });
-      $("input[name='foto_posterior_obras']").on('change', function() {
-      ajax_sub($("input[name='foto_posterior_obras']"), $("#image_holder_posterior_obras"));
+      $("input[name='foto_posterior_obra']").on('change', function() {
+      ajax_sub($("input[name='foto_posterior_obra']"), $("#image_holder_posterior_obra"));
     });
-    $("input[name='foto_superior_obras']").on('change', function() {
-      ajax_sub($("input[name='foto_superior_obras']"), $("#image_holder_superior_obras"));
+    $("input[name='foto_superior_obra']").on('change', function() {
+      ajax_sub($("input[name='foto_superior_obra']"), $("#image_holder_superior_obra"));
     });
-    $("input[name='foto_inferior_obras']").on('change', function() {
-      ajax_sub($("input[name='foto_inferior_obras']"), $("#image_holder_inferior_obras"));
+    $("input[name='foto_inferior_obra']").on('change', function() {
+      ajax_sub($("input[name='foto_inferior_obra']"), $("#image_holder_inferior_obra"));
     });
   });
 

@@ -2,21 +2,6 @@
 
 @section('content')
 
-@php
-
-use App\Models\Acervos;
-use App\Models\EspecificacaoAcervos;
-use App\Models\EstadoConservacaoAcervos;
-use App\Models\Seculos;
-use App\Models\Tombamentos;
-
-$especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
-$estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
-$seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
-$tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
-
-@endphp
-
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">
@@ -34,7 +19,7 @@ $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombam
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
             <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
-            @csrf
+              @csrf
               <div class="card-header">
                 <h4> Adicionar Acervo </h4>
               </div>

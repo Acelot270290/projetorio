@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Detalhamento de acervo ID: {{ !is_null($acervo->id) ? $acervo->id : '-'}}</h3>
+                        <h3>Detalhamento de obra ID: {{ !is_null($obra->id) ? $obra->id : '-'}}</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
@@ -16,45 +16,45 @@
                                 <div class="owl-carousel owl-theme slider owl-loaded owl-drag" id="slider1">
                                     <div class="owl-stage-outer">
                                         <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0.25s ease 0s; width: 450px;">
-                                            @if(!is_null($acervo->foto_frontal_acervo))
+                                            @if(!is_null($obra->foto_frontal_obra))
                                                 <div class="owl-item active" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_frontal_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($obra->foto_frontal_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if(!is_null($acervo->foto_lateral_1_acervo))
+                                            @if(!is_null($obra->foto_lateral_1_obra))
                                                 <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_lateral_1_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($obra->foto_lateral_1_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if(!is_null($acervo->foto_lateral_2_acervo))
+                                            @if(!is_null($obra->foto_lateral_2_obra))
                                                 <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_lateral_2_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_lateral_2_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if(!is_null($acervo->foto_posterior_acervo))
+                                            @if(!is_null($obra->foto_posterior_obra))
                                                 <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_posterior_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($obra->foto_posterior_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if(!is_null($acervo->foto_cobertura_acervo))
+                                            @if(!is_null($obra->foto_cobertura_obra))
                                                 <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->foto_cobertura_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($obra->foto_cobertura_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if(!is_null($acervo->plantas_situacao_acervo))
+                                            @if(!is_null($obra->plantas_situacao_obra))
                                                 <div class="owl-item" style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
                                                     <div>
-                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($acervo->plantas_situacao_acervo) }}">
+                                                        <img alt="image" style="flex-shrink: 0; min-width: 100%; min-height: 100%" src="{{ asset($obra->plantas_situacao_obra) }}">
                                                     </div>
                                                 </div>
                                             @endif
@@ -65,12 +65,12 @@
                             <div class="form-group col-md-7">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <h5>{{ !is_null($acervo->nome_acervo) ? $acervo->nome_acervo : '-'}}</h5>
+                                        <h5>{{ !is_null($obra->nome_obra) ? $obra->nome_obra : '-' }}</h5>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <b>Nome do acervo:</b> {{ !is_null($acervo->nome_acervo) ? $acervo->nome_acervo : '-'}}
+                                        <b>Nome da obra:</b> {{ !is_null($acervo->nome_acervo) ? $acervo->nome_acervo : '-' }}
                                     </div>
                                 </div>
                                 <div class="form-row">
