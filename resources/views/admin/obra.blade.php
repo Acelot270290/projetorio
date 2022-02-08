@@ -54,7 +54,7 @@
                         <td>
                           <a href="{{route('detalhar_obra', ['id' => $obra->id])}}" class="btn btn-outline-success">Visualizar</a>
                           <a href="{{route('editar_obra', ['id' => $obra->id])}}" class="btn btn-outline-primary">Editar</a>
-                          <a href="#" class="btn btn-outline-danger">Deletar</a>
+                          <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteObra">Deletar</a>
                         </td>
                       </tr>
                       @endforeach
@@ -66,4 +66,5 @@
           </div>
     </div>
 
+@include('modal.deleteObraModal')
 @endsection
