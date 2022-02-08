@@ -79,11 +79,6 @@ class ObraController extends Controller
 
             'categoria_obra'=>'required',
             'titulo_obra'=>'required|max:250',
-            'altura_obra'=>'',
-            'largura_obra'=>'',
-            'profundidade_obra'=>'',
-            'comprimento_obra'=>'',
-            'diâmetro_obra'=>'',
             'tesauro_obra'=>'required',
             'localizacao_obra'=>'required',
             'condicao_seguranca_obra'=>'required',
@@ -91,9 +86,7 @@ class ObraController extends Controller
             'estado_de_conservacao_obra'=>'required',
             'material_1_obra'=>'required',
             'tecnica_1_obra'=>'required',
-            'especificacao_obra'=>'required',
             'seculo_obra'=>'required',
-            'especificacao_seg_obra'=>'required',
 
         ]);
 
