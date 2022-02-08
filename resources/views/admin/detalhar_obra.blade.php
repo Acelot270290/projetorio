@@ -113,13 +113,13 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <b>Primeiro material:</b> {{ !is_null($obra->titulo_material_1) ? $obra->titulo_material_1 : '-'}}
+                                        <b>Material 1:</b> {{ !is_null($obra->titulo_material_1) ? $obra->titulo_material_1 : '-'}}
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <b>Segundo material:</b> {{ !is_null($obra->titulo_material_2) ? $obra->titulo_material_2 : '-'}}
+                                        <b>Material 2:</b> {{ !is_null($obra->titulo_material_2) ? $obra->titulo_material_2 : '-'}}
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <b>Terceiro material:</b> {{ !is_null($obra->titulo_material_3) ? $obra->titulo_material_3 : '-'}}
+                                        <b>Material 3:</b> {{ !is_null($obra->titulo_material_3) ? $obra->titulo_material_3 : '-'}}
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -129,13 +129,13 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <b>Primeira técnica:</b> {{ !is_null($obra->titulo_tecnica_1) ? $obra->titulo_tecnica_1 : '-'}}
+                                        <b>Técnica 1:</b> {{ !is_null($obra->titulo_tecnica_1) ? $obra->titulo_tecnica_1 : '-'}}
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <b>Segunda técnica:</b> {{ !is_null($obra->titulo_tecnica_2) ? $obra->titulo_tecnica_2 : '-'}}
+                                        <b>Técnica 2:</b> {{ !is_null($obra->titulo_tecnica_2) ? $obra->titulo_tecnica_2 : '-'}}
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <b>Terceira técnica:</b> {{ !is_null($obra->titulo_tecnica_3) ? $obra->titulo_tecnica_3 : '-'}}
+                                        <b>Técnica 3:</b> {{ !is_null($obra->titulo_tecnica_3) ? $obra->titulo_tecnica_3 : '-'}}
                                     </div>
                                 </div>
                                 <div class="form-row">
