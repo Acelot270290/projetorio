@@ -373,10 +373,10 @@ class AcervoController extends Controller
             }
 
             if ($isSuccess) {
-                $alertMsg = 'Acervo cadastrado com sucesso!';
+                $alertMsg = 'Acervo atualizado com sucesso!';
                 $alertType = 'success';
             } else {
-                $alertMsg = 'Falha ao cadastrar o acervo!';
+                $alertMsg = 'Falha ao atualizar o acervo!';
                 $alertType = 'danger';
             }
             return redirect('/acervo/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
