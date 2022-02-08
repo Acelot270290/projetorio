@@ -36,7 +36,7 @@ Route::get('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acerv
 //Route::get('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
 
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
-Route::post('/acervo/atualizar', 'AcervoController@atualizar')->name('atualizar_acervo');
+Route::post('/acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
 
 // Obras
 Route::get('/obra', 'ObraController@index')->name('obra');

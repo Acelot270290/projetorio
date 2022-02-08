@@ -220,7 +220,7 @@ class AcervoController extends Controller
         return view('admin.editar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
     }
 
-    public function atualizar(Request $request){
+    public function atualizar(Request $request, $id){
         // Descobre quais anos são os limites do século escolhido
         $acervo = Acervos::select('seculo_id')->where('id', $id)->first();
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $acervo['seculo_id'])->first();
