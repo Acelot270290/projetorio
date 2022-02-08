@@ -209,7 +209,8 @@ class AcervoController extends Controller
 
     public function editar(Request $request, $id){
         // Descobre quais anos são os limites do século escolhido
-        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
+        $acervo = Acervos::select('seculo_id')->where('id', $id)->first();
+        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $acervo['seculo_id'])->first();
 
         $request->validate([
             'nome_acervo' => 'required|min:2|max:191',
