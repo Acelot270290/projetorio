@@ -254,7 +254,7 @@ class AcervoController extends Controller
             mkdir(public_path($basePath));
         }
 
-        $imagemacervo =  $basePath . '/' . $adicionandoAcervoId;
+        $imagemacervo =  $basePath . '/' . $id;
         if (!is_dir($imagemacervo)) {
             mkdir(public_path($imagemacervo));
         }
