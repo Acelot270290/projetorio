@@ -50,7 +50,7 @@
                           @endif
                         </td>
                         <td>{{$usuario->name}}</td>
-                        <td>{{$usuario->nome_funcao}}</td>
+                        <td>{{$usuario->nome_cargo}}</td>
                         <td>
                           @if($usuario->estado == 1)
                             <div class="badge badge-success">Ativo</div>
