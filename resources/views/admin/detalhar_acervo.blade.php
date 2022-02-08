@@ -102,13 +102,13 @@
                                         <b>Cadastrado por:</b> {{ !is_null($acervo->usuario_cadastrante) ? $acervo->usuario_cadastrante : '-' }}
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <b>Cadastrado em:</b> {{ !is_null($acervo->created_at) ? $acervo->created_at : '-' }}
+                                        <b>Cadastrado em:</b> {{ !is_null($acervo->created_at) ? date('d-m-Y', strtotime($acervo->created_at)) : '-' }}
                                     </div>
                                     <div class="form-group col-md-3">
                                         <b>Revisado por:</b> {{ !is_null($acervo->usuario_revisor) ? $acervo->usuario_revisor : '-' }}
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <b>Revisado em:</b> {{ !is_null($acervo->updated_at) ? $acervo->updated_at : '-' }}
+                                        <b>Revisado em:</b> {{ !is_null($acervo->updated_at) ? date('d-m-Y', strtotime($acervo->updated_at)) : '-' }}
                                     </div>
                                 </div>
                             </div>

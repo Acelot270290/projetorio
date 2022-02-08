@@ -40,9 +40,9 @@
                         <td class="align-middle text-center">
                           <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}">
                           @if($obra->foto_frontal_obra)
-                            <img class="team-member-sm" src="{{ url($obra->foto_frontal_obra) }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
+                            <img class="team-member-sm" src="{{ asset($obra->foto_frontal_obra) }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
                             @else
-                            <img class="team-member-sm" src="{{ url('assets/img/noimg.png') }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
+                            <img class="team-member-sm" src="{{ asset('img/noimg.png') }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
                             @endif
                           </a>
                         </td>
