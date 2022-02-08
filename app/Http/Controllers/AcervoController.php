@@ -204,7 +204,6 @@ class AcervoController extends Controller
         ->leftJoin('users as u2', 'u2.id', '=', 'usuario_atualizacao_id')
         ->first();
         
-
         return view('admin.detalhar_acervo', ['acervo' => $acervo]);
     }
 
