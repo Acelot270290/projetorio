@@ -49,7 +49,7 @@
                         <td>{{ $obra->titulo_obra }}</td>
                         <td>{{ $obra->titulo_tesauro }}</td>
                         <td>{{ $obra->nome_acervo }}</td>
-                        <td>{{ $obra->titulo_material_1 }} / {{ $obra->titulo_material_2 }} / {{ $obra->titulo_material_3 }}</td>
+                        <td>{{ $obra->titulo_material_1 }}</td>
                         <td>{{ $obra->titulo_seculo }}</td>
                         <td>
                           <a href="{{route('detalhar_obra', ['id' => $obra->id])}}" class="btn btn-outline-success">Visualizar</a>

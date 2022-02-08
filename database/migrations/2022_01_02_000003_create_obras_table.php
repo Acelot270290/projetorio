@@ -36,11 +36,11 @@ class CreateObrasTable extends Migration
             $table->foreign('tesauro_id')->references('id')->on('tesauros');
 
             //Dimensões (em centímetros sempre)
-            $table->decimal('altura_obra');
-            $table->decimal('largura_obra');
-            $table->decimal('profundidade_obra');
-            $table->decimal('comprimento_obra');
-            $table->decimal('diametro_obra');
+            $table->decimal('altura_obra')->nullable();
+            $table->decimal('largura_obra')->nullable();
+            $table->decimal('profundidade_obra')->nullable();
+            $table->decimal('comprimento_obra')->nullable();
+            $table->decimal('diametro_obra')->nullable();
 
             // Material (até 3)
             $table->unsignedBigInteger('material_id_1'); // Chave estrangeira para material 1
