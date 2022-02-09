@@ -91,7 +91,7 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="titulo_obra" value="{{old('titulo_obra')}}">
+                      <input type="text" class="form-control" name="titulo_obra" value=" {{ (old('titulo_obra') !== null ? old('titulo_obra') : $obra['titulo_obra']) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('titulo_obra') }}</small>
                   </div>
@@ -111,7 +111,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="altura_obra"
-                        value="{{ old('altura_obra') }}">
+                        value=" {{ (old('altura_obra') !== null ? old('altura_obra') : $obra['altura_obra']) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
 
@@ -125,10 +125,9 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="largura_obra"
-                        value="{{old('largura_obra')}}">
+                        value=" {{ (old('largura_obra') !== null ? old('largura_obra') : $obra['largura_obra']) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('largura_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Profundidade</label>
@@ -139,10 +138,9 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="profundidade_obra"
-                        value="{{old('profundidade_obra')}}">
+                        value=" {{ (old('profundidade_obra') !== null ? old('profundidade_obra') : $obra['profundidade_obra']) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Comprimento</label>
@@ -153,7 +151,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="comprimento_obra"
-                        value="{{old('comprimento_obra')}}">
+                        value=" {{ (old('comprimento_obra') !== null ? old('comprimento_obra') : $obra['comprimento_obra']) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
 
@@ -166,7 +164,7 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="diâmetro_obra" value='{{old('diâmetro_obra')}}'>
+                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ (old('diâmetro_obra') !== null ? old('diâmetro_obra') : $obra['diâmetro_obra']) }}'>
                     </div>
                       <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
                   </div>
@@ -177,12 +175,12 @@
                     <select name="tesauro_obra" class="form-control">
                     @foreach ($tesauros as $tesauro)
                       @if(old('tesauro_obra') !== null)
-                        <option value="{{$tesauro->id}}" {{ (old("tesauro_obra") == $tesauro->id ? "selected" : "") }}>{{$tesauro->titulo_tesauro}}</option>
+                        <option value="{{ $tesauro->id }}" {{ (old("tesauro_obra") == $tesauro->id ? "selected" : "") }}>{{ $tesauro->titulo_tesauro }}</option>
                       @else
                         @if($tesauro->id == $obra['tesauro_id'])
-                          <option value="{{$tesauro->id}}" selected>{{$tesauro->titulo_tesauro}}</option>
+                          <option value="{{ $tesauro->id }}" selected>{{ $tesauro->titulo_tesauro }}</option>
                         @else
-                          <option value="{{$tesauro->id}}">{{$tesauro->titulo_tesauro}}</option>
+                          <option value="{{ $tesauro->id }}">{{ $tesauro->titulo_tesauro }}</option>
                         @endif
                       @endif
                     @endforeach
@@ -276,7 +274,7 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="ano_obra" value="{{old('ano_obra')}}">
+                      <input type="number" class="form-control" name="ano_obra" value="{{ (old('ano_obra') !== null ? old('ano_obra') : $obra['ano_obra']) }}">
                     </div>
                      <small class="text-danger">{{ $errors->first('ano_obra') }}</small>
 
@@ -307,7 +305,7 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="autoria_obra" value="{{old('autoria_obra')}}">
+                      <input type="text" class="form-control" name="autoria_obra" value="{{ (old('autoria_obra') !== null ? old('autoria_obra') : $obra['autoria_obra']) }}">
                     </div>
                   </div>
                 </div>
@@ -346,9 +344,9 @@
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                         @if (old('material_3_obra') == $material->id)
-                          <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
-                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
                         @endif
                       @endforeach
                     </select>
@@ -361,9 +359,9 @@
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                         @if (old('tecnica_1_obra') == $tecnica->id)
-                          <option value="{{$tecnica->id}}" selected>{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
                         @endif
                       @endforeach
                     </select>
@@ -376,9 +374,9 @@
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                         @if (old('tecnica_2_obra') == $tecnica->id)
-                          <option value="{{$tecnica->id}}" selected>{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
                         @endif
                       @endforeach
                     </select>
@@ -389,9 +387,9 @@
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                         @if (old('tecnica_3_obra') == $tecnica->id)
-                          <option value="{{$tecnica->id}}" selected>{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
                         @endif
                       @endforeach
                     </select>
@@ -404,16 +402,16 @@
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                             @if(old('especificacao_obra') == $especificacao->id)
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" checked>
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
                             @else
                               @if($obra->especificacao_obra_id == $especificacao->id)
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" checked>
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
                               @else
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}">
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}">
                               @endif
                             @endif
                             <div class="state p-success">
-                              <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obra}}</label>
+                              <label style="margin-left: 10px;" for="especificacao_obra_{{ $especificacao->id }}">{{ $especificacao->titulo_especificacao_obra }}</label>
                             </div>
                           </div>
                          @endforeach
@@ -428,16 +426,16 @@
                          @foreach ($especificacoesSeg as $especificacaoSeg)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                             @if(old('especificacao_seg_obra') == $especificacaoSeg->id)
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" checked>
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
                             @else
                               @if($obra->especificacao_seguranca_obra_id == $especificacaoSeg->id)
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" checked>
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
                               @else
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}">
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}">
                               @endif
                             @endif
                               <div class="state p-success">
-                                <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obra}}</label>
+                                <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
                               </div>
                           </div>
                          @endforeach
@@ -448,13 +446,13 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Características estilísticas/iconográficas e ornamentais</label>
-                    <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{old('caracteristicas_estilisticas_obra')}}</textarea>
+                    <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{ (old('caracteristicas_estilisticas_obra') !== null ? old('caracteristicas_estilisticas_obra') : $obra['caracteristicas_est_icono_orna_obra']) }}</textarea>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Observações</label>
-                    <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;">{{old('observacoes_obra')}}</textarea>
+                    <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;">{{ (old('observacoes_obra') !== null ? old('observacoes_obra') : $obra['observacoes_obra']) }}</textarea>
                   </div>
                 </div>
                 <div class="form-row">
@@ -471,7 +469,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_frontal_obra"></div>
+                     <div  id="image_holder_frontal_obra">
+                      @if($obra['foto_frontal_obra'])
+                        <img src="{{ asset($obra['foto_frontal_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -489,7 +491,11 @@
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <input type="hidden" name="user_foto">
-                     <div  id="image_holder_lateral_esquerda_obra"></div>
+                     <div  id="image_holder_lateral_esquerda_obra">
+                      @if($obra['foto_lateral_esquerda_obra'])
+                        <img src="{{ asset($obra['foto_lateral_esquerda_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -508,7 +514,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_lateral_direita_obra"></div>
+                     <div  id="image_holder_lateral_direita_obra">
+                      @if($obra['foto_lateral_direita_obra'])
+                        <img src="{{ asset($obra['foto_lateral_direita_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -525,7 +535,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_posterior_obra"></div>
+                     <div  id="image_holder_posterior_obra">
+                      @if($obra['foto_posterior_obra'])
+                        <img src="{{ asset($obra['foto_posterior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -541,7 +555,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_superior_obra"></div>
+                     <div  id="image_holder_superior_obra">
+                      @if($obra['foto_superior_obra'])
+                        <img src="{{ asset($obra['foto_superior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -557,7 +575,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_inferior_obra"></div>
+                     <div  id="image_holder_inferior_obra">
+                      @if($obra['foto_inferior_obra'])
+                        <img src="{{ asset($obra['foto_inferior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      @endif
+                     </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
