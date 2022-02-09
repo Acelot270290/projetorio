@@ -234,7 +234,6 @@ class ObraController extends Controller
         }
       
         return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
-
     }
 
     public function detalhar(Request $request, $id){
@@ -263,8 +262,8 @@ class ObraController extends Controller
     }
 
     public function editar(Request $request, $id){
-        /*$acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'usuario_insercao_id', 'usuario_atualizacao_id')
-        ->where('acervos.id', '=', intval($id))
+        $obra = Obras::select('obras.id', 'acervo_id', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'especificacao_obra_id', 'condicoes_de_seguranca_obra_id', 'especificacao_seguranca_obra_id', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id')
+        ->where('obras.id', '=', intval($id))
         ->first();
         
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
@@ -272,8 +271,7 @@ class ObraController extends Controller
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
-        return view('admin.editar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);*/
-        return;
+        return view('admin.editar_obra', ['obra' => $obra, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
     }
 
     public function deletar(Request $request, $id){
