@@ -403,10 +403,18 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}">
-                              <div class="state p-success">
-                                  <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obra}}</label>
-                              </div>
+                            @if(old('especificacao_obra') == $especificacao->id)
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" checked>
+                            @else
+                              @if($obra->especificacao_obra_id == $especificacao->id)
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" checked>
+                              @else
+                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}">
+                              @endif
+                            @endif
+                            <div class="state p-success">
+                              <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obra}}</label>
+                            </div>
                           </div>
                          @endforeach
                         </div>
@@ -419,15 +427,22 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoesSeg as $especificacaoSeg)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}">
+                            @if(old('especificacao_seg_obra') == $especificacaoSeg->id)
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" checked>
+                            @else
+                              @if($obra->especificacao_seguranca_obra_id == $especificacaoSeg->id)
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" checked>
+                              @else
+                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}">
+                              @endif
+                            @endif
                               <div class="state p-success">
-                                  <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obra}}</label>
+                                <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obra}}</label>
                               </div>
                           </div>
                          @endforeach
                         </div>
                         <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
-
                     </div>
                 </div>
                 <div class="form-row">
@@ -435,7 +450,6 @@
                     <label>Características estilísticas/iconográficas e ornamentais</label>
                     <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{old('caracteristicas_estilisticas_obra')}}</textarea>
                   </div>
-
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
@@ -454,7 +468,6 @@
                       </div>
                       <input type="file" class="form-control" name="foto_frontal_obra">
                     </div>
-                    
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
@@ -476,9 +489,7 @@
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <input type="hidden" name="user_foto">
-                        
                      <div  id="image_holder_lateral_esquerda_obra"></div>
-                     
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
