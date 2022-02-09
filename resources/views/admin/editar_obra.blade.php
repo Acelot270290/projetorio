@@ -38,10 +38,10 @@
                         @if (old('categoria_obra') == $categoria->id)
                           <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
                         @else
-                          @if($categoria->id == $obra['categoria_id'])
+                          @if ($categoria->id == $obra['categoria_id'])
                             <option value="{{$categoria->id}}" selected>{{$categoria->titulo_tombamento}}</option>
                           @else
-                            @if($categoria->is_default_categoria)
+                            @if ($categoria->is_default_categoria)
                               <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
                             @else
                               <option value="{{$categoria->id}}">{{$categoria->titulo_categoria}}</option>
@@ -66,10 +66,10 @@
                         @if (old('acervo_obra') == $acervo->id)
                           <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
                         @else
-                          @if($categoria->id == $obra['acervo_obra'])
+                          @if ($categoria->id == $obra['acervo_obra'])
                             <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
                           @else
-                            @if($acervo->is_default_acervo)
+                            @if ($acervo->is_default_acervo)
                               <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
                             @else
                               <option value="{{$acervo->id}}">{{$acervo->nome_acervo}}</option>
@@ -111,7 +111,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="altura_obra"
-                        value="{{old('altura_obra')}}">
+                        value="{{ old('altura_obra') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
 
