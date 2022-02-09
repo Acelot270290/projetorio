@@ -18,10 +18,10 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('atualizar_acervo', ['id' => $acervo['id']]) }}" name="atualizar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
             @csrf
               <div class="card-header">
-                <h4> Adicionar Acervo </h4>
+                <h4> Editar Acervo  {{ $acervo['nome_acervo'] }}</h4>
               </div>
               <div class="card-body">
                 <div class="form-row">
