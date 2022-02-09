@@ -279,7 +279,7 @@ class ObraController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->orderBy('titulo_tesauro', 'ASC')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
-        return view('admin.editar_obra', ['obra' => $obra, 'acervos'=>$acervos, 'categorias'=>$categorias, 'especificacoes'=>$especificacoes, 'estados'=>$estados, 'localizacoes'=>$localizacoes, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoes'=>$condicoes, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros]);
+        return view('admin.editar_obra', ['obra' => $obra, 'acervos' => $acervos, 'categorias' => $categorias, 'especificacoes' => $especificacoes, 'estados'=>$estados, 'localizacoes' => $localizacoes, 'seculos' => $seculos, 'tombamentos' => $tombamentos, 'condicoes' => $condicoes, 'especificacoesSeg' => $especificacoesSeg, 'materiais' => $materiais, 'tecnicas' => $tecnicas, 'tesauros' => $tesauros]);
     }
 
     public function deletar(Request $request, $id){
