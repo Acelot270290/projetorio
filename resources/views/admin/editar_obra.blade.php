@@ -91,7 +91,7 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="titulo_obra" value="{{ (old('titulo_obra') !== null ? old('titulo_obra') : intval($obra['titulo_obra'])) }}">
+                      <input type="text" class="form-control" name="titulo_obra" value="{{ (old('titulo_obra') !== null ? old('titulo_obra') : $obra['titulo_obra']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('titulo_obra') }}</small>
                   </div>
@@ -111,7 +111,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="altura_obra"
-                        value="{{ (old('altura_obra') !== null ? old('altura_obra') : intval($obra['altura_obra'])) }}">
+                        value="{{ (old('altura_obra') !== null ? old('altura_obra') : $obra['altura_obra']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
 
@@ -125,7 +125,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="largura_obra"
-                        value="{{ (old('largura_obra') !== null ? old('largura_obra') : intval($obra['largura_obra'])) }}">
+                        value="{{ (old('largura_obra') !== null ? old('largura_obra') : $obra['largura_obra']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('largura_obra') }}</small>
                   </div>
@@ -138,7 +138,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="profundidade_obra"
-                        value="{{ (old('profundidade_obra') !== null ? old('profundidade_obra') : intval($obra['profundidade_obra'])) }}">
+                        value="{{ (old('profundidade_obra') !== null ? old('profundidade_obra') : $obra['profundidade_obra']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
                   </div>
@@ -151,7 +151,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="comprimento_obra"
-                        value="{{ (old('comprimento_obra') !== null ? old('comprimento_obra') : intval($obra['comprimento_obra'])) }}">
+                        value="{{ (old('comprimento_obra') !== null ? old('comprimento_obra') : $obra['comprimento_obra']) }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
 
@@ -164,7 +164,7 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ (old('diâmetro_obra') !== null ? old('diâmetro_obra') : intval($obra['diâmetro_obra'])) }}'>
+                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ (old('diâmetro_obra') !== null ? old('diâmetro_obra') : $obra['diâmetro_obra']) }}'>
                     </div>
                       <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
                   </div>
