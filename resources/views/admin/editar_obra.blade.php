@@ -39,7 +39,7 @@
                           <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
                         @else
                           @if ($categoria->id == $obra['categoria_id'])
-                            <option value="{{$categoria->id}}" selected>{{$categoria->titulo_tombamento}}</option>
+                            <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
                           @else
                             @if ($categoria->is_default_categoria)
                               <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
