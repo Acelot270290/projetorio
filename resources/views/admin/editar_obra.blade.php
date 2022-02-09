@@ -318,7 +318,7 @@
                         @if (old('material_1_obra') == $material->id)
                           <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                         @else
-                          @if($localizacao->id == $obra['material_id_1'])
+                          @if($material->id == $obra['material_id_1'])
                             <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                           @else
                             <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -337,7 +337,7 @@
                         @if (old('material_2_obra') == $material->id)
                           <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                         @else
-                          @if($localizacao->id == $obra['material_id_2'])
+                          @if($material->id == $obra['material_id_2'])
                             <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                           @else
                             <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -354,7 +354,7 @@
                         @if (old('material_3_obra') == $material->id)
                           <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
-                          @if($localizacao->id == $obra['material_id_3'])
+                          @if($material->id == $obra['material_id_3'])
                             <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                           @else
                             <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -373,7 +373,7 @@
                         @if (old('tecnica_1_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          @if($localizacao->id == $obra['tecnica_id_1'])
+                          @if($tecnica->id == $obra['tecnica_id_1'])
                             <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                           @else
                             <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
@@ -392,7 +392,7 @@
                         @if (old('tecnica_2_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          @if($localizacao->id == $obra['tecnica_id_2'])
+                          @if($tecnica->id == $obra['tecnica_id_2'])
                             <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                           @else
                             <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
@@ -409,7 +409,7 @@
                         @if (old('tecnica_3_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          @if($localizacao->id == $obra['tecnica_id_3'])
+                          @if($tecnica->id == $obra['tecnica_id_3'])
                             <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                           @else
                             <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
