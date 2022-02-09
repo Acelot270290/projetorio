@@ -199,7 +199,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{route('acervo')}}" class="btn btn-dark">voltar</a>
+                        <a href="{{route('obra')}}" class="btn btn-dark">voltar</a>
                     </div>
                 </div>
             </div>
