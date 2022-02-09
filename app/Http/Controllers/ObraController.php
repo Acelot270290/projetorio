@@ -265,7 +265,8 @@ class ObraController extends Controller
         $obra = Obras::select('obras.id', 'acervo_id', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'especificacao_obra_id', 'condicoes_de_seguranca_obra_id', 'especificacao_seguranca_obra_id', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id')
         ->where('obras.id', '=', intval($id))
         ->first();
-        
+
+        $acervos = Acervos::select('id', 'nome_acervo')->get();
         $especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obra')->orderBy('titulo_especificacao_obra', 'ASC')->get();
         $estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obra', 'is_default_estado_conservacao_obra')->get();
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
