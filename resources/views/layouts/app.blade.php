@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Admin - Sistema Diocese do Rio de janeiro</title>
+  <title>@yield('titulo') - Sistema Diocese do Rio de janeiro</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{url('assets/css/app.min.css')}}">
   <!-- Template CSS -->
