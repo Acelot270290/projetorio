@@ -91,7 +91,7 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="titulo_obra" value=" {{ (old('titulo_obra') !== null ? old('titulo_obra') : $obra['titulo_obra']) }} ">
+                      <input type="text" class="form-control" name="titulo_obra" value=" {{ (old('titulo_obra') !== null ? old('titulo_obra') : intval($obra['titulo_obra'])) }} ">
                     </div>
                     <small class="text-danger">{{ $errors->first('titulo_obra') }}</small>
                   </div>
