@@ -270,8 +270,9 @@ class ObraController extends Controller
         $estados = EstadoConservacaoObras::select('id', 'titulo_estado_conservacao_obra', 'is_default_estado_conservacao_obra')->get();
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
+        $categorias = Categorias::select('id', 'titulo_categoria')->get();
 
-        return view('admin.editar_obra', ['obra' => $obra, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
+        return view('admin.editar_obra', ['obra' => $obra, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos, 'categorias' => $categorias]);
     }
 
     public function deletar(Request $request, $id){
