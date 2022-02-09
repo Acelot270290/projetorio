@@ -318,7 +318,11 @@
                         @if (old('material_1_obra') == $material->id)
                           <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                         @else
-                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          @if($localizacao->id == $obra['material_id_1'])
+                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          @else
+                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -333,7 +337,11 @@
                         @if (old('material_2_obra') == $material->id)
                           <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
                         @else
-                          <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          @if($localizacao->id == $obra['material_id_2'])
+                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          @else
+                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -346,7 +354,11 @@
                         @if (old('material_3_obra') == $material->id)
                           <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
-                          <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                          @if($localizacao->id == $obra['material_id_3'])
+                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          @else
+                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -361,7 +373,11 @@
                         @if (old('tecnica_1_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @if($localizacao->id == $obra['tecnica_id_1'])
+                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -376,7 +392,11 @@
                         @if (old('tecnica_2_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @if($localizacao->id == $obra['tecnica_id_2'])
+                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
@@ -389,7 +409,11 @@
                         @if (old('tecnica_3_obra') == $tecnica->id)
                           <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
                         @else
-                          <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @if($localizacao->id == $obra['tecnica_id_3'])
+                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
                         @endif
                       @endforeach
                     </select>
