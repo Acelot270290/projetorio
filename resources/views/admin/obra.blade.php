@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', 'Lista de Obras cadastradas')
+@section('titulo', 'Obras cadastradas')
 
 <div class="main-content">
 @section('content')
