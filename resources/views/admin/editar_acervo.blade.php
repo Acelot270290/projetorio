@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo', 'Editar Acervo {{ $acervo['nome_acervo'] }}')
+
 @section('content')
 
 <div class="main-content" style="min-height: 562px;">
@@ -21,7 +23,7 @@
             <form method="POST" action="{{ route('atualizar_acervo', ['id' => $acervo['id']]) }}" name="atualizar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
             @csrf
               <div class="card-header">
-                <h4> Editar Acervo  {{ $acervo['nome_acervo'] }}</h4>
+                <h4> Editar Acervo {{ $acervo['nome_acervo'] }}</h4>
               </div>
               <div class="card-body">
                 <div class="form-row">

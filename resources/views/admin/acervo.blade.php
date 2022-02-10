@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('titulo', 'Acervos cadastrados')
+
 <div class="main-content">
 @section('content')
 

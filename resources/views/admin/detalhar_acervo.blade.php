@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo', 'Detalhamento de acervo ID: {{ !is_null($acervo->id) ? $acervo->id : '-'}}')
+
 @section('content')
 
 <div class="main-content">

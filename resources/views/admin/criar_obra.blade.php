@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo', 'Cadastro de obra')
+
 @section('content')
 
 <div class="main-content" style="min-height: 562px;">
