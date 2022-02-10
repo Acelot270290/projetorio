@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', "Editar Obra")
+@section('titulo', "Editar Obra - ID: " . $obra['id'])
 
 @section('content')
 
@@ -38,15 +38,15 @@
                       <select name="categoria_obra" class="form-control">
                       @foreach ($categorias as $categoria)
                         @if (old('categoria_obra') == $categoria->id)
-                          <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
+                          <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
                         @else
                           @if ($categoria->id == intval($obra['categoria_id']))
-                            <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
+                            <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
                           @else
                             @if ($categoria->is_default_categoria)
-                              <option value="{{$categoria->id}}" selected>{{$categoria->titulo_categoria}}</option>
+                              <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
                             @else
-                              <option value="{{$categoria->id}}">{{$categoria->titulo_categoria}}</option>
+                              <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
                             @endif
                           @endif
                         @endif

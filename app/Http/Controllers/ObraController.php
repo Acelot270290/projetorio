@@ -66,7 +66,6 @@ class ObraController extends Controller
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
         return view('admin.criar_obra', ['acervos'=>$acervos, 'categorias'=>$categorias, 'especificacoes'=>$especificacoes, 'estados'=>$estados, 'localizacoes'=>$localizacoes, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoes'=>$condicoes, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros]);
-        #return view('admin.criar_obra');
     }
 
     public function adicionar(Request $request)
@@ -76,7 +75,6 @@ class ObraController extends Controller
 
         //validando os campos de obras
         $request->validate([
-
             'categoria_obra'=>'required',
             'titulo_obra'=>'required|max:250',
             'tesauro_obra'=>'required',
@@ -87,7 +85,6 @@ class ObraController extends Controller
             'material_1_obra'=>'required',
             'tecnica_1_obra'=>'required',
             'seculo_obra'=>'required',
-
         ]);
 
 
@@ -140,10 +137,16 @@ class ObraController extends Controller
 
         $imagemaobra =  $basePath . '/' . $adicionandoObra;
         if (is_dir($imagemaobra)) {
-            // erro
+            // se a pasta esxistir, deleta tudo dentro dela, remove e depois recria
+            array_map('unlink', glob(public_path($imagemaobra) . "/*.*"));
+            rmdir(public_path($imagemaobra));
+            mkdir(public_path($imagemaobra));
         } else {
             mkdir(public_path($imagemaobra));
         }
+
+        $insereObra = Obras::where('id', $IdObra);
+        $insereObra->timestamps = false;
 
         if ($request->file('foto_frontal_obra')) {
 
@@ -156,7 +159,7 @@ class ObraController extends Controller
            
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id', $IdObra)->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($request->file('foto_lateral_esquerda_obra')) {
@@ -170,7 +173,7 @@ class ObraController extends Controller
 
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id',$IdObra)->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($request->file('foto_lateral_direita_obra')) {
@@ -183,7 +186,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id', $IdObra)->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($request->file('foto_posterior_obra')) {
@@ -196,7 +199,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id', $IdObra)->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($request->file('foto_superior_obra')) {
@@ -209,7 +212,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id', $IdObra)->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($request->file('foto_inferior_obra')) {
@@ -222,7 +225,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoObra = Obras::where('id', $IdObra)->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
+            $insereObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
         if ($adicionandoObra) {
@@ -280,6 +283,176 @@ class ObraController extends Controller
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
         return view('admin.editar_obra', ['obra' => $obra, 'acervos' => $acervos, 'categorias' => $categorias, 'especificacoes' => $especificacoes, 'estados'=>$estados, 'localizacoes' => $localizacoes, 'seculos' => $seculos, 'tombamentos' => $tombamentos, 'condicoes' => $condicoes, 'especificacoesSeg' => $especificacoesSeg, 'materiais' => $materiais, 'tecnicas' => $tecnicas, 'tesauros' => $tesauros]);
+    }
+
+    public function atualizar(Request $request, $id)
+    {
+        // Descobre quais anos são os limites do século escolhido
+        $obra = Obras::select('seculo_id')->where('id', $id)->first();
+        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $obra['seculo_id'])->first();
+
+        //validando os campos de obras
+        $request->validate([
+            'categoria_obra' => 'required',
+            'titulo_obra' => 'required|max:250',
+            'tesauro_obra' => 'required',
+            'localizacao_obra' => 'required',
+            'condicao_seguranca_obra' => 'required',
+            'tombamento_obra' => 'required',
+            'estado_de_conservacao_obra' => 'required',
+            'material_1_obra' => 'required',
+            'tecnica_1_obra' => 'required',
+            'seculo_obra' => 'required',
+        ]);
+
+        //Pegando os dados do user
+        $usuario = auth()->user('id');
+       
+        try{
+            $atualizaObra = Obras::where('id', '=', $id)
+                ->update([
+                'acervo_id' => $request->acervo_obra,
+                'updated_at' => new \DateTime(),
+                'usuario_atualizacao_id'=> $usuario->id,
+                'categoria_id' => $request->categoria_obra,
+                'titulo_obra' => $request->titulo_obra,
+                'altura_obra' => $request->altura_obra,
+                'largura_obra' => $request->largura_obra,
+                'profundidade_obra' => $request->profundidade_obra,
+                'comprimento_obra' => $request->comprimento_obra,
+                'diametro_obra' => $request->diâmetro_obra,
+                'tesauro_id' => $request->tesauro_obra,
+                'localizacao_obra_id' => $request->localizacao_obra,
+                'condicoes_de_seguranca_obra_id' => $request->condicao_seguranca_obra,
+                'tombamento_id' => $request->tombamento_obra,
+                'seculo_id' => $request->seculo_obra,
+                'ano_obra'=> $request->ano_obra,
+                'autoria_obra'=> $request->autoria_obra,
+                'estado_conservacao_obra_id'=> $request->estado_de_conservacao_obra,
+                'material_id_1'=> $request->material_1_obra,
+                'material_id_2'=> $request->material_2_obra,
+                'material_id_3'=> $request->material_3_obra,
+                'tecnica_id_1'=> $request->tecnica_1_obra,
+                'tecnica_id_2'=> $request->tecnica_2_obra,
+                'tecnica_id_3'=> $request->tecnica_3_obra,
+                'especificacao_obra_id'=> $request->especificacao_obra,
+                'especificacao_seguranca_obra_id'=> $request->especificacao_seg_obra,
+                'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
+                'observacoes_obra'=> $request->observacoes_obra,
+            ]);
+            $isSuccess = true;
+        }catch(Exception $e){
+            $isSuccess = false;
+        }
+
+        $preBasePath =  'imagem';
+        $basePath =  $preBasePath . '/obras';
+        if (!is_dir($preBasePath)) {
+            mkdir(public_path($preBasePath));
+            mkdir(public_path($basePath));
+        }else if (!is_dir($basePath)) {
+            mkdir(public_path($basePath));
+        }
+
+        $imagemaobra =  $basePath . '/' . $id;
+        if (is_dir($imagemaobra)) {
+            // erro
+        } else {
+            mkdir(public_path($imagemaobra));
+        }
+
+        $atualizaObra = Obras::where('id', $id);
+        $atualizaObra->timestamps = false;
+
+        if ($request->file('foto_frontal_obra')) {
+
+            $imageName = 'Frontal_obra.webp';
+            
+            $img = Image::make($request->foto_frontal_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+           
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($request->file('foto_lateral_esquerda_obra')) {
+
+            $imageName = 'Lateral_esquerda_obra.webp';
+            
+            $img = Image::make($request->foto_lateral_esquerda_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($request->file('foto_lateral_direita_obra')) {
+
+            $imageName = 'foto_lateral_direita_obra.webp';
+            
+            $img = Image::make($request->foto_lateral_direita_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($request->file('foto_posterior_obra')) {
+
+            $imageName = 'Posterior_obra.webp';
+            
+            $img = Image::make($request->foto_posterior_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($request->file('foto_superior_obra')) {
+
+            $imageName = 'Superior_obra.webp';
+            
+            $img = Image::make($request->foto_superior_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($request->file('foto_inferior_obra')) {
+
+            $imageName = 'Inferior_obra.webp';
+            
+            $img = Image::make($request->foto_inferior_obra);
+            $img->resize(450, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+            $atualizaObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
+        }
+
+        if ($isSuccess) {
+            $alertMsg = 'Obra atualizada com sucesso!';
+            $alertType = 'success';
+        } else {
+            $alertMsg = 'Falha ao atualizada a obra!';
+            $alertType = 'danger';
+        }
+      
+        return redirect('/obra/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
     public function deletar(Request $request, $id){

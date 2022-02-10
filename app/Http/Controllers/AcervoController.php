@@ -98,6 +98,9 @@ class AcervoController extends Controller
             mkdir(public_path($basePath));
         }
 
+        $insereAcervo = Acervos::where('id', $adicionandoAcervoId);
+        $insereAcervo->timestamps = false;
+
         $imagemacervo =  $basePath . '/' . $adicionandoAcervoId;
         if (is_dir($imagemacervo)) {\
             // se a pasta esxistir, deleta tudo dentro dela, remove e depois recria
@@ -118,7 +121,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_lateral_1_acervo')) {
@@ -131,7 +134,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_lateral_2_acervo')) {
@@ -144,7 +147,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_posterior_acervo')) {
@@ -157,7 +160,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('foto_cobertura_acervo')) {
@@ -170,7 +173,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($request->file('plantas_situacao_acervo')) {
@@ -183,7 +186,7 @@ class AcervoController extends Controller
             });
             $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            $adicionandoAcervoId = Acervos::where('id', $adicionandoAcervoId)->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
+            $insereAcervo->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
         }
 
         if ($adicionandoAcervoId) {
@@ -262,9 +265,8 @@ class AcervoController extends Controller
             mkdir(public_path($imagemacervo));
         }
 
-
         try{
-            $editandoAcervo = Acervos::where('id', '=', $request->id)
+            $editandoAcervo = Acervos::where('id', '=', $id)
             ->update([
                 'nome_acervo' => $request->nome_acervo,
                 'updated_at' => new \DateTime(),
