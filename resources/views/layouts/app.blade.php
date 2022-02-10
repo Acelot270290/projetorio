@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Admin - Sistema Diocese do Rio de janeiro</title>
+  <title>@yield('titulo') - Sistema Diocese do Rio de janeiro</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{url('assets/css/app.min.css')}}">
   <!-- Template CSS -->
@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="{{url('assets/css/components.css')}}">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
+<!-- DataTables CSS-->
+  <link rel="stylesheet" href="{{url('assets/bundles/datatables/datatables.min.css')}}">
+  <link rel="stylesheet" href="{{url('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
+
+  <link rel="stylesheet" href="{{url('//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css')}}">
+  
   <!-- Custom JS-->
 
   <!-- <link rel="text/javascript" href="{{URL::asset('js/jquery.mask.min.js')}}">
@@ -217,6 +223,13 @@
   <script src="{{url('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
   <script src="{{url('assets/js/custom.js')}}"></script>
+  <!-- DataTables JS -->
+  <script src="{{url('assets/bundles/datatables/datatables.min.js')}}"></script>
+  <script src="{{url('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{url('assets/bundles/jquery-ui/jquery-ui.min.js')}}"></script>
+  <script src="{{url('assets/js/page/datatables.js')}}"></script>
+
+
 </body>
 
 

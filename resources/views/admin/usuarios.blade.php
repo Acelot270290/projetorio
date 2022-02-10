@@ -1,6 +1,9 @@
 @extends('layouts.app')
-<div class="main-content">
+
+@section('titulo', 'Usuários cadastrados')
+
 @section('content')
+<div class="main-content">
 
           <div class="row">
             <div class="col-12">
@@ -9,36 +12,31 @@
                   <h4>Usuários</h4>
                   <div class="card-header-form">
                     <form>
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-btn">
-                          <button class="btn btn-primary" style="height: 31px;"><i class="fas fa-search"></i></button>
-                        </div>
-                      </div>
+                    
                     </form>
                   </div>
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive">
-                    <table class="table table-striped">
-                      <tr>
-                        <th class="text-center">
-                        </th>
-                        <th>Id</th>
-                        <th>Foto</th>
+                    <table class="table table-striped" id="table-user">
+                      <thead>
+                        
+                        <th style="padding-left:25px; text-align: center;">Id</th>
+                        <th style="text-align: center;">Foto</th>
                         <th>Nome</th>
                         <th>Função</th>
                         <th>Ativo</th>
                         <th>Ações</th>
                       </tr>
-                      <tr>
+                      </thead>
+                      </tbody>
                       @foreach ($usuarios as $usuario )
-                      <td> </td>
+                      
                       
                           
                       
-                        <td>{{$usuario->id}}</td>
-                        <td class="align-middle">
+                        <td style="padding-left:25px; text-align: center;">{{$usuario->id}}</td>
+                        <td class="align-middle" style="text-align: center;">
                           @if($usuario->image)
                           <img class="team-member team-member-sm rounded-circle"
                                 src="{{url('assets/img/users/' .$usuario->image)}}" alt="user" data-toggle="tooltip" title=""
@@ -66,6 +64,7 @@
                         </td>
                       </tr>
                       @endforeach
+                      </tbody>
                     </table>
                   </div>
                 </div>
