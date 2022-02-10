@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', 'Editar Obra (ID: {{ $obra['id'] }})')
+@section('titulo', "Editar Obra")
 
 @section('content')
 
