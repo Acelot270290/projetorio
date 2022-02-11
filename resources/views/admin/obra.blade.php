@@ -55,9 +55,9 @@
                         <td>{{ $obra->titulo_material_1 }}</td>
                         <td>{{ $obra->titulo_seculo }}</td>
                         <td>
-                          <a href="{{route('detalhar_obra', ['id' => $obra->id])}}" class="btn btn-outline-success"><i class="far fa-eye"></i></a>
-                          <a href="{{route('editar_obra', ['id' => $obra->id])}}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                          <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteObra"><i class="fas fa-trash"></i></a>
+                          <button href="{{route('detalhar_obra', ['id' => $obra->id])}}" class="btn btn-outline-success"><i class="far fa-eye"></i></button>
+                          <button href="{{route('editar_obra', ['id' => $obra->id])}}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></button>
+                          <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteObra"><i class="fas fa-trash"></i></button>
                         </td>
                       </tr>
                       @endforeach

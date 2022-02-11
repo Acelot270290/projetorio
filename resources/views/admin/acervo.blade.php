@@ -59,9 +59,9 @@
                         <td>{{$acervo->titulo_seculo}}</td>
                         <td>{{$acervo->ano_construcao_acervo}}</td>
                         <td>
-                          <a href="{{route('detalhar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-success">Visualizar</a>
-                          <a href="{{route('editar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-primary">Editar</a>
-                          <a href="#" class="btn btn-outline-danger">Deletar</a>
+                          <button href="{{route('detalhar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-success"><i class="far fa-eye"></i></button>
+                          <button href="{{route('editar_acervo', ['id' => $acervo->id])}}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></button>
+                          <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                         </td>
                       </tr>
                       @endforeach
