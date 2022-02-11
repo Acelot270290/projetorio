@@ -58,8 +58,8 @@
                         </td>
                         <td>
                         
-                        <a href="#" class="btn btn-outline-primary">Editar</a>
-                        <a href="#" class="btn btn-outline-danger">Deletar</a>
+                        <button href="#" class="btn btn-outline-primary"><i class="fas fa-edit"></i></button>
+                        <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                         
                         </td>
                       </tr>
