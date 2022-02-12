@@ -54,7 +54,7 @@ class AcervoController extends Controller
 
         $request->validate([
             'nome_acervo' => 'required|min:2|max:191',
-            'cep_acervo' => 'required|min:9|max:9',
+            'cep_acervo' => 'required|min:1|max:9',
             'endereco_acervo' => 'required|min:1|max:250',
             'numero_endereco_acervo' => 'max:6',
             'bairro_acervo' => 'required|min:1|max:50',
@@ -233,7 +233,7 @@ class AcervoController extends Controller
 
         $request->validate([
             'nome_acervo' => 'required|min:2|max:191',
-            'cep_acervo' => 'required|min:9|max:9',
+            'cep_acervo' => 'required|min:1|max:9',
             'endereco_acervo' => 'required|min:1|max:250',
             'numero_endereco_acervo' => 'max:6',
             'bairro_acervo' => 'required|min:1|max:50',
