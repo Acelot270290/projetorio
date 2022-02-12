@@ -71,7 +71,7 @@ class ObraController extends Controller
     public function adicionar(Request $request)
     {
 
-        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
+        $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_obra)->first();
 
         //validando os campos de obras
         $request->validate([
@@ -86,7 +86,7 @@ class ObraController extends Controller
             'material_1_obra'=>'required|min:1|max:21',
             'tecnica_1_obra'=>'required|min:1|max:21',
             'seculo_obra'=>'required|min:1|max:21',
-            'ano_obra' => 'min:1|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
+            'ano_obra' => 'max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
 
@@ -306,7 +306,7 @@ class ObraController extends Controller
             'material_1_obra'=>'required|min:1|max:21',
             'tecnica_1_obra'=>'required|min:1|max:21',
             'seculo_obra'=>'required|min:1|max:21',
-            'ano_obra' => 'min:1|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
+            'ano_obra' => 'max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
         //Pegando os dados do user
@@ -479,16 +479,11 @@ class ObraController extends Controller
             rmdir(public_path($imagemaobra));
         }
 
-        /*$acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'usuario_insercao_id', 'usuario_atualizacao_id')
-        ->where('acervos.id', '=', intval($id))
-        ->first();
+        if ($obra) {
+            return response()->json(['status' => 'success', 'msg' => 'Obra deletada']);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'Ops.. Não coneguimos deletar']);
+        }
         
-        $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
-        $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
-        $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
-        $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
-
-        return view('admin.editar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);*/
-        return;
     }
 }
