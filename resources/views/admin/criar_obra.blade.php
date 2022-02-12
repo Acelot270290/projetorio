@@ -55,7 +55,8 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <select name="acervo_obra" class="form-control">
+                      <select name="acervo_obra" class="form-control select2">
+                      <option value="">Selecione um Acervo</option>
                       @foreach ($acervos as $acervo)
                         @if($acervo->is_default_acervo)
                           <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
@@ -160,7 +161,8 @@
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label>Tesauro</label>
-                    <select name="tesauro_obra" class="form-control">
+                    <select name="tesauro_obra" class="form-control select2">
+                      <option value="">Selecione um tesauro</option>
                     @foreach ($tesauros as $tesauro)
                       @if(old('tesauro_obra') !== null)
                         <option value="{{$tesauro->id}}" {{ (old("tesauro_obra") == $tesauro->id ? "selected" : "") }}>{{$tesauro->titulo_tesauro}}</option>
@@ -180,7 +182,8 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <select name="localizacao_obra" class="form-control">
+                      <select name="localizacao_obra" class="form-control select2">
+                        <option value="">Selecione uma localização</option>
                       @foreach ($localizacoes as $localizacao)
                         @if(old('localizacao_obra') !== null)
                           <option value="{{$localizacao->id}}" {{ (old("localizacao_obra") == $localizacao->id ? "selected" : "") }}>{{$localizacao->nome_localizacao}}</option>
@@ -277,7 +280,7 @@
                 <div class="form-row">
                  <div class="form-group col-md-4">
                     <label>Material 1</label>
-                    <select name="material_1_obra" class="form-control">
+                    <select name="material_1_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -288,7 +291,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label>Material 2</label>
-                    <select name="material_2_obra" class="form-control">
+                    <select name="material_2_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -297,7 +300,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label>Material 3</label>
-                    <select name="material_3_obra" class="form-control">
+                    <select name="material_3_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
@@ -308,7 +311,7 @@
                 <div class="form-row">
                  <div class="form-group col-md-4">
                     <label>Técnica 1</label>
-                    <select name="tecnica_1_obra" class="form-control">
+                    <select name="tecnica_1_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
@@ -319,7 +322,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label>Técnica 2</label>
-                    <select name="tecnica_2_obra" class="form-control">
+                    <select name="tecnica_2_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
@@ -328,7 +331,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label>Técnica 3</label>
-                    <select name="tecnica_3_obra" class="form-control">
+                    <select name="tecnica_3_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>

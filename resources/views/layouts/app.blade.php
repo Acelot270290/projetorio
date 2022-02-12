@@ -18,7 +18,13 @@
   <link rel="stylesheet" href="{{url('assets/bundles/datatables/datatables.min.css')}}">
   <link rel="stylesheet" href="{{url('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 
-  <link rel="stylesheet" href="{{url('//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css')}}">
+  <!-- CSS Select2 -->
+
+  <link rel="stylesheet" href="{{url('assets/bundles/select2/dist/css/select2.min.css')}}">
+
+
+
+ 
   
   <!-- Custom JS-->
 
@@ -228,6 +234,12 @@
   <script src="{{url('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
   <script src="{{url('assets/bundles/jquery-ui/jquery-ui.min.js')}}"></script>
   <script src="{{url('assets/js/page/datatables.js')}}"></script>
+  <!-- Select2 JS -->
+  <script src="{{url('assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>
+  <!-- Sweetalerts JS -->
+  <script src="{{url('assets/bundles/sweetalert/sweetalert.min.js')}}"></script>
+
+
 
 
 </body>

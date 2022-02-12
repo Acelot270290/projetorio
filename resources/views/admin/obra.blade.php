@@ -54,10 +54,10 @@
                         <td>{{ $obra->nome_acervo }}</td>
                         <td>{{ $obra->titulo_material_1 }}</td>
                         <td>{{ $obra->titulo_seculo }}</td>
-                        <td>
-                          <button href="{{route('detalhar_obra', ['id' => $obra->id])}}" class="btn btn-outline-success"><i class="far fa-eye"></i></button>
-                          <button href="{{route('editar_obra', ['id' => $obra->id])}}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></button>
-                          <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteObra"><i class="fas fa-trash"></i></button>
+                        <td id="interacoes">
+                          <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"><i class="far fa-eye"></i></a>
+                          <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                          <a href="#" class="btn btn-danger" id="deleta-obra_{{ $obra->id }}" data-id="{{ $obra->id }}" name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
                         </td>
                       </tr>
                       @endforeach
@@ -68,6 +68,51 @@
             </div>
           </div>
     </div>
+
+    <script>
+
+        $("#interacoes_tirar12345678912456789").on('click', 'a.btn-danger',function(e){
+
+            e.preventDefault();
+            let id_produto = $(this).attr('data-id');
+            let titulo_produto = $(this).attr('name');
+            var botao = $(this);
+                Swal.fire({
+				title: 'Tem certeza que deseja DELETAR o produto '+titulo_produto+' ?',
+				showCancelButton: true,
+				confirmButtonText: 'Sim',
+				cancelButtonText: 'Não',
+				}).then((result) => {
+				if(result.isConfirmed) 
+				{
+					$('#preloader').show();
+
+					$.ajax({
+						url: '/produto-pai-filho-rebate/deleteprodutoFilho/'+ id_produto,
+						type: 'DELETE',
+						headers: {
+								'X-CSRF-TOKEN': $('input[name=_token]').val()
+						}}).done(function(data) {
+						if(data.status == 'success')
+						{
+							$('#linhas').trigger("change");
+
+							Swal.fire('Sucesso!', data.msg, 'success');
+                            botao.parent().parent().remove();
+						}
+						else
+						{
+							Swal.fire('Ops!', data.msg, 'warning');
+						}
+
+						$('#preloader').hide();
+					});
+				}
+			});
+        });
+
+
+    </script>
 
 @include('modal.deleteObraModal')
 @endsection

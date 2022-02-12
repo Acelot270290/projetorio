@@ -75,16 +75,18 @@ class ObraController extends Controller
 
         //validando os campos de obras
         $request->validate([
-            'categoria_obra'=>'required',
-            'titulo_obra'=>'required|max:250',
-            'tesauro_obra'=>'required',
-            'localizacao_obra'=>'required',
-            'condicao_seguranca_obra'=>'required',
-            'tombamento_obra'=>'required',
-            'estado_de_conservacao_obra'=>'required',
-            'material_1_obra'=>'required',
-            'tecnica_1_obra'=>'required',
-            'seculo_obra'=>'required',
+            'acervo_obra' => 'required|min:1|max:21',
+            'categoria_obra'=>'required|min:1|max:21',
+            'titulo_obra'=>'required|min:1|max:250',
+            'tesauro_obra'=>'required|min:1|max:21',
+            'localizacao_obra'=>'required|min:1|max:21',
+            'condicao_seguranca_obra'=>'required|min:1|max:21',
+            'tombamento_obra'=>'required|min:1|max:21',
+            'estado_de_conservacao_obra'=>'required|min:1|max:21',
+            'material_1_obra'=>'required|min:1|max:21',
+            'tecnica_1_obra'=>'required|min:1|max:21',
+            'seculo_obra'=>'required|min:1|max:21',
+            'ano_obra' => 'min:1|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
 
@@ -293,16 +295,18 @@ class ObraController extends Controller
 
         //validando os campos de obras
         $request->validate([
-            'categoria_obra' => 'required',
-            'titulo_obra' => 'required|max:250',
-            'tesauro_obra' => 'required',
-            'localizacao_obra' => 'required',
-            'condicao_seguranca_obra' => 'required',
-            'tombamento_obra' => 'required',
-            'estado_de_conservacao_obra' => 'required',
-            'material_1_obra' => 'required',
-            'tecnica_1_obra' => 'required',
-            'seculo_obra' => 'required',
+            'acervo_obra' => 'required|min:1|max:21',
+            'categoria_obra'=>'required|min:1|max:21',
+            'titulo_obra'=>'required|min:1|max:250',
+            'tesauro_obra'=>'required|min:1|max:21',
+            'localizacao_obra'=>'required|min:1|max:21',
+            'condicao_seguranca_obra'=>'required|min:1|max:21',
+            'tombamento_obra'=>'required|min:1|max:21',
+            'estado_de_conservacao_obra'=>'required|min:1|max:21',
+            'material_1_obra'=>'required|min:1|max:21',
+            'tecnica_1_obra'=>'required|min:1|max:21',
+            'seculo_obra'=>'required|min:1|max:21',
+            'ano_obra' => 'min:1|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
         //Pegando os dados do user
@@ -456,6 +460,25 @@ class ObraController extends Controller
     }
 
     public function deletar(Request $request, $id){
+
+        $obra = Obras::select()->where('id', '=', $id)->delete();
+
+        $preBasePath =  'imagem';
+        $basePath =  $preBasePath . '/obras';
+        if (!is_dir($preBasePath)) {
+            mkdir(public_path($preBasePath));
+            mkdir(public_path($basePath));
+        }else if (!is_dir($basePath)) {
+            mkdir(public_path($basePath));
+        }
+
+        $imagemaobra =  $basePath . '/' . $id;
+        if (is_dir($imagemaobra)) {
+            // se a pasta existir, deleta tudo dentro dela, remove e depois recria
+            array_map('unlink', glob(public_path($imagemaobra) . "/*.*"));
+            rmdir(public_path($imagemaobra));
+        }
+
         /*$acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'usuario_insercao_id', 'usuario_atualizacao_id')
         ->where('acervos.id', '=', intval($id))
         ->first();
