@@ -27,6 +27,7 @@ class UserController extends Controller
     {
         $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')
         ->join('cargos as f', 'f.id', '=', 'id_cargo')
+        ->orderBy('users.id', 'ASC')
         ->get();
        // print_r($usuarios);die;
         

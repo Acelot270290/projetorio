@@ -45,6 +45,7 @@ class ObraController extends Controller
         ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
         ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
         ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
+        ->orderBy('obras.id', 'ASC')
         ->get();
 
         return view('admin.obra', ['obras' => $obras]);

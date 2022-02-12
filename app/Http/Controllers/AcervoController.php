@@ -32,6 +32,7 @@ class AcervoController extends Controller
     {
         $acervos = Acervos::select('acervos.id', 'nome_acervo', 'cidade_acervo', 'UF_acervo', 'foto_frontal_acervo', 'seculo_id', 'titulo_seculo', 'ano_construcao_acervo')
         ->join('seculos as s', 's.id', '=', 'seculo_id')
+        ->orderBy('acervos.id', 'ASC')
         ->get();
         return view('admin.acervo', ['acervos' => $acervos]);
     }
