@@ -11,37 +11,29 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Acervos</h4>
+                  <h4>Obras</h4>
                   <div class="card-header-form">
-                    <form>
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-btn">
-                          <button class="btn btn-primary" style="height: 31px;"><i class="fas fa-search"></i></button>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="table-obras"> 
+                      <thead>
                       <tr>
-                        <th class="text-center">
-                        </th>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Fachada Principal</th>
-                        <th>Título</th>
-                        <th>Tesauro</th>
-                        <th>Acervo</th>
-                        <th>Material</th>
-                        <th>Século</th>
-                        <th>Ações</th>
-                      </tr>
+                          <th style="padding-left:25px; text-align: center;">Id</th>
+                          <th style="text-align: center;">Fachada Principal</th>
+                          <th>Título</th>
+                          <th>Tesauro</th>
+                          <th>Acervo</th>
+                          <th>Material</th>
+                          <th>Século</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
                       <tr>
                       @foreach ($obras as $obra)
-                        <td> </td>
-                        <td class="text-center">{{ $obra->id }}</td>
+                        <td style="padding-left:25px; text-align: center;">{{ $obra->id }}</td>
                         <td class="align-middle text-center">
                           <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}">
                           @if($obra->foto_frontal_obra)
@@ -61,8 +53,9 @@
                           <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
                           <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"  name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
                         </td>
-                      </tr>
-                      @endforeach
+                        </tr>
+                        @endforeach
+                      </tbody>
                     </table>
                   </div>
                 </div>

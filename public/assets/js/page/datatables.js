@@ -28,32 +28,54 @@ $("[data-checkboxes]").each(function () {
   });
 });
 
+
 $("#table-user").dataTable({
   "language": {
 		"url": "//cdn.datatables.net/plug-ins/1.11.2/i18n/pt_br.json",
 	},
   
   "columnDefs": [
-    { "sortable": false, "targets": [0, 2, 3] }
+    { "sortable": false, "targets": [1,4,5] }
+  ],
+  "columns": [
+    { "type": "num" },
+    null,
+    null,
+    null,
+    null,
+    null
   ],
   "order": [[ 0, "asc" ]]
 });
 
-
-$("#table-2").dataTable({
+$("#table-obras").dataTable({
+  "language": {
+		"url": "//cdn.datatables.net/plug-ins/1.11.2/i18n/pt_br.json",
+	},
+  
   "columnDefs": [
-    { "sortable": false, "targets": [0, 2, 3] }
+    { "sortable": false, "targets": [1, 7] }
   ],
-  order: [[1, "asc"]] //column indexes is zero based
+  "columns": [
+    { "type": "num" },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "pageLength": 25
+});
 
-});
-$('#save-stage').DataTable({
-  "scrollX": true,
-  stateSave: true
-});
-$('#tableExport').DataTable({
-  dom: 'Bfrtip',
-  buttons: [
-    'copy', 'csv', 'excel', 'pdf', 'print'
-  ]
+$("#table-acervo").dataTable({
+  "language": {
+		"url": "//cdn.datatables.net/plug-ins/1.11.2/i18n/pt_br.json",
+	},
+  
+  "columnDefs": [
+    { "sortable": false, "targets": [1, 7] }
+  ],
+
+  "pageLength": 25
 });

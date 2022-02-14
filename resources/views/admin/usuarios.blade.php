@@ -11,16 +11,13 @@
                 <div class="card-header">
                   <h4>Usuários</h4>
                   <div class="card-header-form">
-                    <form>
-                    
-                    </form>
                   </div>
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive">
                     <table class="table table-striped" id="table-user">
                       <thead>
-                        
+                      <tr>
                         <th style="padding-left:25px; text-align: center;">Id</th>
                         <th style="text-align: center;">Foto</th>
                         <th>Nome</th>
@@ -29,12 +26,9 @@
                         <th>Ações</th>
                       </tr>
                       </thead>
-                      </tbody>
+                      <tbody>
+                      <tr>
                       @foreach ($usuarios as $usuario )
-                      
-                      
-                          
-                      
                         <td style="padding-left:25px; text-align: center;">{{$usuario->id}}</td>
                         <td class="align-middle" style="text-align: center;">
                           @if($usuario->image)

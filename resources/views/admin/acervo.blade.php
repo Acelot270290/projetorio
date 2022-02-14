@@ -10,25 +10,14 @@
               <div class="card">
                 <div class="card-header">
                   <h4>Acervos</h4>
-                  <div class="card-header-form">
-                    <form>
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-btn">
-                          <button class="btn btn-primary" style="height: 31px;"><i class="fas fa-search"></i></button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="table-acervo">
+                    <thead>
                       <tr>
-                        <th class="text-center">
-                        </th>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Fachada Principal</th>
+                        <th style="padding-left:25px; text-align: center;">Id</th>
+                        <th style="text-align: center;">Fachada Principal</th>
                         <th>Nome</th>
                         <th>Cidade</th>
                         <th>UF</th>
@@ -36,10 +25,11 @@
                         <th>Ano de construção</th>
                         <th>Ações</th>
                       </tr>
+                      </thead>
+                      <tbody>
                       <tr>
                       @foreach ($acervos as $acervo)
-                        <td> </td>
-                        <td class="text-center">{{$acervo->id}}</td>
+                        <td style="padding-left:25px; text-align: center;">{{$acervo->id}}</td>
                         <td class="align-middle text-center">
                           <a href="{{route('detalhar_acervo', ['id' => $acervo->id])}}">
                           @if($acervo->foto_frontal_acervo)
@@ -64,6 +54,7 @@
                           <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                         </td>
                       </tr>
+                      </tbody>
                       @endforeach
                     </table>
                   </div>
@@ -72,5 +63,4 @@
             </div>
           </div>
     </div>
-
 @endsection

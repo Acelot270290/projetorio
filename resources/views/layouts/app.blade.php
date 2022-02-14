@@ -172,13 +172,16 @@
 	 <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="{{route('home')}}"> <img style="margin-top:5%" alt="image" src="{{url('assets/img/logo.png')}}" class="header-logo" /> 
+            <a href="{{route('home')}}">
+              <img style="margin-top:5%" alt="image" src="{{url('assets/img/logo.png')}}" class="header-logo" /> 
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Painel</li>
             <li class="dropdown active">
-              <a href="{{route('home')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="{{route('home')}}" class="nav-link">
+                <i data-feather="monitor"></i><span>Dashboard</span>
+              </a>
             </li>
             <li class="menu-header">Páginas</li>
             <li class="dropdown">
