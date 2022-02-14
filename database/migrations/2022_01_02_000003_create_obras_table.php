@@ -62,7 +62,7 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('seculo_id'); // Chave estrangeira para seculo
             $table->foreign('seculo_id')->references('id')->on('seculos');
 
-            $table->integer('ano_obra')->nullable();
+            $table->unsignedSmallInteger('ano_obra')->nullable();
             $table->string('autoria_obra', 250);
             $table->string('procedencia_obra', 250);
 
@@ -74,13 +74,12 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('estado_conservacao_obra_id'); // Chave estrangeira para
             $table->foreign('estado_conservacao_obra_id')->references('id')->on('estado_conservacao_obras');
 
-            //Esécificação de Obras
+            // Especificação de Obras
             // Esse abaixo é 1:1
             $table->unsignedBigInteger('especificacao_obra_id'); // Chave estrangeira para 
             $table->foreign('especificacao_obra_id')->references('id')->on('especificacao_obras');
 
             // Esse abaixo é 1:1
-
             $table->unsignedBigInteger('condicoes_de_seguranca_obra_id'); // Chave estrangeira para 
             $table->foreign('condicoes_de_seguranca_obra_id')->references('id')->on('condicao_seguranca_obras');
             

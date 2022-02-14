@@ -87,7 +87,7 @@ class ObraController extends Controller
             'material_1_obra'=>'required|min:1|max:21',
             'tecnica_1_obra'=>'required|min:1|max:21',
             'seculo_obra'=>'required|min:1|max:21',
-            'ano_obra' => 'max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
+            'ano_obra' => 'sometimes|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
 
@@ -307,7 +307,7 @@ class ObraController extends Controller
             'material_1_obra'=>'required|min:1|max:21',
             'tecnica_1_obra'=>'required|min:1|max:21',
             'seculo_obra'=>'required|min:1|max:21',
-            'ano_obra' => 'max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
+            'ano_obra' => 'sometimes|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
         //Pegando os dados do user
