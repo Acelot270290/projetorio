@@ -162,6 +162,7 @@ class ObraController extends Controller
            
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -176,6 +177,7 @@ class ObraController extends Controller
 
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -189,6 +191,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -202,6 +205,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -215,6 +219,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -228,6 +233,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $insereObra->timestamps = false;
             $insereObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -380,6 +386,7 @@ class ObraController extends Controller
            
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -394,6 +401,7 @@ class ObraController extends Controller
 
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -407,6 +415,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -420,6 +429,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -433,6 +443,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
@@ -446,6 +457,7 @@ class ObraController extends Controller
             });
             $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
+            $atualizaObra->timestamps = false;
             $atualizaObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
         }
 
