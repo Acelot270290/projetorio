@@ -257,8 +257,8 @@
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <div  id="image_holder_lateral1_acervo">
-                        @if($acervo['foto_lateral_esquerda_acervo'])
-                          <img src="{{ asset($acervo['foto_lateral_esquerda_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        @if($acervo['foto_lateral_1_acervo'])
+                          <img src="{{ asset($acervo['foto_lateral_1_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -278,9 +278,9 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_lateral2_acervo">
-                        @if($acervo['foto_lateral_direita_acervo'])
-                          <img src="{{ asset($acervo['foto_lateral_direita_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                      <div id="image_holder_lateral2_acervo">
+                        @if($acervo['foto_lateral_2_acervo'])
+                          <img src="{{ asset($acervo['foto_lateral_2_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -300,7 +300,7 @@
                     <div id="box-foto-usuario">
                       <div  id="image_holder_posterior_acervo">
                         @if($acervo['foto_posterior_acervo'])
-                          <img src="{{$acervo['foto_posterior_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                          <img src="{{ asset($acervo['foto_posterior_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -322,7 +322,7 @@
                     <div id="box-foto-usuario">
                       <div id="image_holder_cobertura_acervo">
                         @if($acervo['foto_cobertura_acervo'])
-                          <img src="{{$acervo['foto_cobertura_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                          <img src="{{ asset($acervo['foto_cobertura_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -342,7 +342,7 @@
                     <div id="box-foto-usuario">
                       <div id="image_holder_plantas_situcao_acervo">
                         @if($acervo['plantas_situacao_acervo'])
-                          <img src="{{$acervo['plantas_situacao_acervo']}}" class="thumb-image" style="width:100px; max-height: 200px;">
+                          <img src="{{ asset($acervo['plantas_situacao_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -351,7 +351,7 @@
               </div>
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
+                <a href="{{ route('home') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
           </div>

@@ -92,7 +92,7 @@ class ObraController extends Controller
 
 
         //Pegando os dados do user
-        $usuario =  auth()->user('id');
+        $usuario = auth()->user('id');
        
         $adicionandoObra = Obras::insertGetId([
             'id' => $request->id,
@@ -148,94 +148,92 @@ class ObraController extends Controller
             mkdir(public_path($imagemaobra));
         }
 
-        $insereObra = Obras::where('id', $IdObra);
-        $insereObra->timestamps = false;
-
-        if ($request->file('foto_frontal_obra')) {
-
-            $imageName = 'Frontal_obra.webp';
-            
-            $img = Image::make($request->foto_frontal_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-           
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+        if($request->hasFile('foto_frontal_obra') or $request->hasFile('foto_lateral_esquerda_obra') or $request->hasFile('foto_lateral_direita_obra') or $request->hasFile('foto_posterior_obra') or $request->hasFile('foto_superior_obra') or $request->hasFile('foto_inferior_obra')){
+            $insereObra = Obras::find($IdObra);
             $insereObra->timestamps = false;
-            $insereObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
+
+            if ($request->file('foto_frontal_obra')) {
+
+                $imageName = 'Frontal_obra.webp';
+                
+                $img = Image::make($request->foto_frontal_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                
+                $insereObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
+            }
+
+            if ($request->file('foto_lateral_esquerda_obra')) {
+
+                $imageName = 'Lateral_esquerda_obra.webp';
+                
+                $img = Image::make($request->foto_lateral_esquerda_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $insereObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
+            }
+
+            if ($request->file('foto_lateral_direita_obra')) {
+
+                $imageName = 'foto_lateral_direita_obra.webp';
+                
+                $img = Image::make($request->foto_lateral_direita_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $insereObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
+            }
+
+            if ($request->file('foto_posterior_obra')) {
+
+                $imageName = 'Posterior_obra.webp';
+                
+                $img = Image::make($request->foto_posterior_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $insereObra->foto_posterior_obra =$imagemaobra . '/' . $imageName;
+            }
+
+            if ($request->file('foto_superior_obra')) {
+
+                $imageName = 'Superior_obra.webp';
+                
+                $img = Image::make($request->foto_superior_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $insereObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
+            }
+
+            if ($request->file('foto_inferior_obra')) {
+
+                $imageName = 'Inferior_obra.webp';
+                
+                $img = Image::make($request->foto_inferior_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $insereObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
+            }
+            $insereObra->save();
         }
 
-        if ($request->file('foto_lateral_esquerda_obra')) {
-
-            $imageName = 'Lateral_esquerda_obra.webp';
-            
-            $img = Image::make($request->foto_lateral_esquerda_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-            $insereObra->timestamps = false;
-            $insereObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_lateral_direita_obra')) {
-
-            $imageName = 'foto_lateral_direita_obra.webp';
-            
-            $img = Image::make($request->foto_lateral_direita_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-            $insereObra->timestamps = false;
-            $insereObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_posterior_obra')) {
-
-            $imageName = 'Posterior_obra.webp';
-            
-            $img = Image::make($request->foto_posterior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-            $insereObra->timestamps = false;
-            $insereObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_superior_obra')) {
-
-            $imageName = 'Superior_obra.webp';
-            
-            $img = Image::make($request->foto_superior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-            $insereObra->timestamps = false;
-            $insereObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_inferior_obra')) {
-
-            $imageName = 'Inferior_obra.webp';
-            
-            $img = Image::make($request->foto_inferior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-            $insereObra->timestamps = false;
-            $insereObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
-        }
 
         if ($adicionandoObra) {
             $alertMsg = 'Obra cadastrada com sucesso!';
@@ -372,93 +370,92 @@ class ObraController extends Controller
             mkdir(public_path($imagemaobra));
         }
 
-        $atualizaObra = Obras::where('id', $id);
-        $atualizaObra->timestamps = false;
 
-        if ($request->file('foto_frontal_obra')) {
-
-            $imageName = 'Frontal_obra.webp';
-            
-            $img = Image::make($request->foto_frontal_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-           
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+        if($request->hasFile('foto_frontal_obra') or $request->hasFile('foto_lateral_esquerda_obra') or $request->hasFile('foto_lateral_direita_obra') or $request->hasFile('foto_posterior_obra') or $request->hasFile('foto_superior_obra') or $request->hasFile('foto_inferior_obra')){
+            $atualizaObra = Obras::find($id);
             $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_frontal_obra' => $imagemaobra . '/' . $imageName]);
-        }
 
-        if ($request->file('foto_lateral_esquerda_obra')) {
+            if ($request->file('foto_frontal_obra')) {
 
-            $imageName = 'Lateral_esquerda_obra.webp';
+                $imageName = 'Frontal_obra.webp';
+                
+                $img = Image::make($request->foto_frontal_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
             
-            $img = Image::make($request->foto_lateral_esquerda_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                
+                $atualizaObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
+            }
 
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+            if ($request->file('foto_lateral_esquerda_obra')) {
 
-            $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_lateral_esquerda_obra' => $imagemaobra . '/' . $imageName]);
-        }
+                $imageName = 'Lateral_esquerda_obra.webp';
+                
+                $img = Image::make($request->foto_lateral_esquerda_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
 
-        if ($request->file('foto_lateral_direita_obra')) {
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $imageName = 'foto_lateral_direita_obra.webp';
-            
-            $img = Image::make($request->foto_lateral_direita_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $atualizaObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
+            }
 
-            $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_lateral_direita_obra' => $imagemaobra . '/' . $imageName]);
-        }
+            if ($request->file('foto_lateral_direita_obra')) {
 
-        if ($request->file('foto_posterior_obra')) {
+                $imageName = 'foto_lateral_direita_obra.webp';
+                
+                $img = Image::make($request->foto_lateral_direita_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $imageName = 'Posterior_obra.webp';
-            
-            $img = Image::make($request->foto_posterior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $atualizaObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
+            }
 
-            $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_posterior_obra' => $imagemaobra . '/' . $imageName]);
-        }
+            if ($request->file('foto_posterior_obra')) {
 
-        if ($request->file('foto_superior_obra')) {
+                $imageName = 'Posterior_obra.webp';
+                
+                $img = Image::make($request->foto_posterior_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $imageName = 'Superior_obra.webp';
-            
-            $img = Image::make($request->foto_superior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $atualizaObra->foto_posterior_obra = $imagemaobra . '/' . $imageName;
+            }
 
-            $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_superior_obra' => $imagemaobra . '/' . $imageName]);
-        }
+            if ($request->file('foto_superior_obra')) {
 
-        if ($request->file('foto_inferior_obra')) {
+                $imageName = 'Superior_obra.webp';
+                
+                $img = Image::make($request->foto_superior_obra);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
 
-            $imageName = 'Inferior_obra.webp';
-            
-            $img = Image::make($request->foto_inferior_obra);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $atualizaObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
+            }
 
-            $atualizaObra->timestamps = false;
-            $atualizaObra->update(['foto_inferior_obra' => $imagemaobra . '/' . $imageName]);
+            if ($request->file('foto_inferior_obra')) {
+
+                $imageName = 'Inferior_obra.webp';
+                
+                $img = Image::make($request->foto_inferior_obra)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+
+                $atualizaObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
+            }
+
+            $atualizaObra->save();
         }
 
         if ($isSuccess) {

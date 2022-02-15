@@ -72,7 +72,7 @@ class AcervoController extends Controller
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
-        $adicionandoAcervoId = Acervos::insertGetId([
+        $acervoId = Acervos::insertGetId([
             'id' => $request->id,
             'nome_acervo' => $request->nome_acervo,
             'cep_acervo' => $request->cep_acervo,
@@ -99,7 +99,7 @@ class AcervoController extends Controller
             mkdir(public_path($basePath));
         }
 
-        $imagemacervo =  $basePath . '/' . $adicionandoAcervoId;
+        $imagemacervo =  $basePath . '/' . $acervoId;
         if (is_dir($imagemacervo)) {\
             // se a pasta esxistir, deleta tudo dentro dela, remove e depois recria
             array_map('unlink', glob(public_path($imagemacervo) . "/*.*"));
@@ -109,94 +109,92 @@ class AcervoController extends Controller
             mkdir(public_path($imagemacervo));
         }
 
-        $insereAcervo = Acervos::where('id', $adicionandoAcervoId);
-        $insereAcervo->timestamps = false;
-
-        if ($request->file('foto_frontal_acervo')) {
-
-            $imageName = 'Frontal_Acervo.webp';
-
-            $img = Image::make($request->foto_frontal_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
+        if($request->hasFile('foto_frontal_acervo') or $request->hasFile('foto_lateral_1_acervo') or $request->hasFile('foto_lateral_2_acervo') or $request->hasFile('foto_posterior_acervo') or $request->hasFile('foto_cobertura_acervo') or $request->hasFile('plantas_situacao_acervo')){
+            $insereAcervo = Acervos::find($acervoId);
             $insereAcervo->timestamps = false;
-            $insereAcervo->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+
+            if ($request->file('foto_frontal_acervo')) {
+
+                $imageName = 'Frontal_Acervo.webp';
+
+                $img = Image::make($request->foto_frontal_acervo)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->foto_frontal_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('foto_lateral_1_acervo')) {
+
+                $imageName = 'Lateral_Esquerda_Acervo.webp';
+                
+                $img = Image::make($request->foto_lateral_1_acervo)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->foto_lateral_1_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('foto_lateral_2_acervo')) {
+
+                $imageName = 'Lateral_Direita_Acervo.webp';
+
+                $img = Image::make($request->foto_lateral_2_acervo)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->foto_lateral_2_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('foto_posterior_acervo')) {
+
+                $imageName = 'Posterior_Acervo.webp';
+                
+                $img = Image::make($request->foto_posterior_acervo)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->foto_posterior_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('foto_cobertura_acervo')) {
+
+                $imageName = 'Cobertura_Acervo.webp';
+                
+                $img = Image::make($request->foto_cobertura_acervo)->orientate();
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->foto_cobertura_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('plantas_situacao_acervo')) {
+
+                $imageName = 'Plantas_Situacao_Acervo.webp';
+                
+                $img = Image::make($request->plantas_situacao_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $insereAcervo->plantas_situacao_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            $insereAcervo->save();
         }
 
-        if ($request->file('foto_lateral_1_acervo')) {
-
-            $imageName = 'Lateral_Esquerda_Acervo.webp';
-            
-            $img = Image::make($request->foto_lateral_1_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            $insereAcervo->timestamps = false;
-            $insereAcervo->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_lateral_2_acervo')) {
-
-            $imageName = 'Lateral_Direita_Acervo.webp';
-
-            $img = Image::make($request->foto_lateral_2_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            $insereAcervo->timestamps = false;
-            $insereAcervo->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_posterior_acervo')) {
-
-            $imageName = 'Posterior_Acervo.webp';
-            
-            $img = Image::make($request->foto_posterior_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            $insereAcervo->timestamps = false;
-            $insereAcervo->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
-        }
-
-        if ($request->file('foto_cobertura_acervo')) {
-
-            $imageName = 'Cobertura_Acervo.webp';
-            
-            $img = Image::make($request->foto_cobertura_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            $insereAcervo->timestamps = false;
-            $insereAcervo->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
-        }
-
-        if ($request->file('plantas_situacao_acervo')) {
-
-            $imageName = 'Plantas_Situacao_Acervo.webp';
-            
-            $img = Image::make($request->plantas_situacao_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            $insereAcervo->timestamps = false;
-            $insereAcervo->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
-        }
-
-        if ($adicionandoAcervoId) {
+        if ($acervoId) {
             $alertMsg = 'Acervo cadastrado com sucesso!';
             $alertType = 'success';
         } else {
@@ -221,9 +219,11 @@ class AcervoController extends Controller
     }
 
     public function editar(Request $request, $id){
-        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id')
+        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id')
         ->where('acervos.id', '=', intval($id))
         ->first();
+
+        //print_r($acervo); die;
 
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
         $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
@@ -296,98 +296,89 @@ class AcervoController extends Controller
             $isSuccess = false;
         }
 
-        // adição sem timestamp (importante pra não flagar como update)
-        $updateAcervo = Acervos::where('id', $request->id);
-        $updateAcervo->timestamps = false;
-
-        if ($request->file('foto_frontal_acervo')) {
-
-            $imageName = 'Frontal_Acervo.webp';
-
-            $img = Image::make($request->foto_frontal_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
+        if($request->hasFile('foto_frontal_acervo') or $request->hasFile('foto_lateral_1_acervo') or $request->hasFile('foto_lateral_2_acervo') or $request->hasFile('foto_posterior_acervo') or $request->hasFile('foto_cobertura_acervo') or $request->hasFile('plantas_situacao_acervo')){
+            // adição sem timestamp (importante pra não flagar como update)
+            $updateAcervo = Acervos::find($id);
             $updateAcervo->timestamps = false;
-            $updateAcervo->update(['foto_frontal_acervo' => $imagemacervo . '/' . $imageName]);
-        }
 
-        if ($request->file('foto_lateral_1_acervo')) {
+            if ($request->file('foto_frontal_acervo')) {
 
-            $imageName = 'Lateral_Esquerda_Acervo.webp';
-            
-            $img = Image::make($request->foto_lateral_1_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                $imageName = 'Frontal_Acervo.webp';
 
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
-            $updateAcervo->timestamps = false;
-            $updateAcervo->update(['foto_lateral_1_acervo' => $imagemacervo . '/' . $imageName]);
-        }
+                $img = Image::make($request->foto_frontal_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-        if ($request->file('foto_lateral_2_acervo')) {
+                $updateAcervo->foto_frontal_acervo = $imagemacervo . '/' . $imageName;
+            }
 
-            $imageName = 'Lateral_Direita_Acervo.webp';
+            if ($request->file('foto_lateral_1_acervo')) {
 
-            $img = Image::make($request->foto_lateral_2_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                $imageName = 'Lateral_Esquerda_Acervo.webp';
+                
+                $img = Image::make($request->foto_lateral_1_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
-            $updateAcervo->timestamps = false;
-            $updateAcervo->update(['foto_lateral_2_acervo' => $imagemacervo . '/' . $imageName]);
-        }
+                $updateAcervo->foto_lateral_1_acervo = $imagemacervo . '/' . $imageName;
+            }
 
-        if ($request->file('foto_posterior_acervo')) {
+            if ($request->file('foto_lateral_2_acervo')) {
 
-            $imageName = 'Posterior_Acervo.webp';
-            
-            $img = Image::make($request->foto_posterior_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                $imageName = 'Lateral_Direita_Acervo.webp';
 
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
-            $updateAcervo->timestamps = false;
-            $updateAcervo->update(['foto_posterior_acervo' => $imagemacervo . '/' . $imageName]);
-        }
+                $img = Image::make($request->foto_lateral_2_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-        if ($request->file('foto_cobertura_acervo')) {
+                $updateAcervo->foto_lateral_2_acervo = $imagemacervo . '/' . $imageName;
+            }
 
-            $imageName = 'Cobertura_Acervo.webp';
-            
-            $img = Image::make($request->foto_cobertura_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+            if ($request->file('foto_posterior_acervo')) {
 
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
-            $updateAcervo->timestamps = false;
-            $updateAcervo->update(['foto_cobertura_acervo' => $imagemacervo . '/' . $imageName]);
-        }
+                $imageName = 'Posterior_Acervo.webp';
+                
+                $img = Image::make($request->foto_posterior_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
 
-        if ($request->file('plantas_situacao_acervo')) {
+                $updateAcervo->foto_posterior_acervo = $imagemacervo . '/' . $imageName;
+            }
 
-            $imageName = 'Plantas_Situacao_Acervo.webp';
-            
-            $img = Image::make($request->plantas_situacao_acervo);
-            $img->resize(450, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+            if ($request->file('foto_cobertura_acervo')) {
 
-            //$adicionandoAcervoId = Acervos::where('id', $request->id)->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
-            $updateAcervo->timestamps = false;
-            $updateAcervo->update(['plantas_situacao_acervo' => $imagemacervo . '/' . $imageName]);
+                $imageName = 'Cobertura_Acervo.webp';
+                
+                $img = Image::make($request->foto_cobertura_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $updateAcervo->foto_cobertura_acervo = $imagemacervo . '/' . $imageName;
+            }
+
+            if ($request->file('plantas_situacao_acervo')) {
+
+                $imageName = 'Plantas_Situacao_Acervo.webp';
+                
+                $img = Image::make($request->plantas_situacao_acervo);
+                $img->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                $updateAcervo->plantas_situacao_acervo = $imagemacervo . '/' . $imageName;
+            }
+            $updateAcervo->save();
         }
 
         if ($isSuccess) {
