@@ -198,12 +198,12 @@
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                               @if(old('especificacao_acervo') !== null)
-                                <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}" {{ (old('especificacao_acervo') == $especificacao->id ? 'checked' : '') }}>
+                                <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}" {{ (old('especificacao_acervo') == $especificacao->id ? 'checked' : '') }}>
                               @else
                                 @if($especificacao->id == $acervo['especificacao_acervo_id'])
-                                  <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}" checked>
+                                  <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}" checked>
                                 @else
-                                  <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}">
+                                  <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="{{$especificacao->id}}">
                                 @endif
                               @endif
                               <div class="state p-success">

@@ -65,7 +65,7 @@ class AcervoController extends Controller
             'seculo_acervo' => 'required|min:1|max:21',
             'ano_acervo' => 'nullable|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
             'estado_conservacao_acervo' => 'required|min:1|max:21',
-            'especificacao_acervo' => 'min:1|max:21',
+            //'especificacao_acervo' => 'min:1|max:21',
             'descricao_acervo' => 'required|max:10000',
         ]);
 
@@ -253,7 +253,7 @@ class AcervoController extends Controller
             'especificacao_acervo' => 'min:1|max:21',
             'descricao_acervo' => 'required|max:10000',
         ]);
-
+        //print_r($acervo);die();
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
@@ -272,6 +272,10 @@ class AcervoController extends Controller
             mkdir(public_path($imagemacervo));
         }
 
+        $testejson = $request->especificacao_acervo;
+
+       
+            var_dump($testejson);die;
         try{
             $editandoAcervo = Acervos::where('id', '=', $id)
             ->update([
@@ -295,6 +299,7 @@ class AcervoController extends Controller
         }catch(Exception $e){
             $isSuccess = false;
         }
+
 
         if($request->hasFile('foto_frontal_acervo') or $request->hasFile('foto_lateral_1_acervo') or $request->hasFile('foto_lateral_2_acervo') or $request->hasFile('foto_posterior_acervo') or $request->hasFile('foto_cobertura_acervo') or $request->hasFile('plantas_situacao_acervo')){
             // adição sem timestamp (importante pra não flagar como update)
@@ -378,7 +383,8 @@ class AcervoController extends Controller
 
                 $updateAcervo->plantas_situacao_acervo = $imagemacervo . '/' . $imageName;
             }
-            $updateAcervo->save();
+
+           
         }
 
         if ($isSuccess) {
