@@ -102,7 +102,7 @@ class AcervoController extends Controller
         }
 
         $imagemacervo =  $basePath . '/' . $acervoId;
-        if (is_dir($imagemacervo)) {\
+        if (is_dir($imagemacervo)) {
             // se a pasta esxistir, deleta tudo dentro dela, remove e depois recria
             array_map('unlink', glob(public_path($imagemacervo) . "/*.*"));
             rmdir(public_path($imagemacervo));
@@ -230,7 +230,13 @@ class AcervoController extends Controller
         ->where('acervos.id', '=', intval($id))
         ->first();
 
+        $check = array_map('intval', explode(',', $acervo->checkbox_especificacao_acervo));
 
+        for ($i = 0 ; $i < count($check) ; $i++ ) 
+
+        var_dump($check);die;
+
+       
         
 
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
@@ -238,7 +244,15 @@ class AcervoController extends Controller
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
-        return view('admin.editar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
+        return view('admin.editar_acervo', [
+
+            'acervo' => $acervo, 
+            'especificacoes' => $especificacoes, 
+            'estados' => $estados, 
+            'seculos' => $seculos, 
+            'tombamentos' => $tombamentos, 
+            'check'=>$check
+        ]);
     }
 
     public function atualizar(Request $request, $id){
