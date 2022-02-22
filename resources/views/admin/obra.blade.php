@@ -21,7 +21,7 @@
                       <thead>
                       <tr>
                           <th style="padding-left:25px; text-align: center;">Id</th>
-                          <th style="text-align: center;">Fachada Principal</th>
+                          <th style="text-align: center;">Foto Principal</th>
                           <th>Título</th>
                           <th>Tesauro</th>
                           <th>Acervo</th>

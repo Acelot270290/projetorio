@@ -219,11 +219,12 @@ class AcervoController extends Controller
     }
 
     public function editar(Request $request, $id){
-        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id')
+        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id','checkbox_especificacao_acervo')
         ->where('acervos.id', '=', intval($id))
         ->first();
 
-        //print_r($acervo); die;
+
+        
 
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
         $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
@@ -253,6 +254,8 @@ class AcervoController extends Controller
             'especificacao_acervo' => 'min:1|max:21',
             'descricao_acervo' => 'required|max:10000',
         ]);
+
+        implode(',', $request->especificacao_acervo);
         //print_r($acervo);die();
         //Pegando os dados do user
         $usuario = auth()->user('id');
@@ -271,14 +274,16 @@ class AcervoController extends Controller
         if (!is_dir($imagemacervo)) {
             mkdir(public_path($imagemacervo));
         }
-
-        $testejson = $request->especificacao_acervo;
-
        
-            var_dump($testejson);die;
+        $marcado = implode('|', $request->especificacao_acervo);
+         
         try{
-            $editandoAcervo = Acervos::where('id', '=', $id)
-            ->update([
+                       
+            $editandoAcervo = Acervos::where('id', '=', $id);
+
+            $editandoAcervo->descricao_fachada_planta_acervo = $marcado;
+
+            $editandoAcervo->update([
                 'nome_acervo' => $request->nome_acervo,
                 'updated_at' => new \DateTime(),
                 'cep_acervo' => $request->cep_acervo,
@@ -291,8 +296,8 @@ class AcervoController extends Controller
                 'seculo_id' => $request->seculo_acervo,
                 'ano_construcao_acervo' => $request->ano_acervo,
                 'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
-                'especificacao_acervo_id' => $request->especificacao_acervo,
-                'descricao_fachada_planta_acervo' => $request->descricao_acervo,
+                'checkbox_especificacao_acervo' => $request->especificacao_acervo,
+                //'descricao_fachada_planta_acervo' => $marcado,
                 'usuario_atualizacao_id' => $usuario->id,
             ]);
             $isSuccess = true;
@@ -300,6 +305,9 @@ class AcervoController extends Controller
             $isSuccess = false;
         }
 
+       // print_r($editandoAcervo);die;
+        
+        
 
         if($request->hasFile('foto_frontal_acervo') or $request->hasFile('foto_lateral_1_acervo') or $request->hasFile('foto_lateral_2_acervo') or $request->hasFile('foto_posterior_acervo') or $request->hasFile('foto_cobertura_acervo') or $request->hasFile('plantas_situacao_acervo')){
             // adição sem timestamp (importante pra não flagar como update)
