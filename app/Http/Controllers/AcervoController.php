@@ -72,6 +72,8 @@ class AcervoController extends Controller
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
+        $marcado = implode(',', $request->especificacao_acervo);
+
         $acervoId = Acervos::insertGetId([
             'id' => $request->id,
             'nome_acervo' => $request->nome_acervo,
@@ -85,7 +87,7 @@ class AcervoController extends Controller
             'seculo_id' => $request->seculo_acervo,
             'ano_construcao_acervo' => $request->ano_acervo,
             'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
-            'especificacao_acervo_id' => $request->especificacao_acervo,
+            'checkbox_especificacao_acervo' => $marcado,
             'descricao_fachada_planta_acervo' => $request->descricao_acervo,
             'usuario_insercao_id' => $usuario->id,
         ]);
@@ -205,7 +207,8 @@ class AcervoController extends Controller
     }
 
     public function detalhar(Request $request, $id){
-        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor')
+        //$acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'estado_conservacao_acervo_id', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor')
+        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor', 'checkbox_especificacao_acervo',)
         ->where('acervos.id', '=', intval($id))
         ->join('estado_conservacao_acervos as ec', 'ec.id', '=', 'estado_conservacao_acervo_id')
         ->join('tombamentos as t', 't.id', '=', 'tombamento_id')
@@ -214,8 +217,12 @@ class AcervoController extends Controller
         ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
         ->leftJoin('users as u2', 'u2.id', '=', 'usuario_atualizacao_id')
         ->first();
-        
-        return view('admin.detalhar_acervo', ['acervo' => $acervo]);
+
+        $especificacoes_array = explode(',', $acervo->checkbox_especificacao_acervo);
+
+        $especificacoes = EspecificacaoAcervos::find($especificacoes_array);
+
+        return view('admin.detalhar_acervo', ['acervo' => $acervo, 'especificacoes' => $especificacoes]);
     }
 
     public function editar(Request $request, $id){
@@ -275,7 +282,7 @@ class AcervoController extends Controller
             mkdir(public_path($imagemacervo));
         }
        
-        $marcado = implode('|', $request->especificacao_acervo);
+        $marcado = implode(',', $request->especificacao_acervo);
          
         try{
                        
@@ -296,8 +303,8 @@ class AcervoController extends Controller
                 'seculo_id' => $request->seculo_acervo,
                 'ano_construcao_acervo' => $request->ano_acervo,
                 'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
-                'checkbox_especificacao_acervo' => $request->especificacao_acervo,
-                //'descricao_fachada_planta_acervo' => $marcado,
+                'checkbox_especificacao_acervo' => $marcado,
+                'descricao_fachada_planta_acervo' => $request->descricao_acervo,
                 'usuario_atualizacao_id' => $usuario->id,
             ]);
             $isSuccess = true;

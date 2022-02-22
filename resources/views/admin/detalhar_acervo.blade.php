@@ -100,6 +100,18 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <b>Especificações de conservação:</b>
+                                        @if(empty($especificacoes))
+                                            -
+                                        @else
+                                            @foreach($especificacoes as $especificacao)
+                                                {{ $especificacao->titulo_especificacao_acervo }}@if (!$loop->last),@endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <b>Cadastrado por:</b> {{ !is_null($acervo->usuario_cadastrante) ? $acervo->usuario_cadastrante : '-' }}
                                     </div>

@@ -234,7 +234,6 @@ class ObraController extends Controller
             $insereObra->save();
         }
 
-
         if ($adicionandoObra) {
             $alertMsg = 'Obra cadastrada com sucesso!';
             $alertType = 'success';

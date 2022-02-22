@@ -186,7 +186,7 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_acervo" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" {{ (old('especificacao_acervo') == $especificacao->id ? 'checked' : '') }}>
+                              <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" {{ (old('especificacao_acervo') == $especificacao->id ? 'checked' : '') }}>
                               <div class="state p-success">
                                   <label style="margin-left: 10px;" for="{{ $especificacao->id }}">{{ $especificacao->titulo_especificacao_acervo }}</label>
                               </div>
@@ -203,7 +203,6 @@
                     <div>
                      <small class="text-danger">{{ $errors->first('descricao_acervo') }}</small>
                     </div>
-    
                   </div>
                 </div>
                 <div class="form-row">
@@ -270,7 +269,6 @@
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <div  id="image_holder_posterior_acervo"></div>
-                      
                     </div>
                   </div>
                 </div>
