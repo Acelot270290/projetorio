@@ -70,24 +70,24 @@ class CreateObrasTable extends Migration
             $table->unsignedBigInteger('tombamento_id'); // Chave estrangeira para seculo
             $table->foreign('tombamento_id')->references('id')->on('tombamentos');
 
-             //Estado de conservação da Obra
+            // Estado de conservação da Obra
             $table->unsignedBigInteger('estado_conservacao_obra_id'); // Chave estrangeira para
             $table->foreign('estado_conservacao_obra_id')->references('id')->on('estado_conservacao_obras');
 
             // Especificação de Obras
-            // Esse abaixo é 1:1
-            $table->unsignedBigInteger('especificacao_obra_id'); // Chave estrangeira para 
-            $table->foreign('especificacao_obra_id')->references('id')->on('especificacao_obras');
+            //$table->unsignedBigInteger('especificacao_obra_id'); // Chave estrangeira para 
+            //$table->foreign('especificacao_obra_id')->references('id')->on('especificacao_obras');
 
-            // Esse abaixo é 1:1
+            $table->string('checkbox_especificacao_obra', 250)->nullable(); // Suporte para n estados de conservação do acervo
+
+            // Segurança
             $table->unsignedBigInteger('condicoes_de_seguranca_obra_id'); // Chave estrangeira para 
             $table->foreign('condicoes_de_seguranca_obra_id')->references('id')->on('condicao_seguranca_obras');
             
+            //$table->unsignedBigInteger('especificacao_seguranca_obra_id'); // Chave estrangeira para 
+            //$table->foreign('especificacao_seguranca_obra_id')->references('id')->on('especificacao_seguranca_obras');
 
-            // Esse abaixo é 1:1
-            $table->unsignedBigInteger('especificacao_seguranca_obra_id'); // Chave estrangeira para 
-            $table->foreign('especificacao_seguranca_obra_id')->references('id')->on('especificacao_seguranca_obras');
-
+            $table->string('checkbox_especificacao_seguranca_obra', 250)->nullable(); // Suporte para n estados de conservação do acervo
                         
             // Características estilísticas/iconográficas e ornamentais
             $table->string('caracteristicas_est_icono_orna_obra', 9000)->nullable();

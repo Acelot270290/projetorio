@@ -316,12 +316,12 @@
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                         @if (old('material_1_obra') == $material->id)
-                          <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
                           @if($material->id == $obra['material_id_1'] and old('material_1_obra') == null)
-                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                           @else
-                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
                           @endif
                         @endif
                       @endforeach
@@ -334,12 +334,12 @@
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
                         @if (old('material_2_obra') == $material->id)
-                          <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
                           @if($material->id == $obra['material_id_2'] and old('material_2_obra') == null)
-                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                           @else
-                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
                           @endif
                         @endif
                       @endforeach
@@ -350,13 +350,13 @@
                     <select name="material_3_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                        @if (old('material_3_obra') == $material->id)
+                        @if(old('material_3_obra') == $material->id)
                           <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                         @else
                           @if($material->id == $obra['material_id_3'] and old('material_3_obra') == null)
-                            <option value="{{$material->id}}" selected>{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
                           @else
-                            <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
                           @endif
                         @endif
                       @endforeach
@@ -425,12 +425,12 @@
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                             @if(old('especificacao_obra') == $especificacao->id)
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
+                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
                             @else
-                              @if($obra->especificacao_obra_id == $especificacao->id and old('especificacao_obra') == null)
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
+                              @if(in_array($especificacao->id, $check) and old('especificacao_obra') == null)
+                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
                               @else
-                                <input name="especificacao_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}">
+                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}">
                               @endif
                             @endif
                             <div class="state p-success">
@@ -449,12 +449,12 @@
                          @foreach ($especificacoesSeg as $especificacaoSeg)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
                             @if(old('especificacao_seg_obra') == $especificacaoSeg->id)
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
+                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
                             @else
-                              @if($obra->especificacao_seguranca_obra_id == $especificacaoSeg->id and old('especificacao_seg_obra') == null)
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
+                              @if(in_array($especificacaoSeg->id, $checkSeg) and old('especificacao_seg_obra') == null)
+                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
                               @else
-                                <input name="especificacao_seg_obra" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}">
+                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}">
                               @endif
                             @endif
                               <div class="state p-success">

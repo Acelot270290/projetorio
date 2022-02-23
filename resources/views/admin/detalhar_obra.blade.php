@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <b>Dimensões cm</b>
+                                        <b>Dimensões (cm)</b>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -162,7 +162,14 @@
                                         <b>Estado de conservação:</b> {{ !is_null($obra->titulo_estado_conservacao_obra) ? $obra->titulo_estado_conservacao_obra : '-'}}
                                     </div>
                                     <div class="form-group col-md-10">
-                                        <b>Especificações:</b> {{ !is_null($obra->titulo_especificacao_obra) ? $obra->titulo_especificacao_obra : '-'}}
+                                        <b>Especificações:</b>
+                                        @if(empty($especificacoes))
+                                            -
+                                        @else
+                                            @foreach($especificacoes as $especificacao)
+                                                {{ $especificacao->titulo_especificacao_obra }}@if (!$loop->last),@endif
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -170,7 +177,14 @@
                                         <b>Condição de segurança:</b> {{ !is_null($obra->titulo_condicao_seguranca_obra) ? $obra->titulo_condicao_seguranca_obra : '-'}}
                                     </div>
                                     <div class="form-group col-md-10">
-                                        <b>Especificações de segurança:</b> {{ !is_null($obra->titulo_especificacao_seguranca_obra) ? $obra->titulo_especificacao_seguranca_obra : '-'}}
+                                        <b>Especificações de segurança:</b>
+                                        @if(empty($especificacoesSeg))
+                                            -
+                                        @else
+                                            @foreach($especificacoesSeg as $especificacaoSeg)
+                                                {{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}@if (!$loop->last),@endif
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-row">
