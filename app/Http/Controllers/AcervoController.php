@@ -49,7 +49,6 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
-
         // Descobre quais anos são os limites do século escolhido
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
 
@@ -65,7 +64,6 @@ class AcervoController extends Controller
             'seculo_acervo' => 'required|min:1|max:21',
             'ano_acervo' => 'nullable|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
             'estado_conservacao_acervo' => 'required|min:1|max:21',
-            //'especificacao_acervo' => 'min:1|max:21',
             'descricao_acervo' => 'required|max:10000',
         ]);
 
@@ -232,26 +230,18 @@ class AcervoController extends Controller
 
         $check = array_map('intval', explode(',', $acervo->checkbox_especificacao_acervo));
 
-        for ($i = 0 ; $i < count($check) ; $i++ ) 
-
-        var_dump($check);die;
-
-       
-        
-
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
         $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
         return view('admin.editar_acervo', [
-
             'acervo' => $acervo, 
             'especificacoes' => $especificacoes, 
             'estados' => $estados, 
             'seculos' => $seculos, 
             'tombamentos' => $tombamentos, 
-            'check'=>$check
+            'check' => $check
         ]);
     }
 
@@ -272,12 +262,10 @@ class AcervoController extends Controller
             'seculo_acervo' => 'required|min:1|max:21',
             'ano_acervo' => 'nullable|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
             'estado_conservacao_acervo' => 'required|min:1|max:21',
-            'especificacao_acervo' => 'min:1|max:21',
+            //'especificacao_acervo' => 'min:1|max:21',
             'descricao_acervo' => 'required|max:10000',
         ]);
 
-        implode(',', $request->especificacao_acervo);
-        //print_r($acervo);die();
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
@@ -295,16 +283,11 @@ class AcervoController extends Controller
         if (!is_dir($imagemacervo)) {
             mkdir(public_path($imagemacervo));
         }
-       
-        $marcado = implode(',', $request->especificacao_acervo);
          
         try{
-                       
-            $editandoAcervo = Acervos::where('id', '=', $id);
-
-            $editandoAcervo->descricao_fachada_planta_acervo = $marcado;
-
-            $editandoAcervo->update([
+            $check = implode(',', $request->especificacao_acervo);
+            $editandoAcervo = Acervos::where('id', '=', $id)
+            ->update([
                 'nome_acervo' => $request->nome_acervo,
                 'updated_at' => new \DateTime(),
                 'cep_acervo' => $request->cep_acervo,
@@ -317,7 +300,7 @@ class AcervoController extends Controller
                 'seculo_id' => $request->seculo_acervo,
                 'ano_construcao_acervo' => $request->ano_acervo,
                 'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
-                'checkbox_especificacao_acervo' => $marcado,
+                'checkbox_especificacao_acervo' => $check,
                 'descricao_fachada_planta_acervo' => $request->descricao_acervo,
                 'usuario_atualizacao_id' => $usuario->id,
             ]);
@@ -325,10 +308,6 @@ class AcervoController extends Controller
         }catch(Exception $e){
             $isSuccess = false;
         }
-
-       // print_r($editandoAcervo);die;
-        
-        
 
         if($request->hasFile('foto_frontal_acervo') or $request->hasFile('foto_lateral_1_acervo') or $request->hasFile('foto_lateral_2_acervo') or $request->hasFile('foto_posterior_acervo') or $request->hasFile('foto_cobertura_acervo') or $request->hasFile('plantas_situacao_acervo')){
             // adição sem timestamp (importante pra não flagar como update)

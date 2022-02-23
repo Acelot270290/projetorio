@@ -12,4 +12,5 @@ class Obras extends Model
     public $timestamps = true;
 
  
+
 }
