@@ -424,7 +424,7 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                            @if(old('especificacao_obra') == $especificacao->id)
+                            @if(is_array(old('especificacao_obra')) and in_array($especificacao->id, old('especificacao_obra')))
                                 <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
                             @else
                               @if(in_array($especificacao->id, $check) and old('especificacao_obra') == null)
@@ -448,7 +448,7 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoesSeg as $especificacaoSeg)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                            @if(old('especificacao_seg_obra') == $especificacaoSeg->id)
+                            @if(is_array(old('especificacao_seg_obra')) and in_array($especifiespecificacaoSegcacao->id, old('especificacao_seg_obra')))
                                 <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
                             @else
                               @if(in_array($especificacaoSeg->id, $checkSeg) and old('especificacao_seg_obra') == null)

@@ -70,7 +70,11 @@ class AcervoController extends Controller
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
-        $marcado = implode(',', $request->especificacao_acervo);
+        if(isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)){
+            $check = implode(',', $request->especificacao_acervo);
+        } else {
+            $check = '';
+        }
 
         $acervoId = Acervos::insertGetId([
             'id' => $request->id,
@@ -85,7 +89,7 @@ class AcervoController extends Controller
             'seculo_id' => $request->seculo_acervo,
             'ano_construcao_acervo' => $request->ano_acervo,
             'estado_conservacao_acervo_id' => $request->estado_conservacao_acervo,
-            'checkbox_especificacao_acervo' => $marcado,
+            'checkbox_especificacao_acervo' => $check,
             'descricao_fachada_planta_acervo' => $request->descricao_acervo,
             'usuario_insercao_id' => $usuario->id,
         ]);
@@ -285,7 +289,12 @@ class AcervoController extends Controller
         }
          
         try{
-            $check = implode(',', $request->especificacao_acervo);
+            if(isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)){
+                $check = implode(',', $request->especificacao_acervo);
+            } else {
+                $check = '';
+            }
+
             $editandoAcervo = Acervos::where('id', '=', $id)
             ->update([
                 'nome_acervo' => $request->nome_acervo,

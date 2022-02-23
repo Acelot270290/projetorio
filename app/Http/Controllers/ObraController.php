@@ -93,9 +93,18 @@ class ObraController extends Controller
         //Pegando os dados do user
         $usuario = auth()->user('id');
 
-        $marcado = implode(',', $request->especificacao_obra);
-        $marcadoSeg = implode(',', $request->especificacao_seg_obra);
-       
+        if(isset($request->especificacao_obra) and !empty($request->especificacao_obra)){
+            $check = implode(',', $request->especificacao_obra);
+        } else {
+            $check = '';
+        }
+
+        if(isset($request->especificacao_seg_obra) and !empty($request->especificacao_seg_obra)){
+            $checkSeg = implode(',', $request->especificacao_seg_obra);
+        } else {
+            $checkSeg = '';
+        }
+
         $adicionandoObra = Obras::insertGetId([
             'id' => $request->id,
             'acervo_id'=> $request->acervo_obra,
@@ -124,8 +133,8 @@ class ObraController extends Controller
             'tecnica_id_3'=> $request->tecnica_3_obra,
             //'especificacao_obra_id'=> $request->especificacao_obra,
             //'especificacao_seguranca_obra_id'=> $request->especificacao_seg_obra,
-            'checkbox_especificacao_obra' => $marcado,
-            'checkbox_especificacao_seguranca_obra' => $marcadoSeg,
+            'checkbox_especificacao_obra' => $check,
+            'checkbox_especificacao_seguranca_obra' => $checkSeg,
             'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
             'observacoes_obra'=> $request->observacoes_obra,
         ]);
@@ -331,8 +340,18 @@ class ObraController extends Controller
         $usuario = auth()->user('id');
        
         try{
-            $check = implode(',', $request->especificacao_obra);
-            $checkSeg = implode(',', $request->especificacao_seg_obra);
+            if(isset($request->especificacao_obra) and !empty($request->especificacao_obra)){
+                $check = implode(',', $request->especificacao_obra);
+            } else {
+                $check = '';
+            }
+    
+            if(isset($request->especificacao_seg_obra) and !empty($request->especificacao_seg_obra)){
+                $checkSeg = implode(',', $request->especificacao_seg_obra);
+            } else {
+                $checkSeg = '';
+            }
+            
             $atualizaObra = Obras::where('id', '=', $id)
                 ->update([
                 'acervo_id' => $request->acervo_obra,
