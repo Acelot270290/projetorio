@@ -25,10 +25,10 @@ class HomeController extends Controller
     public function index()
     {
 
-        $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')->count('users.id');
+        $usuarios_total = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')->count('users.id');
 
        // print_r($usuarios);die;
 
-        return view('home',['usuarios'=>$usuarios]);
+        return view('home',['usuarios_total'=>$usuarios_total]);
     }
 }

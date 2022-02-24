@@ -58,10 +58,14 @@
                       <select name="acervo_obra" class="form-control select2">
                       <option value="">Selecione um Acervo</option>
                       @foreach ($acervos as $acervo)
-                        @if($acervo->is_default_acervo)
-                          <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
+                        @if($acervo->id == old('acervo_obra'))
+                           <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
                         @else
-                          <option value="{{$acervo->id}}">{{$acervo->nome_acervo}}</option>
+                          @if($acervo->is_default_acervo)
+                            <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
+                          @else
+                            <option value="{{$acervo->id}}">{{$acervo->nome_acervo}}</option>
+                          @endif
                         @endif
                       @endforeach
                       </select>
@@ -221,7 +225,15 @@
                     <label>Tombamento</label>
                     <select name="tombamento_obra" class="form-control">
                     @foreach ($tombamentos as $tombamento)
-                        <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
+                    @if(old('tombamento_obra') !== null)
+                        <option value="{{$tombamento->id}}"{{ (old("tombamento_obra") == $tombamento->id ? "selected" : "") }}>{{$tombamento->titulo_tombamento}}</option>
+                      @else
+                        @if($tombamento->is_default_tombamento) 
+                        <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                        @else
+                        <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                        @endif
+                      @endif
                     @endforeach
                     </select>
                   </div>
@@ -229,10 +241,14 @@
                     <label>Século</label>
                     <select name="seculo_obra" class="form-control">
                     @foreach ($seculos as $seculo)
-                      @if($seculo->is_default_seculo)
-                        <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                      @if(old('seculo_obra') !== null)
+                          <option value="{{$seculo->id}}"{{ (old("seculo_obra") == $seculo->id ? "selected" : "") }}>{{$seculo->titulo_seculo}}</option>
                       @else
-                        <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @if($seculo->is_default_seculo)
+                          <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                        @else
+                          <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                        @endif
                       @endif
                     @endforeach
                     </select>
@@ -255,11 +271,15 @@
                     <label>Estado de Conservação</label>
                     <select name="estado_de_conservacao_obra" class="form-control">
                       @foreach ($estados as $estado)
-                        @if($estado->is_default_estado_conservacao_obra)
-                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obra}}</option>
+                      @if(old('estado_de_conservacao_obra') !== null)
+                          <option value="{{$estado->id}}"{{ (old("estado_de_conservacao_obra") == $estado->id ? "selected" : "") }}>{{$estado->titulo_estado_conservacao_obra}}</option>
                         @else
-                          <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obra}}</option>
-                        @endif
+                          @if($estado->is_default_estado_conservacao_obra)
+                            <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_obra}}</option>
+                          @else
+                            <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_obra}}</option>
+                          @endif
+                      @endif
                       @endforeach
                     </select>
                       <small class="text-danger">{{ $errors->first('estado_de_conservacao_obra') }}</small>
@@ -283,7 +303,11 @@
                     <select name="material_1_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
+                        @if(old('material_1_obra') !== null)
+                          <option value="{{$material->id}}"{{ (old("material_1_obra") == $material->id ? "selected" : "") }}>{{$material->titulo_material}}</option>
+                        @else
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                        @endif
                       @endforeach
                     </select>
                      <small class="text-danger">{{ $errors->first('material_1_obra') }}</small>
@@ -294,7 +318,11 @@
                     <select name="material_2_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
+                        @if(old('material_2_obra') !== null)
+                          <option value="{{$material->id}}"{{ (old("material_2_obra") == $material->id ? "selected" : "") }}>{{$material->titulo_material}}</option>
+                        @else
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -303,7 +331,11 @@
                     <select name="material_3_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
+                        @if(old('material_3_obra') !== null)
+                          <option value="{{$material->id}}"{{ (old("material_3_obra") == $material->id ? "selected" : "") }}>{{$material->titulo_material}}</option>
+                        @else
                           <option value="{{$material->id}}">{{$material->titulo_material}}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -314,7 +346,11 @@
                     <select name="tecnica_1_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
+                        @if(old('tecnica_1_obra') !== null)
+                          <option value="{{$tecnica->id}}"{{ (old("tecnica_1_obra") == $tecnica->id ? "selected" : "") }}>{{$tecnica->titulo_tecnica}}</option>
+                        @else
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                        @endif
                       @endforeach
                     </select>
                        <small class="text-danger">{{ $errors->first('tecnica_1_obra') }}</small>
@@ -325,7 +361,11 @@
                     <select name="tecnica_2_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
+                        @if(old('tecnica_2_obra') !== null)
+                          <option value="{{$tecnica->id}}"{{ (old("tecnica_2_obra") == $tecnica->id ? "selected" : "") }}>{{$tecnica->titulo_tecnica}}</option>
+                        @else
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -334,7 +374,11 @@
                     <select name="tecnica_3_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
+                          @if(old('tecnica_3_obra') !== null)
+                          <option value="{{$tecnica->id}}"{{ (old("tecnica_3_obra") == $tecnica->id ? "selected" : "") }}>{{$tecnica->titulo_tecnica}}</option>
+                        @else
                           <option value="{{$tecnica->id}}">{{$tecnica->titulo_tecnica}}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -345,7 +389,7 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoes as $especificacao)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" {{ (is_array(old('especificacao_obra') and in_array($especificacao->id, old('especificacao_obra'))) ? 'checked' : '') }}>
+                              <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacao->id}}" id="especificacao_obra_{{$especificacao->id}}" {{ in_array($especificacao->id, old('especificacao_obra',[])) ? 'checked' : '' }}>
                               <div class="state p-success">
                                   <label style="margin-left: 10px;" for="especificacao_obra_{{$especificacao->id}}">{{$especificacao->titulo_especificacao_obra}}</label>
                               </div>
@@ -361,7 +405,7 @@
                         <div style="display: flex; flex-wrap: wrap;">
                          @foreach ($especificacoesSeg as $especificacaoSeg)
                           <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" {{ (is_array(old('especificacao_seg_obra') and in_array($especificacaoSeg->id, old('especificacao_seg_obra'))) ? 'checked' : '') }}>
+                              <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{$especificacaoSeg->id}}" id="especificacao_seg_obra_{{$especificacaoSeg->id}}" {{ in_array($especificacaoSeg->id, old('especificacao_seg_obra',[])) ? 'checked' : '' }}>
                               <div class="state p-success">
                                 <label style="margin-left: 10px;" for="especificacao_seg_obra_{{$especificacaoSeg->id}}">{{$especificacaoSeg->titulo_especificacao_seguranca_obra}}</label>
                               </div>

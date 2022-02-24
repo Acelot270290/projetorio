@@ -44,7 +44,9 @@ class AcervoController extends Controller
         $seculos = Seculos::select('id', 'titulo_seculo', 'ano_inicio_seculo', 'ano_fim_seculo', 'is_default_seculo')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento', 'is_default_tombamento')->get();
 
-        return view('admin.criar_acervo', ['especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos]);
+        $default = [];
+
+        return view('admin.criar_acervo', ['especificacoes' => $especificacoes, 'estados' => $estados, 'seculos' => $seculos, 'tombamentos' => $tombamentos, 'default'=>$default]);
     }
 
     public function adicionar(Request $request)
