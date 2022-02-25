@@ -31,28 +31,28 @@
                         </tr>
                       </thead>
                       <tbody>
-                      <tr>
                       @foreach ($obras as $obra)
-                        <td style="padding-left:25px; text-align: center;">{{ $obra->id }}</td>
-                        <td class="align-middle text-center">
-                          <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}">
-                          @if($obra->foto_frontal_obra)
-                            <img class="team-member-sm" src="{{ asset($obra->foto_frontal_obra) }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
-                            @else
-                            <img class="team-member-sm" src="{{ asset('img/noimg.png') }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
-                            @endif
-                          </a>
-                        </td>
-                        <td>{{ $obra->titulo_obra }}</td>
-                        <td>{{ $obra->titulo_tesauro }}</td>
-                        <td>{{ $obra->nome_acervo }}</td>
-                        <td>{{ $obra->titulo_material_1 }}</td>
-                        <td>{{ $obra->titulo_seculo }}</td>
-                        <td id="interacoes">
-                          <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"><i class="far fa-eye"></i></a>
-                          <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                          <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"  name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
-                        </td>
+                        <tr>
+                          <td style="padding-left:25px; text-align: center;">{{ $obra->id }}</td>
+                          <td class="align-middle text-center">
+                            <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}">
+                            @if($obra->foto_frontal_obra)
+                              <img class="team-member-sm" src="{{ asset($obra->foto_frontal_obra) }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
+                              @else
+                              <img class="team-member-sm" src="{{ asset('img/noimg.png') }}" alt="obra_{{ $obra->id }}" data-toggle="tooltip" title="obra_{{ $obra->id }}" data-original-title="Foto frontal">
+                              @endif
+                            </a>
+                          </td>
+                          <td>{{ $obra->titulo_obra }}</td>
+                          <td>{{ $obra->titulo_tesauro }}</td>
+                          <td>{{ $obra->nome_acervo }}</td>
+                          <td>{{ $obra->titulo_material_1 }}</td>
+                          <td>{{ $obra->titulo_seculo }}</td>
+                          <td id="interacoes">
+                            <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"><i class="far fa-eye"></i></a>
+                            <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"  name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
+                          </td>
                         </tr>
                         @endforeach
                       </tbody>
