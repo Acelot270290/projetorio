@@ -8,8 +8,8 @@
   <section class="section">
     <div class="section-body">
       @if(session()->has('alert_type'))
-        <div id="msg" class="alert alert-{{session()->pull('alert_type')}} alert-dismissible fade show" role="alert">
-          {{session()->pull('alert_message')}}
+        <div id="msg" class="alert alert-{{ session()->pull('alert_type') }} alert-dismissible fade show" role="alert">
+          {{ session()->pull('alert_message') }}
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{route('adicionar_acervo')}}" name="criar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('adicionar_acervo') }}" name="criar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
               @csrf
               <div class="card-header">
                 <h4> Adicionar Acervo </h4>
@@ -35,7 +35,7 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_acervo" value="{{old('nome_acervo')}}">
+                      <input type="text" class="form-control" name="nome_acervo" value="{{ old('nome_acervo') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('nome_acervo') }}</small>
                   </div>
@@ -50,7 +50,7 @@
                         </div>
                       </div>
                       <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
-                        value="{{old('cep_acervo')}}" maxlength="9">
+                        value="{{ old('cep_acervo') }}" maxlength="9">
                     </div>
                     <small class="text-danger">{{ $errors->first('cep_acervo') }}</small>
                   </div>
@@ -62,7 +62,7 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{old('endereco_acervo')}}" >
+                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{ old('endereco_acervo') }}" >
                     </div>
                      <small class="text-danger">{{ $errors->first('endereco_acervo') }}</small>
                   </div>
@@ -74,7 +74,7 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo" value="{{old('numero_endereco_acervo')}}">
+                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo" value="{{ old('numero_endereco_acervo') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
@@ -88,7 +88,7 @@
                           <i class="fas fa-directions text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{old('bairro_acervo')}}">
+                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{ old('bairro_acervo') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('bairro_acervo') }}</small>
                   </div>
@@ -100,7 +100,7 @@
                           <i class="fas fa-location-arrow text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo" value="{{old('cidade_acervo')}}">
+                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo" value="{{ old('cidade_acervo') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
 
@@ -113,7 +113,7 @@
                           <i class="fas fa-map text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{old('UF_acervo')}}"
+                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{ old('UF_acervo') }}"
                        maxlength="2">
                     </div>
                       <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
@@ -144,9 +144,9 @@
                         <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                       @else
                         @if($seculo->is_default_seculo)
-                          <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
+                          <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                         @else
-                          <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
+                          <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
                         @endif
                       @endif
                     @endforeach
@@ -168,12 +168,12 @@
                     <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
                         @if (old('estado_conservacao_acervo') == $estado->id)
-                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                          <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_acervo }}</option>
                         @else
                           @if($estado->is_default_estado_conservacao_acervo)
-                            <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
+                            <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_acervo }}</option>
                           @else
-                            <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
+                            <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_acervo }}</option>
                           @endif
                         @endif
                       @endforeach
@@ -252,7 +252,7 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_lateral2_acervo"></div>
+                      <div id="image_holder_lateral2_acervo"></div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -268,7 +268,7 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_posterior_acervo"></div>
+                      <div id="image_holder_posterior_acervo"></div>
                     </div>
                   </div>
                 </div>
@@ -286,7 +286,7 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_cobertura_acervo"></div>
+                      <div id="image_holder_cobertura_acervo"></div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -302,15 +302,14 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_plantas_situcao_acervo"></div>
+                      <div id="image_holder_plantas_situcao_acervo"></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- Finalizar forms Acervos (estado de conservação e século (combombox), especificação (checkbox)) -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
+                <a href="{{ route('home') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
           </div>
@@ -381,8 +380,8 @@
 // Parametrização de variáveis
   @foreach ($seculos as $seculo)
     @if ($seculo['is_default_seculo'])
-      var min = {{$seculo['ano_inicio_seculo']}};
-      var max = {{$seculo['ano_fim_seculo']}};
+      var min = {{ $seculo['ano_inicio_seculo'] }};
+      var max = {{ $seculo['ano_fim_seculo'] }};
       var anoOk = false;
     @endif
   @endforeach
@@ -390,9 +389,9 @@
    function minMaxAno(){
    	// Checa o valor do século e seta o minimo e o máximo
     @foreach ($seculos as $seculo)
-      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{$seculo['id']}}'){
-  window.min = {{$seculo['ano_inicio_seculo']}};
-  window.max = {{$seculo['ano_fim_seculo']}};
+      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{ $seculo['id'] }}'){
+  window.min = {{ $seculo['ano_inicio_seculo'] }};
+  window.max = {{ $seculo['ano_fim_seculo'] }};
 }
     @endforeach
 
@@ -480,8 +479,6 @@
           ajax_sub($("input[name='plantas_situacao_acervo']"), $("#image_holder_plantas_situcao_acervo"));
         });
       });
-
-      
 </script>
 
 @endsection

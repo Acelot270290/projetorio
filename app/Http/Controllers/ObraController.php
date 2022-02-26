@@ -38,21 +38,26 @@ class ObraController extends Controller
      */
     public function index()
     {
+        // Seleciona os dados de obras para serem dispostas na listagem de obras
         $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo')
-        ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
-        ->join('tesauros as t', 't.id', '=', 'tesauro_id')
-        ->join('acervos as a', 'a.id', '=', 'acervo_id')
-        ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
-        ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
-        ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
-        ->orderBy('obras.id', 'ASC')
-        ->get();
+            ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
+            ->join('tesauros as t', 't.id', '=', 'tesauro_id')
+            ->join('acervos as a', 'a.id', '=', 'acervo_id')
+            ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
+            ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
+            ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
+            ->orderBy('obras.id', 'ASC')
+            ->get();
 
-        return view('admin.obra', ['obras' => $obras]);
+        // Retorna a view de listagem de obras
+        return view('admin.obra', [
+            'obras' => $obras
+        ]);
     }
 
     public function criar(Request $request)
     {
+        // Seleciona os dados necessários para o preenchimento dos dados do formulário de criação de obras (checkboxes, select, ...)
         $acervos = Acervos::select('id', 'nome_acervo')->get();
         $categorias = Categorias::select('id', 'titulo_categoria')->get();
         $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obra', 'is_default_condicao_seguranca_obra')->get();
@@ -66,14 +71,29 @@ class ObraController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->orderBy('titulo_tesauro', 'ASC')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
-        return view('admin.criar_obra', ['acervos'=>$acervos, 'categorias'=>$categorias, 'especificacoes'=>$especificacoes, 'estados'=>$estados, 'localizacoes'=>$localizacoes, 'seculos'=>$seculos, 'tombamentos'=>$tombamentos,'condicoes'=>$condicoes, 'especificacoesSeg'=>$especificacoesSeg, 'materiais'=>$materiais,'tecnicas'=>$tecnicas,'tesauros'=>$tesauros]);
+        // Retorna a view de criação de obras contendo os dados coletados
+        return view('admin.criar_obra', [
+            'acervos' => $acervos, 
+            'categorias' => $categorias, 
+            'especificacoes' => $especificacoes, 
+            'estados' => $estados, 
+            'localizacoes' => $localizacoes, 
+            'seculos' => $seculos, 
+            'tombamentos' => $tombamentos, 
+            'condicoes' => $condicoes, 
+            'especificacoesSeg' => $especificacoesSeg, 
+            'materiais' => $materiais, 
+            'tecnicas' => $tecnicas, 
+            'tesauros'=>$tesauros
+        ]);
     }
 
     public function adicionar(Request $request)
     {
+        // Descobre os limites superior e inferior para os anos referente ao século desejado
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_obra)->first();
 
-        //validando os campos de obras
+        // Valida os campos
         $request->validate([
             'acervo_obra' => 'required|min:1|max:21',
             'categoria_obra'=>'required|min:1|max:21',
@@ -89,23 +109,29 @@ class ObraController extends Controller
             'ano_obra' => 'nullable|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
-
-        //Pegando os dados do user
+        // Descobre qual user que fez a requisição
         $usuario = auth()->user('id');
 
+        // Se existe uma especificação de obra e ela não está vazia
         if(isset($request->especificacao_obra) and !empty($request->especificacao_obra)){
+            // Concatena os elementos do array usando como separador uma ,
             $check = implode(',', $request->especificacao_obra);
         } else {
+            // Já que não existe dado para especificação de obra, marca como uma string vazia
             $check = '';
         }
 
+        // Se existe uma especificação de segurança de obra e ela não está vazia
         if(isset($request->especificacao_seg_obra) and !empty($request->especificacao_seg_obra)){
+            // Concatena os elementos do array usando como separador uma ,
             $checkSeg = implode(',', $request->especificacao_seg_obra);
         } else {
+            // Já que não existe dado para especificação de segurança de obra, marca como uma string vazia
             $checkSeg = '';
         }
 
-        $adicionandoObra = Obras::insertGetId([
+        // Insere os dados em obras e retorna o id do elemento inserido
+        $obraId = Obras::insertGetId([
             'id' => $request->id,
             'acervo_id'=> $request->acervo_obra,
             'created_at'=> new \DateTime(),
@@ -131,173 +157,219 @@ class ObraController extends Controller
             'tecnica_id_1'=> $request->tecnica_1_obra,
             'tecnica_id_2'=> $request->tecnica_2_obra,
             'tecnica_id_3'=> $request->tecnica_3_obra,
-            //'especificacao_obra_id'=> $request->especificacao_obra,
-            //'especificacao_seguranca_obra_id'=> $request->especificacao_seg_obra,
             'checkbox_especificacao_obra' => $check,
             'checkbox_especificacao_seguranca_obra' => $checkSeg,
             'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
             'observacoes_obra'=> $request->observacoes_obra,
         ]);
 
-        // criando a variavel global para pegar o id da obra
-        $IdObra = $adicionandoObra;
-        
+        /* Parametrização do caminho onde as imagens ficam. */
+        // Nome do primeiro folder
         $preBasePath =  'imagem';
+        // Nome do segundo folder
         $basePath =  $preBasePath . '/obras';
+
+        // Se o primeiro folder não existir
         if (!is_dir($preBasePath)) {
+            // Ele será criado
             mkdir(public_path($preBasePath));
+            // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
         }else if (!is_dir($basePath)) {
+            // Se não existir, cria ele
             mkdir(public_path($basePath));
         }
 
-        $imagemaobra =  $basePath . '/' . $adicionandoObra;
+        /* Tratamento de dados para quando o folder de imagem do id a ser inserido já existe (não deve ser executado nunca, mas por precaução...) */
+        // Parametrização do nome da pasta onde as imagens vão ficar
+        $imagemaobra =  $basePath . '/' . $obraId;
         if (is_dir($imagemaobra)) {
-            // se a pasta esxistir, deleta tudo dentro dela, remove e depois recria
+            // Deleta tudo dentro dela
             array_map('unlink', glob(public_path($imagemaobra) . "/*.*"));
-            rmdir(public_path($imagemaobra));
-            mkdir(public_path($imagemaobra));
+            // Remoção e recriação comentadas, mas deixadas aqui pra caso de algum problema já ter uma sugestão de solução
+            //rmdir(public_path($imagemaobra));
+            //mkdir(public_path($imagemaobra));
         } else {
+            // Já que ela não existe, cria
             mkdir(public_path($imagemaobra));
         }
 
-        if($request->hasFile('foto_frontal_obra') or $request->hasFile('foto_lateral_esquerda_obra') or $request->hasFile('foto_lateral_direita_obra') or $request->hasFile('foto_posterior_obra') or $request->hasFile('foto_superior_obra') or $request->hasFile('foto_inferior_obra')){
-            $insereObra = Obras::find($IdObra);
+        /* Tratamento para inserção de fotos submetidas */
+        // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
+        if($request->hasFile('foto_frontal_obra') or 
+           $request->hasFile('foto_lateral_esquerda_obra') or 
+           $request->hasFile('foto_lateral_direita_obra') or 
+           $request->hasFile('foto_posterior_obra') or 
+           $request->hasFile('foto_superior_obra') or 
+           $request->hasFile('foto_inferior_obra')){
+           
+            // Descobre qual é a obra que acabou de ser inserida
+            $insereObra = Obras::find($obraId);
+            // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
             $insereObra->timestamps = false;
 
+            // Se houver foto frontal
             if ($request->file('foto_frontal_obra')) {
-
+                // Seta o nome da imagem como frontal
                 $imageName = 'Frontal_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_frontal_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-                
+                // Seta a coluna foto_frontal_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto lateral esquerda
             if ($request->file('foto_lateral_esquerda_obra')) {
-
+                // Seta o nome da imagem como lateral esquerda
                 $imageName = 'Lateral_esquerda_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_lateral_esquerda_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_lateral_esquerda_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto lateral direita
             if ($request->file('foto_lateral_direita_obra')) {
-
+                // Seta o nome da imagem como lateral direita
                 $imageName = 'foto_lateral_direita_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_lateral_direita_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_lateral_direita_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto posterior
             if ($request->file('foto_posterior_obra')) {
-
+                // Seta o nome da imagem como posterior
                 $imageName = 'Posterior_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_posterior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_posterior_obra =$imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto superior
             if ($request->file('foto_superior_obra')) {
-
+                // Seta o nome da imagem como superior
                 $imageName = 'Superior_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_superior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto inferior
             if ($request->file('foto_inferior_obra')) {
-
+                // Seta o nome da imagem como inferior
                 $imageName = 'Inferior_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_inferior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
                 $insereObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
             }
+            // Salva as alterações feitas (evitando o timestamp)
             $insereObra->save();
         }
 
-        if ($adicionandoObra) {
+        // Se houver um id, é sinal de que o cadastro foi feito com sucesso (não contempla as atualizações para inserção das imagens)
+        if ($obraId) {
+            // Seta a mensagem de sucesso e o tipo de resposta como sucesso (classe bootstrap)
             $alertMsg = 'Obra cadastrada com sucesso!';
             $alertType = 'success';
         } else {
+            // Seta a mensagem de falha e o tipo de resposta como perigo (classe bootstrap)
             $alertMsg = 'Falha ao cadastrar a obra!';
             $alertType = 'danger';
         }
       
+        // Redireciona para a url de criação de obra passando o alerta de mensagem e o tipo de alerta
         return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
     public function detalhar(Request $request, $id){
-        //$obra = Obras::select('obras.id', 'acervo_id', 'nome_acervo', 'obras.created_at', 'obras.updated_at', 'categoria_id', 'titulo_categoria', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'titulo_tesauro', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra', 'diametro_obra', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'tecnica_id_1', 't1.titulo_tecnica as titulo_tecnica_1', 'tecnica_id_2', 't2.titulo_tecnica as titulo_tecnica_2', 'tecnica_id_3', 't3.titulo_tecnica as titulo_tecnica_3', 'obras.seculo_id', 'titulo_seculo', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'estado_conservacao_obra_id', 'titulo_estado_conservacao_obra', 'especificacao_obra_id', 'titulo_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'titulo_condicao_seguranca_obra', 'especificacao_seguranca_obra_id', 'titulo_especificacao_seguranca_obra', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id', 'nome_localizacao', 'obras.usuario_insercao_id', 'u1.name as usuario_cadastrante', 'obras.usuario_atualizacao_id', 'u2.name as usuario_revisor')
+        // Seleciona os dados de obras para detalhamento (query completa com as devidas associações)
         $obra = Obras::select('obras.id', 'acervo_id', 'nome_acervo', 'obras.created_at', 'obras.updated_at', 'categoria_id', 'titulo_categoria', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'titulo_tesauro', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra', 'diametro_obra', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'tecnica_id_1', 't1.titulo_tecnica as titulo_tecnica_1', 'tecnica_id_2', 't2.titulo_tecnica as titulo_tecnica_2', 'tecnica_id_3', 't3.titulo_tecnica as titulo_tecnica_3', 'obras.seculo_id', 'titulo_seculo', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'estado_conservacao_obra_id', 'titulo_estado_conservacao_obra', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'titulo_condicao_seguranca_obra', 'checkbox_especificacao_seguranca_obra','caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id', 'nome_localizacao', 'obras.usuario_insercao_id', 'u1.name as usuario_cadastrante', 'obras.usuario_atualizacao_id', 'u2.name as usuario_revisor')
-        ->where('obras.id', '=', intval($id))
-        ->join('acervos as a', 'a.id', '=', 'acervo_id')
-        ->join('categorias as c', 'c.id', '=', 'categoria_id')
-        ->join('tesauros as te', 'te.id', '=', 'tesauro_id')
-        ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
-        ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
-        ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
-        ->leftjoin('tecnicas as t1', 't1.id', '=', 'tecnica_id_1')
-        ->leftjoin('tecnicas as t2', 't2.id', '=', 'tecnica_id_2')
-        ->leftjoin('tecnicas as t3', 't3.id', '=', 'tecnica_id_3')
-        ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
-        ->join('estado_conservacao_obras as ec', 'ec.id', '=', 'estado_conservacao_obra_id')
-        //->leftjoin('especificacao_obras as e', 'e.id', '=', 'especificacao_obra_id')
-        ->join('condicao_seguranca_obras as cs', 'cs.id', '=', 'condicoes_de_seguranca_obra_id')
-        //->leftjoin('especificacao_seguranca_obras as es', 'es.id', '=', 'especificacao_seguranca_obra_id')
-        ->join('localizacoes_obras as l', 'l.id', '=', 'localizacao_obra_id')
-        ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
-        ->leftJoin('users as u2', 'u2.id', '=', 'obras.usuario_atualizacao_id')
-        ->first();
+            ->where('obras.id', '=', intval($id))
+            ->join('acervos as a', 'a.id', '=', 'acervo_id')
+            ->join('categorias as c', 'c.id', '=', 'categoria_id')
+            ->join('tesauros as te', 'te.id', '=', 'tesauro_id')
+            ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
+            ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
+            ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
+            ->leftjoin('tecnicas as t1', 't1.id', '=', 'tecnica_id_1')
+            ->leftjoin('tecnicas as t2', 't2.id', '=', 'tecnica_id_2')
+            ->leftjoin('tecnicas as t3', 't3.id', '=', 'tecnica_id_3')
+            ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
+            ->join('estado_conservacao_obras as ec', 'ec.id', '=', 'estado_conservacao_obra_id')
+            ->join('condicao_seguranca_obras as cs', 'cs.id', '=', 'condicoes_de_seguranca_obra_id')
+            ->join('localizacoes_obras as l', 'l.id', '=', 'localizacao_obra_id')
+            ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
+            ->leftJoin('users as u2', 'u2.id', '=', 'obras.usuario_atualizacao_id')
+            ->first();
 
+        // Como as especificações não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
         $especificacoes_array = explode(',', $obra->checkbox_especificacao_obra);
         $especificacoes = EspecificacaoObras::find($especificacoes_array);
 
+        // Como as especificações de segurança não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
         $especificacoes_seg_array = explode(',', $obra->checkbox_especificacao_seguranca_obra);
         $especificacoesSeg = EspecificacaoSegurancaObras::find($especificacoes_seg_array);
 
-        return view('admin.detalhar_obra', ['obra' => $obra, 'especificacoes' => $especificacoes, 'especificacoesSeg' => $especificacoesSeg]);
+        // Retorna a visualização de detalhamento de obras com os dados coletados
+        return view('admin.detalhar_obra', [
+            'obra' => $obra, 
+            'especificacoes' => $especificacoes, 
+            'especificacoesSeg' => $especificacoesSeg
+        ]);
     }
 
     public function editar(Request $request, $id){
+        // Seleciona os dados de obras para edição
         $obra = Obras::select('obras.id', 'acervo_id', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'checkbox_especificacao_seguranca_obra', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id')
-        ->where('obras.id', '=', intval($id))
-        ->first();
+            ->where('obras.id', '=', intval($id))
+            ->first();
 
+        // Converte para inteiro todos os valores contidos nos arrays gerados pela separações das strings checkbox_especificacao_obra e checkbox_especificacao_seguranca_obra com o separador ,
         $check = array_map('intval', explode(',', $obra->checkbox_especificacao_obra));
         $checkSeg = array_map('intval', explode(',', $obra->checkbox_especificacao_seguranca_obra));
 
+        // Seleciona os dados necessários para preencher os valores da lista
         $acervos = Acervos::select('id', 'nome_acervo')->get();
         $categorias = Categorias::select('id', 'titulo_categoria')->get();
         $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obra', 'is_default_condicao_seguranca_obra')->get();
@@ -311,7 +383,24 @@ class ObraController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->orderBy('titulo_tesauro', 'ASC')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
-        return view('admin.editar_obra', ['obra' => $obra, 'acervos' => $acervos, 'categorias' => $categorias, 'especificacoes' => $especificacoes, 'check' => $check, 'estados'=>$estados, 'localizacoes' => $localizacoes, 'seculos' => $seculos, 'tombamentos' => $tombamentos, 'condicoes' => $condicoes, 'especificacoesSeg' => $especificacoesSeg, 'checkSeg' => $checkSeg, 'materiais' => $materiais, 'tecnicas' => $tecnicas, 'tesauros' => $tesauros]);
+        // Chama a view de edição de obras
+        return view('admin.editar_obra', [
+            'obra' => $obra, 
+            'acervos' => $acervos, 
+            'categorias' => $categorias, 
+            'especificacoes' => $especificacoes, 
+            'check' => $check, 
+            'estados' => $estados, 
+            'localizacoes' => $localizacoes, 
+            'seculos' => $seculos, 
+            'tombamentos' => $tombamentos, 
+            'condicoes' => $condicoes, 
+            'especificacoesSeg' => $especificacoesSeg, 
+            'checkSeg' => $checkSeg, 
+            'materiais' => $materiais, 
+            'tecnicas' => $tecnicas, 
+            'tesauros' => $tesauros
+        ]);
     }
 
     public function atualizar(Request $request, $id)
@@ -320,7 +409,7 @@ class ObraController extends Controller
         $obra = Obras::select('seculo_id')->where('id', $id)->first();
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $obra['seculo_id'])->first();
 
-        //validando os campos de obras
+        // Valida os dados
         $request->validate([
             'acervo_obra' => 'required|min:1|max:21',
             'categoria_obra'=>'required|min:1|max:21',
@@ -336,22 +425,29 @@ class ObraController extends Controller
             'ano_obra' => 'nullable|max:5|gte:' . strval($seculo->ano_inicio_seculo) . '|lte:' . strval($seculo->ano_fim_seculo),
         ]);
 
-        //Pegando os dados do user
+        // Descobre qual user que fez a requisição
         $usuario = auth()->user('id');
        
         try{
+            // Se existe uma especificação de obra e ela não está vazia
             if(isset($request->especificacao_obra) and !empty($request->especificacao_obra)){
+                // Concatena os elementos do array usando como separador uma ,
                 $check = implode(',', $request->especificacao_obra);
             } else {
+                // Já que não existe dado para especificação de acervo, marca como uma string vazia
                 $check = '';
             }
     
+            // Se existe uma especificação de segurança de obra e ela não está vazia
             if(isset($request->especificacao_seg_obra) and !empty($request->especificacao_seg_obra)){
+                // Concatena os elementos do array usando como separador uma ,
                 $checkSeg = implode(',', $request->especificacao_seg_obra);
             } else {
+                // Já que não existe dado para especificação de segurança de obra, marca como uma string vazia
                 $checkSeg = '';
             }
             
+            // Edita a obra que possui o id igual ao id passado na url
             $atualizaObra = Obras::where('id', '=', $id)
                 ->update([
                 'acervo_id' => $request->acervo_obra,
@@ -383,151 +479,201 @@ class ObraController extends Controller
                 'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
                 'observacoes_obra'=> $request->observacoes_obra,
             ]);
+            // Seta flag de sucesso
             $isSuccess = true;
         }catch(Exception $e){
+            // Seta flag de falha
             $isSuccess = false;
         }
 
+        /* Parametrização do caminho onde as imagens ficam. */
+        // Nome do primeiro folder
         $preBasePath =  'imagem';
+        // Nome do segundo folder
         $basePath =  $preBasePath . '/obras';
+
+        // Se o primeiro folder não existir (é pra sempre existirem, mas, mais uma vez, checagem de segurança)
         if (!is_dir($preBasePath)) {
+            // Ele será criado
             mkdir(public_path($preBasePath));
+            // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
         }else if (!is_dir($basePath)) {
+            // Se não existir, cria ele
             mkdir(public_path($basePath));
         }
 
+        /* Tratamento de dados para quando o folder de imagem do id a ser inserido já existe (não deve ser executado nunca, mas por precaução...) */
+        // Parametrização do nome da pasta onde as imagens vão ficar
         $imagemaobra =  $basePath . '/' . $id;
-        if (is_dir($imagemaobra)) {
-            // erro
-        } else {
+
+        // Se a pasta não existir
+        if (!is_dir($imagemaobra)) {
+            // Já que ela não existe, cria
             mkdir(public_path($imagemaobra));
         }
 
-
-        if($request->hasFile('foto_frontal_obra') or $request->hasFile('foto_lateral_esquerda_obra') or $request->hasFile('foto_lateral_direita_obra') or $request->hasFile('foto_posterior_obra') or $request->hasFile('foto_superior_obra') or $request->hasFile('foto_inferior_obra')){
-            $atualizaObra = Obras::find($id);
+        /* Tratamento para inserção de fotos submetidas */
+        // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
+        if($request->hasFile('foto_frontal_obra') or 
+           $request->hasFile('foto_lateral_esquerda_obra') or 
+           $request->hasFile('foto_lateral_direita_obra') or 
+           $request->hasFile('foto_posterior_obra') or 
+           $request->hasFile('foto_superior_obra') or 
+           $request->hasFile('foto_inferior_obra')){
+           
+            // Descobre qual é a obra que acabou de ser inserida
+            $atualizaObra = Obras::find($obraId);
+            // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
             $atualizaObra->timestamps = false;
 
+            // Se houver foto frontal
             if ($request->file('foto_frontal_obra')) {
-
+                // Seta o nome da imagem como frontal
                 $imageName = 'Frontal_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_frontal_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-            
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-                
+                // Seta a coluna foto_frontal_obra como o caminho de onde a imagem está salva
                 $atualizaObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto lateral esquerda
             if ($request->file('foto_lateral_esquerda_obra')) {
-
+                // Seta o nome da imagem como lateral esquerda
                 $imageName = 'Lateral_esquerda_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_lateral_esquerda_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_lateral_esquerda_obra como o caminho de onde a imagem está salva
                 $atualizaObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto lateral direita
             if ($request->file('foto_lateral_direita_obra')) {
-
+                // Seta o nome da imagem como lateral direita
                 $imageName = 'foto_lateral_direita_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_lateral_direita_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_lateral_direita_obra como o caminho de onde a imagem está salva
                 $atualizaObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto posterior
             if ($request->file('foto_posterior_obra')) {
-
+                // Seta o nome da imagem como posterior
                 $imageName = 'Posterior_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_posterior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
-                $atualizaObra->foto_posterior_obra = $imagemaobra . '/' . $imageName;
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
+                $atualizaObra->foto_posterior_obra =$imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto superior
             if ($request->file('foto_superior_obra')) {
-
+                // Seta o nome da imagem como superior
                 $imageName = 'Superior_obra.webp';
-                
-                $img = Image::make($request->foto_superior_obra);
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
+                $img = Image::make($request->foto_superior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
                 $atualizaObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
             }
 
+            // Se houver foto inferior
             if ($request->file('foto_inferior_obra')) {
-
+                // Seta o nome da imagem como inferior
                 $imageName = 'Inferior_obra.webp';
-                
+                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
                 $img = Image::make($request->foto_inferior_obra)->orientate();
+                // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
-
+                // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
                 $atualizaObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
             }
-
+            // Salva as alterações feitas (evitando o timestamp)
             $atualizaObra->save();
         }
 
+        // Se houver um id, é sinal de que o cadastro foi feito com sucesso (não contempla as atualizações para inserção das imagens)
         if ($isSuccess) {
+            // Seta a mensagem de sucesso e o tipo de resposta como sucesso (classe bootstrap)
             $alertMsg = 'Obra atualizada com sucesso!';
             $alertType = 'success';
         } else {
+            // Seta a mensagem de falha e o tipo de resposta como perigo (classe bootstrap)
             $alertMsg = 'Falha ao atualizada a obra!';
             $alertType = 'danger';
         }
       
+        // Redireciona para a url de edição de obra passando o alerta de mensagem e o tipo de alerta
         return redirect('/obra/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
     public function deletar(Request $request, $id){
-
+        /*// Descobre qual é a obra a ser deletada
         $obra = Obras::select()->where('id', '=', $id)->delete();
-
-        $preBasePath =  'imagem';
-        $basePath =  $preBasePath . '/obras';
-        if (!is_dir($preBasePath)) {
-            mkdir(public_path($preBasePath));
-            mkdir(public_path($basePath));
-        }else if (!is_dir($basePath)) {
-            mkdir(public_path($basePath));
-        }
-
-        $imagemaobra =  $basePath . '/' . $id;
-        if (is_dir($imagemaobra)) {
-            // se a pasta existir, deleta tudo dentro dela, remove e depois recria
-            array_map('unlink', glob(public_path($imagemaobra) . "/*.*"));
-            rmdir(public_path($imagemaobra));
-        }
-
-        if ($obra) {
-            return response()->json(['status' => 'success', 'msg' => 'Obra deletada']);
-        } else {
-            return response()->json(['status' => 'error', 'msg' => 'Ops.. Não coneguimos deletar']);
-        }
         
+        try{
+            /* Parametrização do caminho onde as imagens ficam. *
+            // Nome do primeiro folder
+            $preBasePath =  'imagem';
+            // Nome do segundo folder
+            $basePath =  $preBasePath . '/obras';
+
+            // Parametrização do nome da pasta onde as imagens estão
+            $imagemaobra =  $basePath . '/' . $id;
+            
+            // Se a pasta existir
+            if (is_dir($imagemaobra)) {
+                // Delete o seu conteúdo
+                array_map('unlink', glob(public_path($imagemaobra) . "/*.*"));
+                // Apague a pasta
+                rmdir(public_path($imagemaobra));
+            }
+            // Se existir um elemento obra
+            if ($obra) {
+                // Retorne sucesso
+                return response()->json(['status' => 'success', 'msg' => 'Obra deletada.']);
+            } else { // caso contrário
+                // Retorne falha
+                return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar a obra.']);
+            }
+        }catch(Exception $e){ // Se houver qualquer falha
+            // Retorne falha
+            return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar a obra.']);
+        }*/
+        return;
     }
 }

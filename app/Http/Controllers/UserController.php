@@ -15,6 +15,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        // Somente usuários logados podem acessar esse controller
         $this->middleware('auth');
     }
 
@@ -25,12 +26,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        // Seleciona os dados dos usuários
         $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')
-        ->join('cargos as f', 'f.id', '=', 'id_cargo')
-        ->orderBy('users.id', 'ASC')
-        ->get();
-       // print_r($usuarios);die;
+            ->join('cargos as f', 'f.id', '=', 'id_cargo')
+            ->orderBy('users.id', 'ASC')
+            ->get();
         
-        return view('admin.usuarios', ['usuarios'=>$usuarios]);
+        return view('admin.usuarios', [
+            'usuarios' => $usuarios
+        ]);
     }
 }
