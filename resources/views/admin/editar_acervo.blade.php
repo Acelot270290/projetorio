@@ -8,20 +8,21 @@
   <section class="section">
     <div class="section-body">
       @if(session()->has('alert_type'))
-        <div id="msg" class="alert alert-{{session()->pull('alert_type')}} alert-dismissible fade show" role="alert">
-          {{session()->pull('alert_message')}}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+      <div id="msg" class="alert alert-{{ session()->pull('alert_type') }} alert-dismissible fade show" role="alert">
+        {{ session()->pull('alert_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       @endif
       <div id="anoerror">
       </div>
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{ route('atualizar_acervo', ['id' => $acervo['id']]) }}" name="atualizar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
-            @csrf
+            <form method="POST" action="{{ route('atualizar_acervo', ['id' => $acervo['id']]) }}"
+              name="atualizar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
+              @csrf
               <div class="card-header">
                 <h4> Editar Acervo {{ $acervo['nome_acervo'] }}</h4>
               </div>
@@ -35,7 +36,8 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="nome_acervo" value="{{ (old('nome_acervo') !== null ? old('nome_acervo') : $acervo['nome_acervo'] ) }}">
+                      <input type="text" class="form-control" name="nome_acervo"
+                        value="{{ old('nome_acervo') !== null ? old('nome_acervo') : $acervo['nome_acervo'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('nome_acervo') }}</small>
                   </div>
@@ -49,7 +51,9 @@
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo" value="{{ (old('cep_acervo') !== null ? old('cep_acervo') : $acervo['cep_acervo']) }}" maxlength="9">
+                      <input type="text" class="form-control cep" id="cep_acervo" name="cep_acervo"
+                        value="{{ old('cep_acervo') !== null ? old('cep_acervo') : $acervo['cep_acervo'] }}"
+                        maxlength="9">
                     </div>
                     <small class="text-danger">{{ $errors->first('cep_acervo') }}</small>
                   </div>
@@ -61,9 +65,10 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo" value="{{ (old('endereco_acervo') !== null ? old('endereco_acervo') : $acervo['endereco_acervo']) }}" >
+                      <input type="text" class="form-control" id="endereco_acervo" name="endereco_acervo"
+                        value="{{ old('endereco_acervo') !== null ? old('endereco_acervo') : $acervo['endereco_acervo'] }}">
                     </div>
-                     <small class="text-danger">{{ $errors->first('endereco_acervo') }}</small>
+                    <small class="text-danger">{{ $errors->first('endereco_acervo') }}</small>
                   </div>
                   <div class="form-group col-md-2">
                     <label>Número</label>
@@ -73,7 +78,8 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo" value="{{ (old('numero_endereco_acervo') !== null ? old('numero_endereco_acervo') : $acervo['numero_endereco_acervo']) }}">
+                      <input type="text" class="form-control" id="numero_endereco_acervo" name="numero_endereco_acervo"
+                        value="{{ old('numero_endereco_acervo') !== null ? old('numero_endereco_acervo') : $acervo['numero_endereco_acervo'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('numero_endereco_acervo') }}</small>
                   </div>
@@ -87,7 +93,8 @@
                           <i class="fas fa-directions text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo" value="{{ (old('bairro_acervo') !== null ? old('bairro_acervo') : $acervo['bairro_acervo']) }}">
+                      <input type="text" class="form-control" id="bairro_acervo" name="bairro_acervo"
+                        value="{{ old('bairro_acervo') !== null ? old('bairro_acervo') : $acervo['bairro_acervo'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('bairro_acervo') }}</small>
                   </div>
@@ -99,7 +106,8 @@
                           <i class="fas fa-location-arrow text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo" value="{{ (old('cidade_acervo') !== null ? old('cidade_acervo') : $acervo['cidade_acervo']) }}">
+                      <input type="text" class="form-control" id="cidade_acervo" name="cidade_acervo"
+                        value="{{ old('cidade_acervo') !== null ? old('cidade_acervo') : $acervo['cidade_acervo'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('cidade_acervo') }}</small>
 
@@ -112,51 +120,52 @@
                           <i class="fas fa-map text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo" value="{{ (old('UF_acervo') !== null ? old('UF_acervo') : $acervo['UF_acervo']) }}" maxlength="2">
+                      <input type="text" class="form-control uf" id="UF_acervo" name="UF_acervo"
+                        value="{{ old('UF_acervo') !== null ? old('UF_acervo') : $acervo['UF_acervo'] }}" maxlength="2">
                     </div>
-                      <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
+                    <small class="text-danger">{{ $errors->first('UF_acervo') }}</small>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                     <label>Tombamento</label>
                     <select name="tombamento_acervo" class="form-control">
-                    @foreach ($tombamentos as $tombamento)
+                      @foreach ($tombamentos as $tombamento)
                       @if (old('tombamento_acervo') == $tombamento->id)
-                        <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
                       @else
-                        @if($tombamento->id == $acervo['tombamento_id'])
-                          <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
-                        @else
-                          @if($tombamento->is_default_tombamento)
-                            <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
-                          @else
-                            <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
-                          @endif
-                        @endif
+                      @if($tombamento->id == $acervo['tombamento_id'])
+                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                      @else
+                      @if($tombamento->is_default_tombamento)
+                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                      @else
+                      <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
                       @endif
-                    @endforeach
+                      @endif
+                      @endif
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Século</label>
                     <select name="seculo_acervo" class="form-control">
-                    @foreach ($seculos as $seculo)
-                      
+                      @foreach ($seculos as $seculo)
+
                       @if (old('seculo_acervo') == $seculo->id)
-                        <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                       @else
-                        @if($seculo->id == $acervo['seculo_id'])
-                          <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
-                        @else
-                          @if($seculo->is_default_seculo and !isset($acervo['seculo_id']))
-                            <option value="{{$seculo->id}}" selected>{{$seculo->titulo_seculo}}</option>
-                          @else
-                            <option value="{{$seculo->id}}">{{$seculo->titulo_seculo}}</option>
-                          @endif
-                        @endif
+                      @if($seculo->id == $acervo['seculo_id'])
+                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                      @else
+                      @if($seculo->is_default_seculo and !isset($acervo['seculo_id']))
+                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                      @else
+                      <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
                       @endif
-                    @endforeach
+                      @endif
+                      @endif
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-3">
@@ -167,60 +176,72 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="ano_acervo" value="{{ (old('ano_acervo') !== null ? old('ano_acervo') : $acervo['ano_construcao_acervo']) }}">
+                      <input type="number" class="form-control" name="ano_acervo"
+                        value="{{ old('ano_acervo') !== null ? old('ano_acervo') : $acervo['ano_construcao_acervo'] }}">
                     </div>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Estado de Conservação</label>
                     <select name="estado_conservacao_acervo" class="form-control">
                       @foreach ($estados as $estado)
-                        @if (old('estado_conservacao_acervo') == $estado->id)
-                          <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
-                        @else
-                          @if($estado->id == $acervo['estado_conservacao_acervo_id'])
-                            <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
-                          @else
-                            @if($estado->is_default_estado_conservacao_acervo and !isset($acervo['estado_conservacao_acervo_id']))
-                              <option value="{{$estado->id}}" selected>{{$estado->titulo_estado_conservacao_acervo}}</option>
-                            @else
-                              <option value="{{$estado->id}}">{{$estado->titulo_estado_conservacao_acervo}}</option>
-                            @endif
-                          @endif
-                        @endif
+                      @if (old('estado_conservacao_acervo') == $estado->id)
+                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_acervo }}
+                      </option>
+                      @else
+                      @if($estado->id == $acervo['estado_conservacao_acervo_id'])
+                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_acervo }}
+                      </option>
+                      @else
+                      @if($estado->is_default_estado_conservacao_acervo and
+                      !isset($acervo['estado_conservacao_acervo_id']))
+                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_acervo }}
+                      </option>
+                      @else
+                      <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_acervo }}</option>
+                      @endif
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label>Especificações</label>
-                        <div style="display: flex; flex-wrap: wrap;">
-                         @foreach ($especificacoes as $especificacao)
-                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                              @if(in_array($especificacao->id, old('especificacao_acervo',[])))
-                                <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" {{ (old('especificacao_acervo') == $especificacao->id ? 'checked' : '') }}>
-                              @else
-                                @if(is_array($check) and in_array($especificacao->id, $check) and old('especificacao_acervo') == null)
-                                  <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" checked>
-                                @else
-                                  <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="{{ $especificacao->id }}">
-                                @endif
-                              @endif
-                              <div class="state p-success">
-                                <label style="margin-left: 10px;" for="{{ $especificacao->id }}">{{ $especificacao->titulo_especificacao_acervo }}</label>
-                              </div>
-                          </div>
-                         @endforeach
-                         <small class="text-danger">{{ $errors->first('especificacao_acervo') }}</small>
+                  <div class="form-group col-md-12">
+                    <label>Especificações</label>
+                    <div style="display: flex; flex-wrap: wrap;">
+                      @foreach ($especificacoes as $especificacao)
+                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                        @if(in_array($especificacao->id, old('especificacao_acervo',[])))
+                        <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" {{
+                          old('especificacao_acervo')==$especificacao->id ? 'checked' : '' }}>
+                        @else
+                        @if(is_array($check) and in_array($especificacao->id, $check) and old('especificacao_acervo') ==
+                        null)
+                        <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="{{ $especificacao->id }}" checked>
+                        @else
+                        <input name="especificacao_acervo[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="{{ $especificacao->id }}">
+                        @endif
+                        @endif
+                        <div class="state p-success">
+                          <label style="margin-left: 10px;" for="{{ $especificacao->id }}">{{
+                            $especificacao->titulo_especificacao_acervo }}</label>
                         </div>
+                      </div>
+                      @endforeach
+                      <small class="text-danger">{{ $errors->first('especificacao_acervo') }}</small>
                     </div>
+                  </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Breve descrição da fachada e planta</label>
-                    <textarea class="form-control" name="descricao_acervo" style="min-height: 200px;">{{ (old('descricao_acervo') !== null ? old('descricao_acervo') : $acervo['descricao_fachada_planta_acervo']) }}</textarea>
+                    <textarea class="form-control" name="descricao_acervo"
+                      style="min-height: 200px;">{{ old('descricao_acervo') !== null ? old('descricao_acervo') : $acervo['descricao_fachada_planta_acervo'] }}</textarea>
                     <div>
-                     <small class="text-danger">{{ $errors->first('descricao_acervo') }}</small>
+                      <small class="text-danger">{{ $errors->first('descricao_acervo') }}</small>
                     </div>
                   </div>
                 </div>
@@ -237,11 +258,12 @@
                     </div>
                   </div>
                   <div class="form-group col-md-3">
-                 <div  id="image_holder_frontal_acervo">
-                   @if($acervo['foto_frontal_acervo'])
-                    <img src="{{ asset($acervo['foto_frontal_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                   @endif
-                 </div>
+                    <div id="image_holder_frontal_acervo">
+                      @if($acervo['foto_frontal_acervo'])
+                      <img src="{{ asset($acervo['foto_frontal_acervo']) }}" class="thumb-image"
+                        style="width:100px; max-height: 200px;">
+                      @endif
+                    </div>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Foto Lateral Esquerda</label>
@@ -256,9 +278,10 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_lateral1_acervo">
+                      <div id="image_holder_lateral1_acervo">
                         @if($acervo['foto_lateral_1_acervo'])
-                          <img src="{{ asset($acervo['foto_lateral_1_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        <img src="{{ asset($acervo['foto_lateral_1_acervo']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -280,7 +303,8 @@
                     <div id="box-foto-usuario">
                       <div id="image_holder_lateral2_acervo">
                         @if($acervo['foto_lateral_2_acervo'])
-                          <img src="{{ asset($acervo['foto_lateral_2_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        <img src="{{ asset($acervo['foto_lateral_2_acervo']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -298,9 +322,10 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                      <div  id="image_holder_posterior_acervo">
+                      <div id="image_holder_posterior_acervo">
                         @if($acervo['foto_posterior_acervo'])
-                          <img src="{{ asset($acervo['foto_posterior_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        <img src="{{ asset($acervo['foto_posterior_acervo']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -322,7 +347,8 @@
                     <div id="box-foto-usuario">
                       <div id="image_holder_cobertura_acervo">
                         @if($acervo['foto_cobertura_acervo'])
-                          <img src="{{ asset($acervo['foto_cobertura_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        <img src="{{ asset($acervo['foto_cobertura_acervo']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -342,7 +368,8 @@
                     <div id="box-foto-usuario">
                       <div id="image_holder_plantas_situcao_acervo">
                         @if($acervo['plantas_situacao_acervo'])
-                          <img src="{{ asset($acervo['plantas_situacao_acervo']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
+                        <img src="{{ asset($acervo['plantas_situacao_acervo']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
                         @endif
                       </div>
                     </div>
@@ -360,12 +387,10 @@
       </div>
     </div>
   </section>
-</div>      
+</div>
 
 <script>
-
- $(document).ready(function() {
-
+  $(document).ready(function() {
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
                 $("#endereco_acervo").val("");
@@ -373,25 +398,19 @@
                 $("#cidade_acervo").val("");
                 $("#UF_acervo").val("");
             }
-            
+
             //Quando o campo cep perde o foco.
             $("#cep_acervo").blur(function() {
-
                 //Nova variável "cep" somente com dígitos.
                 var cep = $(this).val().replace(/\D/g, '');
-
                 //Verifica se campo cep possui valor informado.
                 if (cep != "") {
-
                     //Expressão regular para validar o CEP.
                     var validacep = /^[0-9]{8}$/;
-
                     //Valida o formato do CEP.
                     if(validacep.test(cep)) {
-
                         //Consulta o webservice viacep.com.br/
                         $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
                             if (!("erro" in dados)) {
                                 //Atualiza os campos com os valores da consulta.
                                 $("#endereco_acervo").val(dados.logradouro);
@@ -422,8 +441,8 @@
 // Parametrização de variáveis
   @foreach ($seculos as $seculo)
     @if ($seculo['is_default_seculo'])
-      var min = {{$seculo['ano_inicio_seculo']}};
-      var max = {{$seculo['ano_fim_seculo']}};
+      var min = {{ $seculo['ano_inicio_seculo'] }};
+      var max = {{ $seculo['ano_fim_seculo'] }};
       var anoOk = false;
     @endif
   @endforeach
@@ -431,9 +450,9 @@
    function minMaxAno(){
    	// Checa o valor do século e seta o minimo e o máximo
     @foreach ($seculos as $seculo)
-      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{$seculo['id']}}'){
-  window.min = {{$seculo['ano_inicio_seculo']}};
-  window.max = {{$seculo['ano_fim_seculo']}};
+      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{ $seculo['id'] }}'){
+  window.min = {{ $seculo['ano_inicio_seculo'] }};
+  window.max = {{ $seculo['ano_fim_seculo'] }};
 }
     @endforeach
 
@@ -521,8 +540,6 @@
           ajax_sub($("input[name='plantas_situacao_acervo']"), $("#image_holder_plantas_situcao_acervo"));
         });
       });
-
-      
 </script>
 
 @endsection

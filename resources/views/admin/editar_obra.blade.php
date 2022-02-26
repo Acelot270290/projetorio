@@ -8,20 +8,21 @@
   <section class="section">
     <div class="section-body">
       @if(session()->has('alert_type'))
-        <div id="msg" class="alert alert-{{session()->pull('alert_type')}} alert-dismissible fade show" role="alert">
-          {{session()->pull('alert_message')}}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+      <div id="msg" class="alert alert-{{ session()->pull('alert_type') }} alert-dismissible fade show" role="alert">
+        {{ session()->pull('alert_message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       @endif
       <div id="anoerror">
       </div>
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{ route('atualizar_obra', ['id' => $obra['id']]) }}" name="atualizar_acervo"  accept-charset="utf-8" enctype="multipart/form-data">
-            @csrf
+            <form method="POST" action="{{ route('atualizar_obra', ['id' => $obra['id']]) }}" name="atualizar_acervo"
+              accept-charset="utf-8" enctype="multipart/form-data">
+              @csrf
               <div class="card-header">
                 <h4> Editar Obra (ID: {{ $obra['id'] }}) </h4>
               </div>
@@ -36,21 +37,21 @@
                         </div>
                       </div>
                       <select name="categoria_obra" class="form-control">
-                      @foreach ($categorias as $categoria)
+                        @foreach ($categorias as $categoria)
                         @if (old('categoria_obra') == $categoria->id)
-                          <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                        <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
                         @else
-                          @if ($categoria->id == intval($obra['categoria_id']))
-                            <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
-                          @else
-                            @if ($categoria->is_default_categoria)
-                              <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
-                            @else
-                              <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
-                            @endif
-                          @endif
+                        @if ($categoria->id == intval($obra['categoria_id']))
+                        <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                        @else
+                        @if ($categoria->is_default_categoria)
+                        <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                        @else
+                        <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
                         @endif
-                      @endforeach
+                        @endif
+                        @endif
+                        @endforeach
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('categoria_obra') }}</small>
@@ -64,22 +65,22 @@
                         </div>
                       </div>
                       <select name="acervo_obra" class="form-control select2">
-                      <option value="">Selecione um Acervo</option>
-                      @foreach ($acervos as $acervo)
+                        <option value="">Selecione um Acervo</option>
+                        @foreach ($acervos as $acervo)
                         @if (old('acervo_obra') == $acervo->id)
-                          <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
+                        <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
                         @else
-                          @if ($acervo->id == intval($obra['acervo_id']))
-                            <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
-                          @else
-                            @if ($acervo->is_default_acervo)
-                              <option value="{{$acervo->id}}" selected>{{$acervo->nome_acervo}}</option>
-                            @else
-                              <option value="{{$acervo->id}}">{{$acervo->nome_acervo}}</option>
-                            @endif
-                          @endif
+                        @if ($acervo->id == intval($obra['acervo_id']))
+                        <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
+                        @else
+                        @if ($acervo->is_default_acervo)
+                        <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
+                        @else
+                        <option value="{{ $acervo->id }}">{{ $acervo->nome_acervo }}</option>
                         @endif
-                      @endforeach
+                        @endif
+                        @endif
+                        @endforeach
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('acervo_obra') }}</small>
@@ -94,7 +95,8 @@
                           <i class="fas fa-user text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="titulo_obra" value="{{ (old('titulo_obra') !== null ? old('titulo_obra') : $obra['titulo_obra']) }}">
+                      <input type="text" class="form-control" name="titulo_obra"
+                        value="{{ old('titulo_obra') !== null ? old('titulo_obra') : $obra['titulo_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('titulo_obra') }}</small>
                   </div>
@@ -114,7 +116,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="altura_obra"
-                        value="{{ (old('altura_obra') !== null ? old('altura_obra') : $obra['altura_obra']) }}">
+                        value="{{ old('altura_obra') !== null ? old('altura_obra') : $obra['altura_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
 
@@ -128,7 +130,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="largura_obra"
-                        value="{{ (old('largura_obra') !== null ? old('largura_obra') : $obra['largura_obra']) }}">
+                        value="{{ old('largura_obra') !== null ? old('largura_obra') : $obra['largura_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('largura_obra') }}</small>
                   </div>
@@ -141,7 +143,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="profundidade_obra"
-                        value="{{ (old('profundidade_obra') !== null ? old('profundidade_obra') : $obra['profundidade_obra']) }}">
+                        value="{{ old('profundidade_obra') !== null ? old('profundidade_obra') : $obra['profundidade_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
                   </div>
@@ -154,7 +156,7 @@
                         </div>
                       </div>
                       <input type="number" class="form-control" name="comprimento_obra"
-                        value="{{ (old('comprimento_obra') !== null ? old('comprimento_obra') : $obra['comprimento_obra']) }}">
+                        value="{{ old('comprimento_obra') !== null ? old('comprimento_obra') : $obra['comprimento_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
 
@@ -167,9 +169,10 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ (old('diâmetro_obra') !== null ? old('diâmetro_obra') : $obra['diâmetro_obra']) }}'>
+                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ old(' diâmetro_obra')
+                        !==null ? old('diâmetro_obra') : $obra['diâmetro_obra'] }}'>
                     </div>
-                      <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
+                    <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
                   </div>
                 </div>
                 <div class="form-row">
@@ -177,17 +180,18 @@
                     <label>Tesauro</label>
                     <select name="tesauro_obra" class="form-control select2">
                       <option value="">Selecione um Tesauro</option>
-                    @foreach ($tesauros as $tesauro)
+                      @foreach ($tesauros as $tesauro)
                       @if(old('tesauro_obra') == $tesauro->id)
-                        <option value="{{ $tesauro->id }}" {{ (old("tesauro_obra") == $tesauro->id ? "selected" : "") }}>{{ $tesauro->titulo_tesauro }}</option>
+                      <option value="{{ $tesauro->id }}" {{ old("tesauro_obra")==$tesauro->id ? "selected" : "" }}>{{
+                        $tesauro->titulo_tesauro }}</option>
                       @else
-                        @if($tesauro->id == $obra['tesauro_id'] and old('tesauro_obra') == null)
-                          <option value="{{ $tesauro->id }}" selected>{{ $tesauro->titulo_tesauro }}</option>
-                        @else
-                          <option value="{{ $tesauro->id }}">{{ $tesauro->titulo_tesauro }}</option>
-                        @endif
+                      @if($tesauro->id == $obra['tesauro_id'] and old('tesauro_obra') == null)
+                      <option value="{{ $tesauro->id }}" selected>{{ $tesauro->titulo_tesauro }}</option>
+                      @else
+                      <option value="{{ $tesauro->id }}">{{ $tesauro->titulo_tesauro }}</option>
                       @endif
-                    @endforeach
+                      @endif
+                      @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tesauro_obra') }}</small>
                   </div>
@@ -200,18 +204,18 @@
                         </div>
                       </div>
                       <select name="localizacao_obra" class="form-control select2">
-                      <option value="">Selecione uma Localização</option>
-                      @foreach ($localizacoes as $localizacao)
+                        <option value="">Selecione uma Localização</option>
+                        @foreach ($localizacoes as $localizacao)
                         @if (old('localizacao_obra') == $localizacao->id)
-                          <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
+                        <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
                         @else
-                          @if ($localizacao->id == $obra['localizacao_obra_id'] and old('localizacao_obra') == null)
-                            <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
-                          @else
-                            <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
-                          @endif
+                        @if ($localizacao->id == $obra['localizacao_obra_id'] and old('localizacao_obra') == null)
+                        <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
+                        @else
+                        <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
                         @endif
-                      @endforeach
+                        @endif
+                        @endforeach
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
@@ -219,16 +223,19 @@
                   <div class="form-group col-md-4">
                     <label>Condições de Segurança</label>
                     <select name="condicao_seguranca_obra" class="form-control">
-                    @foreach ($condicoes as $condicao)
-                        @if (old('condicao_seguranca_obra') == $condicao->id)
-                          <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}</option>
-                        @else
-                          @if ($condicao->id == $obra['condicoes_de_seguranca_obra_id'] and old('condicao_seguranca_obra') == null)
-                            <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}</option>
-                          @else
-                            <option value="{{ $condicao->id }}">{{ $condicao->titulo_condicao_seguranca_obra }}</option>
-                          @endif
-                        @endif
+                      @foreach ($condicoes as $condicao)
+                      @if (old('condicao_seguranca_obra') == $condicao->id)
+                      <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}
+                      </option>
+                      @else
+                      @if ($condicao->id == $obra['condicoes_de_seguranca_obra_id'] and old('condicao_seguranca_obra')
+                      == null)
+                      <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}
+                      </option>
+                      @else
+                      <option value="{{ $condicao->id }}">{{ $condicao->titulo_condicao_seguranca_obra }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
@@ -238,33 +245,33 @@
                     <label>Tombamento</label>
                     <select name="tombamento_obra" class="form-control select2">
                       <option value="">Selecione um Tombamento</option>
-                    @foreach ($tombamentos as $tombamento)
+                      @foreach ($tombamentos as $tombamento)
                       @if (old('tombamento_obra') == $tombamento->id)
-                        <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
+                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
                       @else
-                        @if ($tombamento->id == $obra['tombamento_id'] and old('tombamento_obra') == null)
-                          <option value="{{$tombamento->id}}" selected>{{$tombamento->titulo_tombamento}}</option>
-                        @else
-                          <option value="{{$tombamento->id}}">{{$tombamento->titulo_tombamento}}</option>
-                        @endif
+                      @if ($tombamento->id == $obra['tombamento_id'] and old('tombamento_obra') == null)
+                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                      @else
+                      <option value="{{ $tombamento->id }}">{{ $tombamento->titulo_tombamento }}</option>
                       @endif
-                    @endforeach
+                      @endif
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-2">
                     <label>Século</label>
                     <select name="seculo_obra" class="form-control">
-                    @foreach ($seculos as $seculo)
+                      @foreach ($seculos as $seculo)
                       @if (old('seculo_obra') == $seculo->id)
-                        <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
                       @else
-                        @if ($seculo->id == $obra['seculo_id'] and old('seculo_obra') == null)
-                          <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
-                        @else
-                          <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
-                        @endif
+                      @if ($seculo->id == $obra['seculo_id'] and old('seculo_obra') == null)
+                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                      @else
+                      <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
                       @endif
-                    @endforeach
+                      @endif
+                      @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('seculo_obra') }}</small>
                   </div>
@@ -276,7 +283,8 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="ano_obra" value="{{ (old('ano_obra') !== null ? old('ano_obra') : $obra['ano_obra']) }}">
+                      <input type="number" class="form-control" name="ano_obra"
+                        value="{{ old('ano_obra') !== null ? old('ano_obra') : $obra['ano_obra'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('ano_obra') }}</small>
                   </div>
@@ -284,15 +292,16 @@
                     <label>Estado de Conservação</label>
                     <select name="estado_de_conservacao_obra" class="form-control">
                       @foreach ($estados as $estado)
-                        @if (old('estado_de_conservacao_obra') == $estado->id)
-                          <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                        @else
-                          @if ($estado->id == $obra['estado_conservacao_obra_id'] and old('estado_de_conservacao_obra') == null)
-                          <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                          @else
-                            <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
-                          @endif
-                        @endif
+                      @if (old('estado_de_conservacao_obra') == $estado->id)
+                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                      @else
+                      @if ($estado->id == $obra['estado_conservacao_obra_id'] and old('estado_de_conservacao_obra') ==
+                      null)
+                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                      @else
+                      <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('estado_de_conservacao_obra') }}</small>
@@ -305,43 +314,44 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="autoria_obra" value="{{ (old('autoria_obra') !== null ? old('autoria_obra') : $obra['autoria_obra']) }}">
+                      <input type="text" class="form-control" name="autoria_obra"
+                        value="{{ old('autoria_obra') !== null ? old('autoria_obra') : $obra['autoria_obra'] }}">
                     </div>
                   </div>
                 </div>
                 <div class="form-row">
-                 <div class="form-group col-md-4">
+                  <div class="form-group col-md-4">
                     <label>Material 1</label>
                     <select name="material_1_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                        @if (old('material_1_obra') == $material->id)
-                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                        @else
-                          @if($material->id == $obra['material_id_1'] and old('material_1_obra') == null)
-                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                          @else
-                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                          @endif
-                        @endif
+                      @if (old('material_1_obra') == $material->id)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      @if($material->id == $obra['material_id_1'] and old('material_1_obra') == null)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
-                     <small class="text-danger">{{ $errors->first('material_1_obra') }}</small>
+                    <small class="text-danger">{{ $errors->first('material_1_obra') }}</small>
                   </div>
                   <div class="form-group col-md-4">
                     <label>Material 2</label>
                     <select name="material_2_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                        @if (old('material_2_obra') == $material->id)
-                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                        @else
-                          @if($material->id == $obra['material_id_2'] and old('material_2_obra') == null)
-                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                          @else
-                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                          @endif
-                        @endif
+                      @if (old('material_2_obra') == $material->id)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      @if($material->id == $obra['material_id_2'] and old('material_2_obra') == null)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
@@ -350,37 +360,37 @@
                     <select name="material_3_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                        @if(old('material_3_obra') == $material->id)
-                          <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                        @else
-                          @if($material->id == $obra['material_id_3'] and old('material_3_obra') == null)
-                            <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
-                          @else
-                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                          @endif
-                        @endif
+                      @if(old('material_3_obra') == $material->id)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      @if($material->id == $obra['material_id_3'] and old('material_3_obra') == null)
+                      <option value="{{ $material->id }}" selected>{{ $material->titulo_material }}</option>
+                      @else
+                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="form-row">
-                 <div class="form-group col-md-4">
+                  <div class="form-group col-md-4">
                     <label>Técnica 1</label>
                     <select name="tecnica_1_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                        @if (old('tecnica_1_obra') == $tecnica->id)
-                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                        @else
-                          @if($tecnica->id == $obra['tecnica_id_1'] and old('tecnica_1_obra') == null)
-                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                          @else
-                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                          @endif
-                        @endif
+                      @if (old('tecnica_1_obra') == $tecnica->id)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      @if($tecnica->id == $obra['tecnica_id_1'] and old('tecnica_1_obra') == null)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
-                       <small class="text-danger">{{ $errors->first('tecnica_1_obra') }}</small>
+                    <small class="text-danger">{{ $errors->first('tecnica_1_obra') }}</small>
 
                   </div>
                   <div class="form-group col-md-4">
@@ -388,15 +398,15 @@
                     <select name="tecnica_2_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                        @if (old('tecnica_2_obra') == $tecnica->id)
-                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                        @else
-                          @if($tecnica->id == $obra['tecnica_id_2'] and old('tecnica_2_obra') == null)
-                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                          @else
-                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                          @endif
-                        @endif
+                      @if (old('tecnica_2_obra') == $tecnica->id)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      @if($tecnica->id == $obra['tecnica_id_2'] and old('tecnica_2_obra') == null)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
@@ -405,77 +415,91 @@
                     <select name="tecnica_3_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                        @if (old('tecnica_3_obra') == $tecnica->id)
-                          <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                        @else
-                          @if($tecnica->id == $obra['tecnica_id_3'] and old('tecnica_3_obra') == null)
-                            <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
-                          @else
-                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                          @endif
-                        @endif
+                      @if (old('tecnica_3_obra') == $tecnica->id)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      @if($tecnica->id == $obra['tecnica_id_3'] and old('tecnica_3_obra') == null)
+                      <option value="{{ $tecnica->id }}" selected>{{ $tecnica->titulo_tecnica }}</option>
+                      @else
+                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                      @endif
+                      @endif
                       @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label>Especificações</label>
-                        <div style="display: flex; flex-wrap: wrap;">
-                         @foreach ($especificacoes as $especificacao)
-                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                            @if(is_array(old('especificacao_obra')) and in_array($especificacao->id, old('especificacao_obra')))
-                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
-                            @else
-                              @if(in_array($especificacao->id, $check) and old('especificacao_obra') == null)
-                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
-                              @else
-                                <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}">
-                              @endif
-                            @endif
-                            <div class="state p-success">
-                              <label style="margin-left: 10px;" for="especificacao_obra_{{ $especificacao->id }}">{{ $especificacao->titulo_especificacao_obra }}</label>
-                            </div>
-                          </div>
-                         @endforeach
+                  <div class="form-group col-md-12">
+                    <label>Especificações</label>
+                    <div style="display: flex; flex-wrap: wrap;">
+                      @foreach ($especificacoes as $especificacao)
+                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                        @if(is_array(old('especificacao_obra')) and in_array($especificacao->id,
+                        old('especificacao_obra')))
+                        <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
+                        @else
+                        @if(in_array($especificacao->id, $check) and old('especificacao_obra') == null)
+                        <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" checked>
+                        @else
+                        <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}">
+                        @endif
+                        @endif
+                        <div class="state p-success">
+                          <label style="margin-left: 10px;" for="especificacao_obra_{{ $especificacao->id }}">{{
+                            $especificacao->titulo_especificacao_obra }}</label>
                         </div>
-                        <small class="text-danger">{{ $errors->first('especificacao_obra') }}</small>
+                      </div>
+                      @endforeach
                     </div>
+                    <small class="text-danger">{{ $errors->first('especificacao_obra') }}</small>
+                  </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label>Especificações de segurança</label>
-                        <div style="display: flex; flex-wrap: wrap;">
-                         @foreach ($especificacoesSeg as $especificacaoSeg)
-                          <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                            @if(is_array(old('especificacao_seg_obra')) and in_array($especifiespecificacaoSegcacao->id, old('especificacao_seg_obra')))
-                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
-                            @else
-                              @if(in_array($especificacaoSeg->id, $checkSeg) and old('especificacao_seg_obra') == null)
-                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" checked>
-                              @else
-                                <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}">
-                              @endif
-                            @endif
-                              <div class="state p-success">
-                                <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
-                              </div>
-                          </div>
-                         @endforeach
+                  <div class="form-group col-md-12">
+                    <label>Especificações de segurança</label>
+                    <div style="display: flex; flex-wrap: wrap;">
+                      @foreach ($especificacoesSeg as $especificacaoSeg)
+                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                        @if(is_array(old('especificacao_seg_obra')) and in_array($especifiespecificacaoSegcacao->id,
+                        old('especificacao_seg_obra')))
+                        <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}"
+                          checked>
+                        @else
+                        @if(in_array($especificacaoSeg->id, $checkSeg) and old('especificacao_seg_obra') == null)
+                        <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}"
+                          checked>
+                        @else
+                        <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;"
+                          value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}">
+                        @endif
+                        @endif
+                        <div class="state p-success">
+                          <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{
+                            $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
                         </div>
-                        <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
+                      </div>
+                      @endforeach
                     </div>
+                    <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
+                  </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Características estilísticas/iconográficas e ornamentais</label>
-                    <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{ (old('caracteristicas_estilisticas_obra') !== null ? old('caracteristicas_estilisticas_obra') : $obra['caracteristicas_est_icono_orna_obra']) }}</textarea>
+                    <textarea class="form-control" name="caracteristicas_estilisticas_obra"
+                      style="min-height: 200px;">{{ old('caracteristicas_estilisticas_obra') !== null ? old('caracteristicas_estilisticas_obra') : $obra['caracteristicas_est_icono_orna_obra'] }}</textarea>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Observações</label>
-                    <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;">{{ (old('observacoes_obra') !== null ? old('observacoes_obra') : $obra['observacoes_obra']) }}</textarea>
+                    <textarea class="form-control" name="observacoes_obra"
+                      style="min-height: 200px;">{{ old('observacoes_obra') !== null ? old('observacoes_obra') : $obra['observacoes_obra'] }}</textarea>
                   </div>
                 </div>
                 <div class="form-row">
@@ -492,11 +516,12 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_frontal_obra">
-                      @if($obra['foto_frontal_obra'])
-                        <img src="{{ asset($obra['foto_frontal_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_frontal_obra">
+                        @if($obra['foto_frontal_obra'])
+                        <img src="{{ asset($obra['foto_frontal_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -514,11 +539,12 @@
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
                       <input type="hidden" name="user_foto">
-                     <div  id="image_holder_lateral_esquerda_obra">
-                      @if($obra['foto_lateral_esquerda_obra'])
-                        <img src="{{ asset($obra['foto_lateral_esquerda_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_lateral_esquerda_obra">
+                        @if($obra['foto_lateral_esquerda_obra'])
+                        <img src="{{ asset($obra['foto_lateral_esquerda_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -537,11 +563,12 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_lateral_direita_obra">
-                      @if($obra['foto_lateral_direita_obra'])
-                        <img src="{{ asset($obra['foto_lateral_direita_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_lateral_direita_obra">
+                        @if($obra['foto_lateral_direita_obra'])
+                        <img src="{{ asset($obra['foto_lateral_direita_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -558,11 +585,12 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_posterior_obra">
-                      @if($obra['foto_posterior_obra'])
-                        <img src="{{ asset($obra['foto_posterior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_posterior_obra">
+                        @if($obra['foto_posterior_obra'])
+                        <img src="{{ asset($obra['foto_posterior_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -578,11 +606,12 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_superior_obra">
-                      @if($obra['foto_superior_obra'])
-                        <img src="{{ asset($obra['foto_superior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_superior_obra">
+                        @if($obra['foto_superior_obra'])
+                        <img src="{{ asset($obra['foto_superior_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                   </div>
                   <div class="form-group col-md-3">
@@ -598,11 +627,12 @@
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">
-                     <div  id="image_holder_inferior_obra">
-                      @if($obra['foto_inferior_obra'])
-                        <img src="{{ asset($obra['foto_inferior_obra']) }}" class="thumb-image" style="width:100px; max-height: 200px;">
-                      @endif
-                     </div>
+                      <div id="image_holder_inferior_obra">
+                        @if($obra['foto_inferior_obra'])
+                        <img src="{{ asset($obra['foto_inferior_obra']) }}" class="thumb-image"
+                          style="width:100px; max-height: 200px;">
+                        @endif
+                      </div>
                     </div>
                     <input type="hidden" name="usuario_id" value="3">
                   </div>
@@ -610,7 +640,7 @@
               </div>
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
+                <a href="{{ route('home') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
           </div>
@@ -622,8 +652,7 @@
 </div>
 
 <script>
-
- $(document).ready(function() {
+  $(document).ready(function() {
 
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
@@ -681,8 +710,8 @@
 // Parametrização de variáveis
   @foreach ($seculos as $seculo)
     @if ($seculo['is_default_seculo'])
-      var min = {{$seculo['ano_inicio_seculo']}};
-      var max = {{$seculo['ano_fim_seculo']}};
+      var min = {{ $seculo['ano_inicio_seculo'] }};
+      var max = {{ $seculo['ano_fim_seculo'] }};
       var anoOk = false;
     @endif
   @endforeach
@@ -690,9 +719,9 @@
    function minMaxAno(){
    	// Checa o valor do século e seta o minimo e o máximo
     @foreach ($seculos as $seculo)
-      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{$seculo['id']}}'){
-  window.min = {{$seculo['ano_inicio_seculo']}};
-  window.max = {{$seculo['ano_fim_seculo']}};
+      @if ($seculo['titulo_seculo'] != 'Anterior a XVI') else @endif if($('select[name="seculo_acervo"]').val() == '{{ $seculo['id'] }}'){
+  window.min = {{ $seculo['ano_inicio_seculo'] }};
+  window.max = {{ $seculo['ano_fim_seculo'] }};
 }
     @endforeach
 
