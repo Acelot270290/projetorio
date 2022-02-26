@@ -19,8 +19,13 @@
   <link rel="stylesheet" href="{{url('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
 
   <!-- CSS Select2 -->
-
   <link rel="stylesheet" href="{{url('assets/bundles/select2/dist/css/select2.min.css')}}">
+
+  <!-- carrosel -->
+
+<link rel="stylesheet" href="{{url('assets/bundles/owlcarousel2/dist/assets/owl.carousel.min.css')}}">
+<link rel="stylesheet" href="{{url('assets/bundles/owlcarousel2/dist/assets/owl.theme.default.min.css')}}">
+
 
 
 
