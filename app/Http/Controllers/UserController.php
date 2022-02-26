@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         // Seleciona os dados dos usuários
-        $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo','nome_cargo', 'estado')
+        $usuarios = User::select('users.id', 'name', 'email', 'image', 'id_cargo', 'nome_cargo', 'estado')
             ->join('cargos as f', 'f.id', '=', 'id_cargo')
             ->orderBy('users.id', 'ASC')
             ->get();
