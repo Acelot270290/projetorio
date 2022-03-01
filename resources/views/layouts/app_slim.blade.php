@@ -22,7 +22,7 @@
     @yield('content')
 
 	  <!--conteudo -->
-	 <footer class="main-footer">
+	 <footer class="main-footer" style="position:absolute; bottom:0; width:100%;">
         <div class="footer-left">
           <a href="#">Procult</a></a>
         </div>
