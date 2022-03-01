@@ -5,6 +5,126 @@
 <div class="main-content">
   @section('content')
   <section class="section">
+    <h1>Links rápidos</h1>
+    <div class="row ">
+      <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1">
+      </div>
+      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+        <a href="/home">
+          <div class="card">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">Pesquisar</h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/pesquisar.svg" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+        <a href="{{ route('criar_acervo') }}">
+          <div class="card">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">Inserir Acervo</h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_acervo.svg" alt="">
+                    </div>
+                  </div>
+                  <div style="height: 1.15em; width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+        <a href="{{ route('acervo') }}">
+          <div class="card">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">Listar Acervos</h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_acervos.svg" alt="">
+                    </div>
+                  </div>
+                  <div style="height: 1.15em; width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+        <a href="{{ route('criar_obra') }}">
+          <div class="card">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">Inserir Obra</h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_obras.svg" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+        <div class="card">
+          <a href="{{ route('obra') }}">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">Listar Obras</h5>
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_obras.svg" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1">
+      </div>
+    </div>
+    <h1>Informações úteis</h1>
     <div class="row ">
       <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="card">
