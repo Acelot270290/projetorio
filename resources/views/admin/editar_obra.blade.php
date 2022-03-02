@@ -106,7 +106,7 @@
                         </div>
                       </div>
                       <input type="text" class="form-control" name="data_cadastro_obra"
-                        value="{{ $obra['created_at'] }}" readonly>
+                        value="{{ $obra['criado_em'] }}" readonly>
                     </div>
                 </div>
               </div>
