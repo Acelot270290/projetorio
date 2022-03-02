@@ -28,7 +28,7 @@
               </div>
               <div class="card-body">
                 <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label>Categoria da obra</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -56,7 +56,7 @@
                     </div>
                     <small class="text-danger">{{ $errors->first('categoria_obra') }}</small>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label>Acervo da obra</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -85,7 +85,32 @@
                     </div>
                     <small class="text-danger">{{ $errors->first('acervo_obra') }}</small>
                   </div>
+                  <div class="form-group col-md-2">
+                    <label>Cadastrado por</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="cadastrante_obra"
+                        value="{{ $obra->usuario_cadastrante }}" readonly>
+                    </div>
+                  </div>
                 </div>
+                <div class="form-group col-md-2">
+                  <label>Cadastrado em</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-user text-info"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" name="data_cadastro_obra"
+                      value="{{ $obra->created_at }}" readonly>
+                  </div>
+                </div>
+              </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Título</label>
