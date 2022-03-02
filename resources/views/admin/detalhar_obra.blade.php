@@ -218,8 +218,7 @@
                                         -
                                         @else
                                         @foreach($especificacoesSeg as $especificacaoSeg)
-                                        {{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}@if
-                                        (!$loop->last),@endif
+                                        {{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}@if(!$loop->last),@endif
                                         @endforeach
                                         @endif
                                     </div>
