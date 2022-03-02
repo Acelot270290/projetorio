@@ -301,8 +301,9 @@ class AcervoController extends Controller
 
     public function editar(Request $request, $id){
         // Seleciona os dados de acervos para edição
-        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id','checkbox_especificacao_acervo')
+        $acervo = Acervos::select('acervos.id', 'acervos.created_at', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id','checkbox_especificacao_acervo', 'name as usuario_cadastrante', 'usuario_atualizacao_id')
             ->where('acervos.id', '=', intval($id))
+            ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
             ->first();
 
         // Converte para inteiro todos os valores contidos no array gerado pela separação da string checkbox_especificacao_acervo com o separador ,

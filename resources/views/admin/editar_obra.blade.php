@@ -108,8 +108,8 @@
                       <input type="text" class="form-control" name="data_cadastro_obra"
                         value="{{ $obra['criado_em'] }}" readonly>
                     </div>
+                  </div>
                 </div>
-              </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Título</label>

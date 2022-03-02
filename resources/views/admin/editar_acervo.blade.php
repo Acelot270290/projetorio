@@ -28,7 +28,7 @@
               </div>
               <div class="card-body">
                 <div class="form-row">
-                  <div class="form-group col-md-12">
+                  <div class="form-group col-md-8">
                     <label>Nome do monumento</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -40,6 +40,30 @@
                         value="{{ old('nome_acervo') !== null ? old('nome_acervo') : $acervo['nome_acervo'] }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('nome_acervo') }}</small>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Cadastrado por</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="cadastrante_obra"
+                        value="{{ $acervo['usuario_cadastrante'] }}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Cadastrado em</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fas fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" name="data_cadastro_obra"
+                        value="{{ $acervo['criado_em'] }}" readonly>
+                    </div>
                   </div>
                 </div>
                 <div class="form-row">
