@@ -200,7 +200,7 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-3">
                     <label>Tesauro</label>
                     <select name="tesauro_obra" class="form-control select2">
                       <option value="">Selecione um Tesauro</option>
@@ -219,7 +219,7 @@
                     </select>
                     <small class="text-danger">{{ $errors->first('tesauro_obra') }}</small>
                   </div>
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-3">
                     <label>Localização da obra</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -244,7 +244,7 @@
                     </div>
                     <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
                   </div>
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-3">
                     <label>Condições de Segurança</label>
                     <select name="condicao_seguranca_obra" class="form-control">
                       @foreach ($condicoes as $condicao)
@@ -262,6 +262,13 @@
                       @endif
                       @endforeach
                     </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Procedência</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="procedencia_obra" value="{{ old('titulo_procedencia_obraobra') !== null ? old('procedencia_obra') : $obra['procedencia_obra'] }}">
+                    </div>
+                    <small class="text-danger">{{ $errors->first('procedencia_obra') }}</small>
                   </div>
                 </div>
                 <div class="form-row">

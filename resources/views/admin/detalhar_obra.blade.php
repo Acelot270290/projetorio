@@ -96,16 +96,22 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-7">
+                                    <div class="form-group col-md-12">
                                         <b>Acervo pertencente:</b> {{ !is_null($obra->nome_acervo) ? $obra->nome_acervo
                                         : '-' }}
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <b>Categoria:</b> {{ !is_null($obra->titulo_categoria) ? $obra->titulo_categoria
                                         : '-' }}
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <b>Tesauro:</b> {{ !is_null($obra->titulo_tesauro) ? $obra->titulo_tesauro : '-'
+                                        }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <b>Procedência:</b> {{ !is_null($obra->procedencia_obra) ? $obra->procedencia_obra : '-'
                                         }}
                                     </div>
                                 </div>
