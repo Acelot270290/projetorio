@@ -45,7 +45,8 @@
                       @endif
                     </a>
                   </td>
-                  <td>{{ $obra->titulo_obra }}</td>
+                  <td>{{ $obra->titulo_obra }}@if($obra->obra_temporaria == 1)<div style="border-radius: 11px; border-color: rgb(255, 71, 111); background-color:rgb(255, 204, 215); border-width: 2px; border-style: dashed; margin-left: 2%; padding-left: 2%; padding-right: 2%; color: rgb(255, 71, 111); display: inline-block; font-family: 'Baloo Paaji';">T</div>@endif
+                  </td>
                   <td>{{ $obra->titulo_tesauro }}</td>
                   <td>{{ $obra->nome_acervo }}</td>
                   <td>{{ $obra->titulo_material_1 }}</td>

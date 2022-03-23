@@ -19,7 +19,8 @@
   <link rel="stylesheet" href="{{ url('assets/bundles/datatables/datatables.min.css') }}">
   <link rel="stylesheet"
     href="{{ url('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-
+  <!-- Baloo Paaji font -->
+  <link href='https://fonts.googleapis.com/css?family=Baloo Paaji' rel='stylesheet'>
   <!-- CSS Select2 -->
 
 

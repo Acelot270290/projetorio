@@ -11,6 +11,17 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Detalhamento de obra ID: {{ !is_null($obra->id) ? $obra->id : '-' }}</h3>
+                        @if($obra->obra_temporaria == 1)
+                        <div style="border-radius: 11px; border-color: rgb(255, 71, 111); background-color:rgb(255, 204, 215); border-width: 3px; border-style: dashed; margin-left: 5%; padding-left: 1%; padding-right: 1%;">
+                            Obra marcada como temporária!
+                        </div>
+                        @endif
+                        @if(in_array(intval(auth()->user('id')['id_cargo']), [1, 2, 4, 5]))
+                        <div style="position: absolute; right: 0px; margin-right: 5%;">
+                            <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i
+                                class="fas fa-edit"></i>Editar obra ID:{{ $obra->id }}</a>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="form-row">
