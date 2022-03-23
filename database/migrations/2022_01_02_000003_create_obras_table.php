@@ -98,6 +98,9 @@ class CreateObrasTable extends Migration
             $table->foreign('usuario_insercao_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_atualizacao_id')->nullable();
             $table->foreign('usuario_atualizacao_id')->references('id')->on('users');
+
+            // Obra temporária
+            $table->boolval('obra_temporaria')->default(0);
         });
     }
 

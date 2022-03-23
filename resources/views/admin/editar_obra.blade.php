@@ -28,6 +28,17 @@
               </div>
               <div class="card-body">
                 <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                      <input name="obra_temporaria" type="checkbox" style="margin-top: 3px;"
+                              value="obra_temporaria" id="obra_temporaria">
+                      <div class="state p-success">
+                        <label style="margin-left: 10px;" for="obra_temporaria">Obra temporária</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
                   <div class="form-group col-md-4">
                     <label>Categoria da obra</label>
                     <div class="input-group">
@@ -264,7 +275,7 @@
                     </select>
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Procedência</label>
+                    <label>Origem/Procedência</label>
                     <div class="input-group">
                       <input type="text" class="form-control" name="procedencia_obra" value="{{ old('titulo_procedencia_obraobra') !== null ? old('procedencia_obra') : $obra['procedencia_obra'] }}">
                     </div>
