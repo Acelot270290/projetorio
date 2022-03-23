@@ -224,7 +224,7 @@
                     </select>
                   </div>
                   <div class="form-group col-md-3">
-                    <label>Procedência</label>
+                    <label>Origem/Procedência</label>
                     <div class="input-group">
                       <input type="text" class="form-control" name="procedencia_obra" value="{{ old('procedencia_obra') }}">
                     </div>
