@@ -627,8 +627,12 @@ class AcervoController extends Controller
         return redirect('/acervo/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
-    public function deletar(Request $request, $id)
-    {
+    public function deletar(Request $request, $id){
+        // Somente TI ou administradores podem deletar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2'])){
+            return view('unauthorized');
+        }
+        
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 

@@ -796,10 +796,10 @@ class ObraController extends Controller
             return view('unauthorized');
         }
 
-        /*if(!in_array('0', $accesses) or !in_array(strval($acervoId) , $accesses)){
+        if(!in_array('0', $accesses) or !in_array(strval($acervoId) , $accesses)){
             // Se não estiver no array, o usuário não pode deletar essa obra porque não pertence ao acervo que ela tem acesso
             return view('unauthorized');
-        }*/
+        }
 
         // Deleta a obra
         $obra = Obras::select()->where('id', '=', $id)->delete();
