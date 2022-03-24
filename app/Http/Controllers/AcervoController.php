@@ -638,38 +638,50 @@ class AcervoController extends Controller
             return view('unauthorized');
         }
 
-        /*// Descobre qual é o acervo a ser deletado
-        $acervo = Acervos::select()->where('id', '=', $id)->delete();
-        
-        try{
-            /* Parametrização do caminho onde as imagens ficam. *
-            // Nome do primeiro folder
-            $preBasePath =  'imagem';
-            // Nome do segundo folder
-            $basePath =  $preBasePath . '/acervos';
+        // Descobre se existe alguma obra associada à esse acervo
+        $obra = Obras::select()->where('acervo_id', '=', $id)->get();
 
-            // Parametrização do nome da pasta onde as imagens estão
-            $imagemacervo =  $basePath . '/' . $id;
-            
-            // Se a pasta existir
-            if (is_dir($imagemacervo)) {
-                // Delete o seu conteúdo
-                array_map('unlink', glob(public_path($imagemacervo) . "/*.*"));
-                // Apague a pasta
-                rmdir(public_path($imagemacervo));
-            }
-            // Se existir um elemento obra
-            if ($acervo) {
-                // Retorne sucesso
-                return response()->json(['status' => 'success', 'msg' => 'Acervo deletado.']);
-            } else { // caso contrário
+        // Se obra for null, é sinal de que não existe nenhuma obra associada com o acervo a ser deletado
+        if($obra === null){
+            // Deleta o acervo
+            $acervo = Acervos::select()->where('id', '=', $id)->delete();
+            try{
+                /* Parametrização do caminho onde as imagens ficam. */
+                // Nome do primeiro folder
+                $preBasePath =  'imagem';
+                // Nome do segundo folder
+                $basePath =  $preBasePath . '/acervos';
+
+                // Parametrização do nome da pasta onde as imagens estão
+                $imagemacervo =  $basePath . '/' . $id;
+                
+                // Se a pasta existir
+                if (is_dir($imagemacervo)) {
+                    // Delete o seu conteúdo
+                    array_map('unlink', glob(public_path($imagemacervo) . "/*.*"));
+                    // Apague a pasta
+                    rmdir(public_path($imagemacervo));
+                }
+                // Se existir um elemento obra
+                if ($acervo) {
+                    // Retorne sucesso
+                    return response()->json(['status' => 'success', 'msg' => 'Acervo deletado.']);
+                } else { // caso contrário
+                    // Retorne falha
+                    return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo.']);
+                }
+            }catch(Exception $e){ // Se houver qualquer falha
                 // Retorne falha
                 return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo.']);
             }
-        }catch(Exception $e){ // Se houver qualquer falha
-            // Retorne falha
-            return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo.']);
-        }*/
-        return;
+        }else{
+            // Lista de ids de acervo
+            $ids = [];
+            foreach($obras as $obra){
+                array_push($ids, $obra['id']);
+            }
+            return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo pois ele contém obras associadas! As obras são: ' . implode(', ', $ids)]);;
+        }
+        return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo. Erro DESCONHECIDO']);;
     }
 }

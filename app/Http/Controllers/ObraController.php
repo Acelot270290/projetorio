@@ -771,7 +771,7 @@ class ObraController extends Controller
 
     public function deletar(Request $request, $id){
         // Descobre qual é a obra a ser deletada
-        $obra = Obras::select('acervo_id')->where('id', '=', $id)->delete();
+        $acervoId = Obras::select('acervo_id')->where('id', '=', $id)->get()['acervo_id'];
 
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
@@ -789,9 +789,12 @@ class ObraController extends Controller
             // Se não estiver no array, o usuário não pode deletar essa obra porque não pertence ao acervo que ela tem acesso
             return view('unauthorized');
         }
+
+        // Deleta a obra
+        $obra = Obras::select()->where('id', '=', $id)->delete();
         
-        /*try{
-            /* Parametrização do caminho onde as imagens ficam. *
+        try{
+            /* Parametrização do caminho onde as imagens ficam. */
             // Nome do primeiro folder
             $preBasePath =  'imagem';
             // Nome do segundo folder
@@ -807,7 +810,7 @@ class ObraController extends Controller
                 // Apague a pasta
                 rmdir(public_path($imagemaobra));
             }
-            // Se existir um elemento obra
+            // Se existir um elemento obra (sinal de que foi deletada com sucesso)
             if ($obra) {
                 // Retorne sucesso
                 return response()->json(['status' => 'success', 'msg' => 'Obra deletada.']);
@@ -818,7 +821,8 @@ class ObraController extends Controller
         }catch(Exception $e){ // Se houver qualquer falha
             // Retorne falha
             return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar a obra.']);
-        }*/
-        return;
+        }
+        // Erro desconhecido (não é para acontecer)
+        return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar a obra. Erro DESCONHECIDO']);;
     }
 }
