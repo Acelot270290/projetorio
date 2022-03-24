@@ -4,6 +4,10 @@
 
 @section('content')
 
+@if(is_null(auth()->user('id')['acesso_acervos']) or !in_array(strval($obra['id']), explode(',', auth()->user('id')['acesso_acervos'])))
+  <script>window.location = "/unauthorized";</script>
+@endif
+
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">

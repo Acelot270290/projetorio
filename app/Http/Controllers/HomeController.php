@@ -74,4 +74,14 @@ class HomeController extends Controller
             'estatisticasAcervo' => $estatisticasAcervo
         ]);
     }
+
+    /**
+     * Retorna a página de não autorizado
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function unauthorized()
+    {
+        return view('unauthorized');
+    }
 }

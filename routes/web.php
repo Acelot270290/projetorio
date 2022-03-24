@@ -18,6 +18,7 @@ Route::get('/', 'LoginController@index')->name('login');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/unauthorized', 'HomeController@unauthorized')->name('unauthorized');
 
 // Usuários
 Route::get('/usuarios', 'UserController@index')->name('usuarios');

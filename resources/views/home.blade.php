@@ -22,7 +22,7 @@
                   </div>
                   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
                     <div class="banner-img">
-                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/pesquisar.svg" alt="">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/pesquisar.svg" alt="Uma obra de arte sobreposta por uma lupa, indicando 'buscar'.">
                     </div>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                   </div>
                   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
                     <div class="banner-img">
-                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_acervo.svg" alt="">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_acervo.svg" alt="Imagem de uma construção com uma seta para baixo na lateral superior esquerda, indicando 'inserção de um novo acervo'.">
                     </div>
                   </div>
                   <div style="height: 1.15em; width: 100%;"></div>
@@ -67,7 +67,7 @@
                   </div>
                   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
                     <div class="banner-img">
-                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_acervos.svg" alt="">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_acervos.svg" alt="Imagem de uma construção comuma lista sobreposta na lateral superior esquerda, indicando 'listar os acervos existentes'.">
                     </div>
                   </div>
                   <div style="height: 1.15em; width: 100%;"></div>
@@ -90,7 +90,7 @@
                   </div>
                   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
                     <div class="banner-img">
-                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_obras.svg" alt="">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/inserir_obras.svg" alt="Obras de arte sobrepostas por uma seta para baixo na laterial superior direita, indicando 'inserção de uma nova obra'.">
                     </div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                   </div>
                   <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 pl-0">
                     <div class="banner-img">
-                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_obras.svg" alt="">
+                      <img style="max-width:140px; max-height:140px;" src="assets/img/banner/listar_obras.svg" alt="Obras de arte sobrepostas por uma lista na lateral superior direita, indicando 'listar as obras existentes'.">
                     </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pl-0">
                   <div class="banner-img">
-                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/usuarios.svg" alt="">
+                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/usuarios.svg" alt="Pessoas, indicando 'usuários'. Da esquerda para a direita, um rapaz de gravata, uma moça vestida com uma blusa amarela e um rapaz de jaqueta e óculos.">
                   </div>
                 </div>
               </div>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pl-0">
                   <div class="banner-img">
-                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/acervos.svg" alt="">
+                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/acervos.svg" alt="Uma construção.">
                   </div>
                 </div>
               </div>
@@ -216,7 +216,7 @@
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 pl-0">
                   <div class="banner-img">
-                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/obras.svg" alt="">
+                    <img style="max-width:140px; max-height:140px;" src="assets/img/banner/obras.svg" alt="Obras de arte.">
                   </div>
                 </div>
               </div>

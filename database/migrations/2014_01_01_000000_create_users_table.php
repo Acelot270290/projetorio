@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->boolean('estado');
             $table->string('image')->nullable(); // Preenchimento não obrigatório
+            $table->string('acesso_acervos')->nullable(); // Dita acesso a quais o usuário terá. (0 para todos, nulo para nenhum)
         });
     }
 
