@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', "Editar Acervo - ID:" . $acervo['id'])
+@section('titulo', "Editar Acervo - ID: " . $acervo['id'])
 
 @section('content')
 
@@ -574,5 +574,6 @@
         });
       });
 </script>
+@endif
 @endif
 @endsection

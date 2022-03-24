@@ -12,7 +12,7 @@
           </div>
           <div class="card-body p-0">
             <div style="text-align: center; margin-top: 5%;">
-              <img style="max-width:300px; max-height:300px;" src="assets/img/erro.svg" alt="Exclamação em um símbolo de atenção da cor vermelha.">
+              <img style="max-width:300px; max-height:300px;" src="/assets/img/erro.svg" alt="Exclamação em um símbolo de atenção da cor vermelha.">
               <div style="height: 100%; padding: 4%; font-family: 'Baloo Paaji'; font-size: large;">
                 Desculpe, mas você não tem acesso à esta página. Caso você deva ter acesso, mas ainda vê esta mensagem, contacte um administrador relatando o seu problema.
               </div>

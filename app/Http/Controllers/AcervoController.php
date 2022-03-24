@@ -317,7 +317,7 @@ class AcervoController extends Controller
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($acervo['acervos.id']), $accesses)){
+            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
                 // ele não é autorizado
                 return view('unauthorized');
             }
@@ -355,7 +355,7 @@ class AcervoController extends Controller
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($acervo['acervos.id']), $accesses)){
+            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
                 // ele não é autorizado
                 return view('unauthorized');
             }
@@ -637,7 +637,7 @@ class AcervoController extends Controller
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
-        
+
         /*// Descobre qual é o acervo a ser deletado
         $acervo = Acervos::select()->where('id', '=', $id)->delete();
         
