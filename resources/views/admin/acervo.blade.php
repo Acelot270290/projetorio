@@ -54,7 +54,8 @@
                         class="far fa-eye"></i></a>
                     <a href="{{ route('editar_acervo', ['id' => $acervo->id]) }}" class="btn btn-outline-primary"><i
                         class="fas fa-edit"></i></a>
-                    <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                    <a href="#" class="btn btn-outline-danger deletanovo" id="{{ $acervo->id }}"
+                      name="{{ $acervo->nome_acervo }}"><i class="fas fa-trash"></i></a>
                   </td>
                 </tr>
               </tbody>
@@ -66,4 +67,39 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(".deletanovo").click(function (e) {
+  e.preventDefault();
+  let id_acervo = $(this).attr('id');
+  let nome_acervo = $(this).attr('name');
+  var botao = $(this);
+
+  swal({
+    title: 'Tem certeza?',
+    text: 'Deseja deletar o acervo ' + nome_acervo + '?',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: '/acervo/deletar/' + id_acervo,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('input[name=_token]').val()
+          }}).done(function(data) {
+          if(data.status == 'success') {
+            swal('Sucesso!', data.msg, 'success');
+            botao.parent().parent().remove();
+          }else{
+            swal('Erro!', data.msg, 'error');
+          }
+        });
+      }
+    });
+});
+
+</script>
+
 @endsection

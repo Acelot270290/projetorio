@@ -76,36 +76,29 @@
   let id_obra = $(this).attr('id');
   let titulo_obra = $(this).attr('name');
   var botao = $(this);
-  console.log(id_obra);
-  console.log(titulo_obra);
-  console.log(botao);
 
   swal({
     title: 'Tem certeza?',
-    text: 'Deseja deletar a obra '+titulo_obra+ '?',
+    text: 'Deseja deletar a obra ' + titulo_obra + '?',
     icon: 'warning',
     buttons: true,
     dangerMode: true,
-  })
-    .then((willDelete) => {
+  }).then((willDelete) => {
       if (willDelete) {
         $.ajax({
           url: '/obra/deletar/'+ id_obra,
           type: 'POST',
           headers: {
-								'X-CSRF-TOKEN': $('input[name=_token]').val()
-
-						}}).done(function(data) {
-						if(data.status == 'success')
-						{
-              swal('Sucesso!', data.msg, 'success');
-               botao.parent().parent().remove();
-              
-              }else{
-                    swal('Erro!', data.msg, 'error');
-              }  
-            });
-         }
+              'X-CSRF-TOKEN': $('input[name=_token]').val()
+          }}).done(function(data) {
+          if(data.status == 'success') {
+            swal('Sucesso!', data.msg, 'success');
+            botao.parent().parent().remove();
+          }else{
+            swal('Erro!', data.msg, 'error');
+          }  
+        });
+      }
     });
 });
 
