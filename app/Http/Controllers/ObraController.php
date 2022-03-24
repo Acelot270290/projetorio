@@ -41,6 +41,10 @@ class ObraController extends Controller
         // Seleciona os dados de obras para serem dispostas na listagem de obras
         $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_temporaria');
 
+
+        $user = auth()->user('id_cargo');
+
+        
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -73,7 +77,8 @@ class ObraController extends Controller
 
         // Retorna a view de listagem de obras
         return view('admin.obra', [
-            'obras' => $obras
+            'obras' => $obras,
+            'user'=>$user
         ]);
     }
 
@@ -770,9 +775,15 @@ class ObraController extends Controller
     }
 
     public function deletar(Request $request, $id){
-        // Descobre qual é a obra a ser deletada
-        $acervoId = Obras::select('acervo_id')->where('id', '=', $id)->get()['acervo_id'];
+        // Somente TI ou administradores podem deletar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2'])){
+            return view('unauthorized');
+        }
 
+        // Descobre qual é a obra a ser deletada
+        $acervoId = Obras::select('acervo_id')->where('id', '=', $id)->first()['acervo_id'];
+        
+      
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -785,13 +796,14 @@ class ObraController extends Controller
             return view('unauthorized');
         }
 
-        if(!in_array('0', $accesses) or !in_array(strval($obra['acervo_id']) , $accesses)){
+        /*if(!in_array('0', $accesses) or !in_array(strval($acervoId) , $accesses)){
             // Se não estiver no array, o usuário não pode deletar essa obra porque não pertence ao acervo que ela tem acesso
             return view('unauthorized');
-        }
+        }*/
 
         // Deleta a obra
         $obra = Obras::select()->where('id', '=', $id)->delete();
+        //var_dump($obra);die;
         
         try{
             /* Parametrização do caminho onde as imagens ficam. */

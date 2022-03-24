@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Acervos;
 use App\Models\EspecificacaoAcervos;
 use App\Models\EstadoConservacaoAcervos;
+use App\Models\Obras;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
 use Image;
@@ -38,19 +39,19 @@ class AcervoController extends Controller
         $accesses = auth()->user('id')['acesso_acervos'];
 
         // Se o acesso não for nulo
-        if(!is_null($accesses)){
+        if (!is_null($accesses)) {
             // Faz o split do acesso usando vírgulas
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (Acesso 0 é acesso a tudo)
-            if(strval($accesses[0]) != '0'){
+            if (strval($accesses[0]) != '0') {
                 // Para cada acesso
-                foreach($accesses as $access){
+                foreach ($accesses as $access) {
                     // Faz o where com operador or para o id da obra
                     $acervos->orwhere('acervos.id', '=', $access);
                 }
             }
-        }else{
+        } else {
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
@@ -74,9 +75,9 @@ class AcervoController extends Controller
 
         // Chama a criação de acervo
         return view('admin.criar_acervo', [
-            'especificacoes' => $especificacoes, 
-            'estados' => $estados, 
-            'seculos' => $seculos, 
+            'especificacoes' => $especificacoes,
+            'estados' => $estados,
+            'seculos' => $seculos,
             'tombamentos' => $tombamentos
         ]);
     }
@@ -106,7 +107,7 @@ class AcervoController extends Controller
         $usuario = auth()->user('id');
 
         // Se existe uma especificação de acervo e ela não está vazia
-        if(isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)){
+        if (isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)) {
             // Concatena os elementos do array usando como separador uma ,
             $check = implode(',', $request->especificacao_acervo);
         } else {
@@ -145,7 +146,7 @@ class AcervoController extends Controller
             mkdir(public_path($preBasePath));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
-        }else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
+        } else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
             // Se não existir, cria ele
             mkdir(public_path($basePath));
         }
@@ -168,13 +169,15 @@ class AcervoController extends Controller
 
         /* Tratamento para inserção de fotos submetidas */
         // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
-        if($request->hasFile('foto_frontal_acervo') or 
-           $request->hasFile('foto_lateral_1_acervo') or 
-           $request->hasFile('foto_lateral_2_acervo') or 
-           $request->hasFile('foto_posterior_acervo') or 
-           $request->hasFile('foto_cobertura_acervo') or 
-           $request->hasFile('plantas_situacao_acervo')){
-            
+        if (
+            $request->hasFile('foto_frontal_acervo') or
+            $request->hasFile('foto_lateral_1_acervo') or
+            $request->hasFile('foto_lateral_2_acervo') or
+            $request->hasFile('foto_posterior_acervo') or
+            $request->hasFile('foto_cobertura_acervo') or
+            $request->hasFile('plantas_situacao_acervo')
+        ) {
+
             // Descobre qual é o acervo que acabou de ser inserido
             $insereAcervo = Acervos::find($acervoId);
             // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
@@ -296,7 +299,8 @@ class AcervoController extends Controller
         return redirect('/acervo/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
-    public function detalhar(Request $request, $id){
+    public function detalhar(Request $request, $id)
+    {
         // Seleciona os dados de acervos para detalhamento (query completa com as devidas associações)
         $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor', 'checkbox_especificacao_acervo',)
             ->where('acervos.id', '=', intval($id))
@@ -307,21 +311,21 @@ class AcervoController extends Controller
             ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
             ->leftJoin('users as u2', 'u2.id', '=', 'usuario_atualizacao_id')
             ->first();
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
         // Se o acesso não for nulo
-        if(!is_null($accesses)){
+        if (!is_null($accesses)) {
             // Faz o split do acesso usando vírgulas
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+            if (!in_array('0', $accesses) and !in_array(strval($id), $accesses)) {
                 // ele não é autorizado
                 return view('unauthorized');
             }
-        }else{
+        } else {
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
@@ -334,32 +338,33 @@ class AcervoController extends Controller
 
         // Chame a view de detalhamento de acervos
         return view('admin.detalhar_acervo', [
-            'acervo' => $acervo, 
+            'acervo' => $acervo,
             'especificacoes' => $especificacoes
         ]);
     }
 
-    public function editar(Request $request, $id){
+    public function editar(Request $request, $id)
+    {
         // Seleciona os dados de acervos para edição
-        $acervo = Acervos::select('acervos.id', 'acervos.created_at as criado_em', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id','checkbox_especificacao_acervo', 'name as usuario_cadastrante', 'usuario_atualizacao_id')
+        $acervo = Acervos::select('acervos.id', 'acervos.created_at as criado_em', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'checkbox_especificacao_acervo', 'name as usuario_cadastrante', 'usuario_atualizacao_id')
             ->where('acervos.id', '=', intval($id))
             ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
             ->first();
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
         // Se o acesso não for nulo
-        if(!is_null($accesses)){
+        if (!is_null($accesses)) {
             // Faz o split do acesso usando vírgulas
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+            if (!in_array('0', $accesses) and !in_array(strval($id), $accesses)) {
                 // ele não é autorizado
                 return view('unauthorized');
             }
-        }else{
+        } else {
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
@@ -375,30 +380,31 @@ class AcervoController extends Controller
 
         // Chama a view de edição de acervos
         return view('admin.editar_acervo', [
-            'acervo' => $acervo, 
-            'especificacoes' => $especificacoes, 
-            'estados' => $estados, 
-            'seculos' => $seculos, 
-            'tombamentos' => $tombamentos, 
+            'acervo' => $acervo,
+            'especificacoes' => $especificacoes,
+            'estados' => $estados,
+            'seculos' => $seculos,
+            'tombamentos' => $tombamentos,
             'check' => $check
         ]);
     }
 
-    public function atualizar(Request $request, $id){
+    public function atualizar(Request $request, $id)
+    {
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
         // Se o acesso não for nulo
-        if(!is_null($accesses)){
+        if (!is_null($accesses)) {
             // Faz o split do acesso usando vírgulas
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+            if (!in_array('0', $accesses) and !in_array(strval($id), $accesses)) {
                 // ele não é autorizado
                 return view('unauthorized');
             }
-        }else{
+        } else {
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
@@ -438,7 +444,7 @@ class AcervoController extends Controller
             mkdir(public_path($preBasePath));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
-        }else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
+        } else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
             // Se não existir, cria ele
             mkdir(public_path($basePath));
         }
@@ -452,10 +458,10 @@ class AcervoController extends Controller
             // Já que ela não existe, cria
             mkdir(public_path($imagemacervo));
         }
-         
-        try{
+
+        try {
             // Se existe uma especificação de acervo e ela não está vazia
-            if(isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)){
+            if (isset($request->especificacao_acervo) and !empty($request->especificacao_acervo)) {
                 // Concatena os elementos do array usando como separador uma ,
                 $check = implode(',', $request->especificacao_acervo);
             } else {
@@ -484,20 +490,22 @@ class AcervoController extends Controller
                 ]);
             // Seta flag de sucesso
             $isSuccess = true;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             // Seta flag de falha
             $isSuccess = false;
         }
 
         /* Tratamento para inserção de fotos submetidas */
         // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
-        if($request->hasFile('foto_frontal_acervo') or 
-           $request->hasFile('foto_lateral_1_acervo') or 
-           $request->hasFile('foto_lateral_2_acervo') or 
-           $request->hasFile('foto_posterior_acervo') or 
-           $request->hasFile('foto_cobertura_acervo') or 
-           $request->hasFile('plantas_situacao_acervo')){
-            
+        if (
+            $request->hasFile('foto_frontal_acervo') or
+            $request->hasFile('foto_lateral_1_acervo') or
+            $request->hasFile('foto_lateral_2_acervo') or
+            $request->hasFile('foto_posterior_acervo') or
+            $request->hasFile('foto_cobertura_acervo') or
+            $request->hasFile('plantas_situacao_acervo')
+        ) {
+
             // Descobre qual é o acervo que acabou de ser inserido
             $updateAcervo = Acervos::find($id);
             // Adição sem timestamp (importante pra não flagar como update)
@@ -619,33 +627,35 @@ class AcervoController extends Controller
         return redirect('/acervo/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
-    public function deletar(Request $request, $id){
+    public function deletar(Request $request, $id)
+    {
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
         // Se o acesso não for nulo
-        if(!is_null($accesses)){
+        if (!is_null($accesses)) {
             // Faz o split do acesso usando vírgulas
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+            if (!in_array('0', $accesses) and !in_array(strval($id), $accesses)) {
                 // ele não é autorizado
                 return view('unauthorized');
             }
-        }else{
+        } else {
             // Acesso nulo é sem acesso a nada
             return view('unauthorized');
         }
 
         // Descobre se existe alguma obra associada à esse acervo
-        $obra = Obras::select()->where('acervo_id', '=', $id)->get();
-
-        // Se obra for null, é sinal de que não existe nenhuma obra associada com o acervo a ser deletado
-        if($obra === null){
+        $obras = Obras::select()->where('acervo_id', '=', $id)->get();
+        
+        // Se obra tiver algum resultado, significa de que existe pelo menos alguma obra associada com o acervo
+        if ($obras->count() == 0) {
             // Deleta o acervo
             $acervo = Acervos::select()->where('id', '=', $id)->delete();
-            try{
+
+            try {
                 /* Parametrização do caminho onde as imagens ficam. */
                 // Nome do primeiro folder
                 $preBasePath =  'imagem';
@@ -654,7 +664,7 @@ class AcervoController extends Controller
 
                 // Parametrização do nome da pasta onde as imagens estão
                 $imagemacervo =  $basePath . '/' . $id;
-                
+
                 // Se a pasta existir
                 if (is_dir($imagemacervo)) {
                     // Delete o seu conteúdo
@@ -670,14 +680,14 @@ class AcervoController extends Controller
                     // Retorne falha
                     return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo.']);
                 }
-            }catch(Exception $e){ // Se houver qualquer falha
+            } catch (Exception $e) { // Se houver qualquer falha
                 // Retorne falha
                 return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo.']);
             }
-        }else{
+        } else {
             // Lista de ids de acervo
             $ids = [];
-            foreach($obras as $obra){
+            foreach ($obras as $obra) {
                 array_push($ids, $obra['id']);
             }
             return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo pois ele contém obras associadas! As obras são: ' . implode(', ', $ids)]);;
