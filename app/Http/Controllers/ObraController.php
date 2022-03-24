@@ -80,7 +80,38 @@ class ObraController extends Controller
     public function criar(Request $request)
     {
         // Seleciona os dados necessários para o preenchimento dos dados do formulário de criação de obras (checkboxes, select, ...)
-        $acervos = Acervos::select('id', 'nome_acervo')->get();
+        $acervos = Acervos::select('id', 'nome_acervo');
+
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (Acesso 0 é acesso a tudo)
+            if(strval($accesses[0]) != '0'){
+                // Para cada acesso
+                foreach($accesses as $access){
+                    // Faz o where com operador or para o id da obra
+                    $acervos->orwhere('id', '=', $access);
+                }
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+        // Pega os dados
+        $acervos = $acervos->get();
+
+        // Se não houve nenhum resultado em acervo, o usuário não possui acesso a nenum acervo cadastrado.
+        if($acervos === null){
+            // Se estiver vazio, o usuário não pode cadastrar nada (não deve existir esse erro).
+            return view('unauthorized');
+            // TODO: Trocar essa view para "usuario não tem acesso a nenhum acervo existente"
+        }
+
         $categorias = Categorias::select('id', 'titulo_categoria')->get();
         $condicoes = CondicaoSegurancaObras::select('id', 'titulo_condicao_seguranca_obra', 'is_default_condicao_seguranca_obra')->get();
         $especificacoes = EspecificacaoObras::select('id', 'titulo_especificacao_obra')->orderBy('titulo_especificacao_obra', 'ASC')->get();
@@ -150,6 +181,23 @@ class ObraController extends Controller
         } else {
             // Já que não existe dado para especificação de segurança de obra, marca como uma string vazia
             $checkSeg = '';
+        }
+
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
+        if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
+            // Se não estiver no array, o usuário não pode inserir nesse acervo
+            return view('unauthorized');
         }
 
         // Insere os dados em obras e retorna o id do elemento inserido
@@ -376,7 +424,7 @@ class ObraController extends Controller
             $accesses = explode(',', $accesses);
 
             // Se o acesso não for 0 (ilimitado) ou não estiver na lista
-            if($accesses[0] != '0' and !in_array(strval($obra['acervo_id']), $accesses)){
+            if(!in_array('0', $accesses) and !in_array(strval($obra['acervo_id']), $accesses)){
                 // ele não é autorizado
                 return view('unauthorized');
             }
@@ -407,6 +455,24 @@ class ObraController extends Controller
             ->where('obras.id', '=', intval($id))
             ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
             ->first();
+        
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if(!in_array('0', $accesses) and !in_array(strval($obra['acervo_id']), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
 
         // Converte para inteiro todos os valores contidos nos arrays gerados pela separações das strings checkbox_especificacao_obra e checkbox_especificacao_seguranca_obra com o separador ,
         $check = array_map('intval', explode(',', $obra->checkbox_especificacao_obra));
@@ -488,6 +554,23 @@ class ObraController extends Controller
             } else {
                 // Já que não existe dado para especificação de segurança de obra, marca como uma string vazia
                 $checkSeg = '';
+            }
+
+            // Descobre quais acervos que o usuário tem acesso
+            $accesses = auth()->user('id')['acesso_acervos'];
+
+            // Se o acesso não for nulo
+            if(!is_null($accesses)){
+                // Faz o split do acesso usando vírgulas
+                $accesses = explode(',', $accesses);
+            }else{
+                // Acesso nulo é sem acesso a nada
+                return view('unauthorized');
+            }
+
+            if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
+                // Se não estiver no array, o usuário não pode inserir nesse acervo
+                return view('unauthorized');
             }
             
             // Edita a obra que possui o id igual ao id passado na url
