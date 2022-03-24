@@ -39,8 +39,30 @@ class ObraController extends Controller
     public function index()
     {
         // Seleciona os dados de obras para serem dispostas na listagem de obras
-        $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_temporaria')
-            ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
+        $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_temporaria');
+
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (Acesso 0 é acesso a tudo)
+            if(strval($accesses[0]) != '0'){
+                // Para cada acesso
+                foreach($accesses as $access){
+                    // Faz o where com operador or para o id da obra
+                    $obras->orwhere('acervo_id', '=', $access);
+                }
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
+        $obras = $obras->join('seculos as s', 's.id', '=', 'obras.seculo_id')
             ->join('tesauros as t', 't.id', '=', 'tesauro_id')
             ->join('acervos as a', 'a.id', '=', 'acervo_id')
             ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
@@ -344,6 +366,24 @@ class ObraController extends Controller
             ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
             ->leftJoin('users as u2', 'u2.id', '=', 'obras.usuario_atualizacao_id')
             ->first();
+        
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if($accesses[0] != '0' and !in_array(strval($obra['acervo_id']), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
 
         // Como as especificações não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
         $especificacoes_array = explode(',', $obra->checkbox_especificacao_obra);

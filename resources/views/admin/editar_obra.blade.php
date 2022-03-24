@@ -4,8 +4,15 @@
 
 @section('content')
 
-@if(is_null(auth()->user('id')['acesso_acervos']) or !in_array(strval($obra['id']), explode(',', auth()->user('id')['acesso_acervos'])))
+@php
+    $accesses = explode(',', auth()->user('id')['acesso_acervos']);
+@endphp
+@if(is_null(auth()->user('id')['acesso_acervos']))
   <script>window.location = "/unauthorized";</script>
+@else
+  @if(strval($accesses[0]) != '0' and !in_array(strval($obra['id']), strval($accesses)))
+    <script>window.location = "/unauthorized";</script>
+  @endif
 @endif
 
 <div class="main-content" style="min-height: 562px;">
