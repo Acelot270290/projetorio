@@ -30,8 +30,8 @@ Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_
 Route::get('/acervo', 'AcervoController@index')->name('acervo');
 Route::get('/acervo/criar', 'AcervoController@criar')->name('criar_acervo');
 Route::get('/acervo/detalhar/{id}', 'AcervoController@detalhar')->name('detalhar_acervo');
-Route::get('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acervo');
 
+Route::post('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acervo');
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 Route::post('/acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
 Route::post('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
@@ -40,8 +40,8 @@ Route::post('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_a
 Route::get('/obra', 'ObraController@index')->name('obra');
 Route::get('/obra/criar', 'ObraController@criar')->name('criar_obra');
 Route::get('/obra/detalhar/{id}', 'ObraController@detalhar')->name('detalhar_obra');
-Route::post('/obra/editar/{id}', 'ObraController@editar')->name('editar_obra');
 
+Route::post('/obra/editar/{id}', 'ObraController@editar')->name('editar_obra');
 Route::post('/obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra');
 Route::post('/obra/atualizar/{id}', 'ObraController@atualizar')->name('atualizar_obra');
 Route::post('/obra/deletar/{id}', 'ObraController@deletar')->name('deletar_obra');
