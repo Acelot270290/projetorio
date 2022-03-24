@@ -32,8 +32,30 @@ class AcervoController extends Controller
     public function index()
     {
         // Seleciona os dados de acervos para serem mostrados na listagem de acervos
-        $acervos = Acervos::select('acervos.id', 'nome_acervo', 'cidade_acervo', 'UF_acervo', 'foto_frontal_acervo', 'seculo_id', 'titulo_seculo', 'ano_construcao_acervo')
-            ->join('seculos as s', 's.id', '=', 'seculo_id')
+        $acervos = Acervos::select('acervos.id', 'nome_acervo', 'cidade_acervo', 'UF_acervo', 'foto_frontal_acervo', 'seculo_id', 'titulo_seculo', 'ano_construcao_acervo');
+
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (Acesso 0 é acesso a tudo)
+            if(strval($accesses[0]) != '0'){
+                // Para cada acesso
+                foreach($accesses as $access){
+                    // Faz o where com operador or para o id da obra
+                    $acervos->orwhere('acervos.id', '=', $access);
+                }
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
+        $acervos = $acervos->join('seculos as s', 's.id', '=', 'seculo_id')
             ->orderBy('acervos.id', 'ASC')
             ->get();
 
@@ -285,6 +307,24 @@ class AcervoController extends Controller
             ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
             ->leftJoin('users as u2', 'u2.id', '=', 'usuario_atualizacao_id')
             ->first();
+        
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if(!in_array('0', $accesses) and !in_array(strval($acervo['acervos.id']), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
 
         // Como as especificações não são chave estrangeira perfeita, o split da string é feita utilizando como separador a ,
         $especificacoes_array = explode(',', $acervo->checkbox_especificacao_acervo);
@@ -305,6 +345,24 @@ class AcervoController extends Controller
             ->where('acervos.id', '=', intval($id))
             ->join('users as u1', 'u1.id', '=', 'usuario_insercao_id')
             ->first();
+        
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if(!in_array('0', $accesses) and !in_array(strval($acervo['acervos.id']), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
 
         // Converte para inteiro todos os valores contidos no array gerado pela separação da string checkbox_especificacao_acervo com o separador ,
         $check = array_map('intval', explode(',', $acervo->checkbox_especificacao_acervo));
@@ -327,6 +385,24 @@ class AcervoController extends Controller
     }
 
     public function atualizar(Request $request, $id){
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
         // Descobre quais anos são os limites do século escolhido
         $acervo = Acervos::select('seculo_id')->where('id', $id)->first();
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $acervo['seculo_id'])->first();
@@ -544,6 +620,24 @@ class AcervoController extends Controller
     }
 
     public function deletar(Request $request, $id){
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se o acesso não for 0 (ilimitado) ou não estiver na lista
+            if(!in_array('0', $accesses) and !in_array(strval($id), $accesses)){
+                // ele não é autorizado
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+        
         /*// Descobre qual é o acervo a ser deletado
         $acervo = Acervos::select()->where('id', '=', $id)->delete();
         

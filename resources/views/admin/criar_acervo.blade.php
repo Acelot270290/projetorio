@@ -418,7 +418,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div> 
-          <div id="notification-warn-mini"></div>`;
+          <div id="notification-warn-mini"></div>`; @php #` @endphp
           $("#anoerror").html("");
           $("#anoerror").append(errorBox);
           window.anoOk = true;

@@ -772,6 +772,23 @@ class ObraController extends Controller
     public function deletar(Request $request, $id){
         /*// Descobre qual é a obra a ser deletada
         $obra = Obras::select()->where('id', '=', $id)->delete();
+
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
+        if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
+            // Se não estiver no array, o usuário não pode inserir nesse acervo
+            return view('unauthorized');
+        }
         
         try{
             /* Parametrização do caminho onde as imagens ficam. *

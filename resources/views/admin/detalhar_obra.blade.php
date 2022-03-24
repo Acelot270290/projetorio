@@ -4,6 +4,15 @@
 
 @section('content')
 
+@if(is_null(auth()->user('id')['acesso_acervos']))
+  <script>window.location = "/unauthorized";</script>
+@else
+  @php
+    $accesses = explode(',', auth()->user('id')['acesso_acervos']);
+  @endphp
+  @if(!in_array('0', $accesses) and !in_array(strval($obra['acervo_id']), $accesses))
+    <script>window.location = "/unauthorized";</script>
+  @else
 <div class="main-content">
     <div class="section-body">
         <div class="row">
@@ -282,5 +291,5 @@
         </div>
     </div>
 </div>
-
+@endif
 @endsection

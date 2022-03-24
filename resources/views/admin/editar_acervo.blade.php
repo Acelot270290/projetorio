@@ -4,6 +4,15 @@
 
 @section('content')
 
+@if(is_null(auth()->user('id')['acesso_acervos']))
+  <script>window.location = "/unauthorized";</script>
+@else
+  @php
+    $accesses = explode(',', auth()->user('id')['acesso_acervos']);
+  @endphp
+  @if(!in_array('0', $accesses) and !in_array(strval($acervo['id']), $accesses))
+    <script>window.location = "/unauthorized";</script>
+  @else
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">
@@ -503,7 +512,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div> 
-          <div id="notification-warn-mini"></div>`;
+          <div id="notification-warn-mini"></div>`; @php #` @endphp
           $("#anoerror").html("");
           $("#anoerror").append(errorBox);
           window.anoOk = true;
@@ -565,5 +574,5 @@
         });
       });
 </script>
-
+@endif
 @endsection
