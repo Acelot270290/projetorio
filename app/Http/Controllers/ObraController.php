@@ -770,8 +770,8 @@ class ObraController extends Controller
     }
 
     public function deletar(Request $request, $id){
-        /*// Descobre qual é a obra a ser deletada
-        $obra = Obras::select()->where('id', '=', $id)->delete();
+        // Descobre qual é a obra a ser deletada
+        $obra = Obras::select('acervo_id')->where('id', '=', $id)->delete();
 
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
@@ -785,12 +785,12 @@ class ObraController extends Controller
             return view('unauthorized');
         }
 
-        if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
-            // Se não estiver no array, o usuário não pode inserir nesse acervo
+        if(!in_array('0', $accesses) or !in_array(strval($obra['acervo_id']) , $accesses)){
+            // Se não estiver no array, o usuário não pode deletar essa obra porque não pertence ao acervo que ela tem acesso
             return view('unauthorized');
         }
         
-        try{
+        /*try{
             /* Parametrização do caminho onde as imagens ficam. *
             // Nome do primeiro folder
             $preBasePath =  'imagem';
