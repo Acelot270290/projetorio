@@ -38,7 +38,7 @@
 </head>
 
 <body>
-
+@if(Auth::user())
   <!-- navbar-->
   <div class="loader"></div>
   <div id="app">
@@ -100,7 +100,7 @@
         </ul>
       </nav>
 
-      <!-- navbar--!>
+      <!-- navbar-->
      
 	 <!-- sidebar-->
       <div class="main-sidebar sidebar-style-2">
@@ -145,6 +145,7 @@
             </li>
         </aside>
       </div>
+      @endif
       <!-- conteudo das páginas -->
       @yield('content')
       <!--conteudo -->
