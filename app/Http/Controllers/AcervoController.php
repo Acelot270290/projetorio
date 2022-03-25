@@ -676,9 +676,13 @@ class AcervoController extends Controller
         
         // Se obra tiver algum resultado, significa de que existe pelo menos alguma obra associada com o acervo
         if ($obras->count() == 0) {
-            // Deleta o acervo
-            $acervo = Acervos::select()->where('id', '=', $id)->delete();
-
+            
+            try{
+                // Deleta o acervo
+                $acervo = Acervos::select()->where('id', '=', $id)->delete();
+            }catch(Exception $e){
+                return response()->json(['status' => 'error', 'msg' => 'Registro inexistente. Talvez ele já tenha sido deletado.']);
+            }
             try {
                 /* Parametrização do caminho onde as imagens ficam. */
                 // Nome do primeiro folder

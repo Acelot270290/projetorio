@@ -208,7 +208,7 @@ class ObraController extends Controller
             return view('unauthorized');
         }
 
-        if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
+        if(!in_array('0', $accesses) and !in_array(strval($request->acervo_obra) , $accesses)){
             // Se não estiver no array, o usuário não pode inserir nesse acervo
             return view('unauthorized');
         }
@@ -536,7 +536,7 @@ class ObraController extends Controller
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
             return view('unauthorized');
         }
-        
+
         // Descobre quais anos são os limites do século escolhido
         $obra = Obras::select('seculo_id')->where('id', $id)->first();
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $obra['seculo_id'])->first();
@@ -591,7 +591,7 @@ class ObraController extends Controller
                 return view('unauthorized');
             }
 
-            if(!in_array('0', $accesses) or !in_array(strval($request->acervo_obra) , $accesses)){
+            if(!in_array('0', $accesses) and !in_array(strval($request->acervo_obra) , $accesses)){
                 // Se não estiver no array, o usuário não pode inserir nesse acervo
                 return view('unauthorized');
             }
@@ -795,13 +795,16 @@ class ObraController extends Controller
     public function deletar(Request $request, $id){
         // Somente TI ou administradores podem deletar
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2'])){
-            return view('unauthorized');
+            return response()->json(['status' => 'error', 'msg' => 'Você não tem acesso para deletar esta obra.']);
         }
 
-        // Descobre qual é a obra a ser deletada
-        $acervoId = Obras::select('acervo_id')->where('id', '=', $id)->first()['acervo_id'];
+        try{
+            // Descobre qual é a obra a ser deletada
+            $acervoId = Obras::select('acervo_id')->where('id', '=', $id)->first()['acervo_id'];
+        }catch(Exception $e){
+            return response()->json(['status' => 'error', 'msg' => 'Registro inexistente. Talvez ele já tenha sido deletado.']);
+        }
         
-      
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -811,12 +814,12 @@ class ObraController extends Controller
             $accesses = explode(',', $accesses);
         }else{
             // Acesso nulo é sem acesso a nada
-            return view('unauthorized');
+            return response()->json(['status' => 'error', 'msg' => 'Você não tem acesso para deletar esta obra.']);
         }
 
-        if(!in_array('0', $accesses) or !in_array(strval($acervoId) , $accesses)){
+        if(!in_array('0', $accesses) and !in_array(strval($acervoId) , $accesses)){
             // Se não estiver no array, o usuário não pode deletar essa obra porque não pertence ao acervo que ela tem acesso
-            return view('unauthorized');
+            return response()->json(['status' => 'error', 'msg' => 'Você não tem acesso para deletar esta obra.']);
         }
 
         // Deleta a obra

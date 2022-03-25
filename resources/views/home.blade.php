@@ -234,6 +234,7 @@
           </div>
           <div class="card-body p-0">
             <div class="table-responsive">
+              {!! csrf_field() !!}
               <table class="table table-striped">
                 <tr>
                   <th style="padding-left:25px; text-align: center;">Id</th>
@@ -269,8 +270,10 @@
                         class="far fa-eye"></i></a>
                     <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i
                         class="fas fa-edit"></i></a>
+                    @if(in_array(strval(auth()->user('id')['id_cargo']), ['1', '2']))
                     <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"
                       name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach
@@ -283,5 +286,40 @@
   </section>
 
 </div>
+
+<script>
+  $(".deletanovo").click(function (e) {
+  e.preventDefault();
+  let id_obra = $(this).attr('id');
+  let titulo_obra = $(this).attr('name');
+  var botao = $(this);
+
+  swal({
+    title: 'Tem certeza?',
+    text: 'Deseja deletar a obra ' + titulo_obra + '?',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: '/obra/deletar/' + id_obra,
+          type: 'POST',
+          headers: {
+              'X-CSRF-TOKEN': $('input[name=_token]').val()
+          }}).done(function(data) {
+          if(data.status == 'success') {
+            swal('Sucesso!', data.msg, 'success');
+            botao.parent().parent().remove();
+          }else{
+            swal('Erro!', data.msg, 'error');
+          }  
+        });
+        
+      }
+    });
+});
+
+</script>
 
 @endsection
