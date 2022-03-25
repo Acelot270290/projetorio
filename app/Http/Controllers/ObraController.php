@@ -41,10 +41,8 @@ class ObraController extends Controller
         // Seleciona os dados de obras para serem dispostas na listagem de obras
         $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_temporaria');
 
-
         $user = auth()->user('id_cargo');
 
-        
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -84,6 +82,11 @@ class ObraController extends Controller
 
     public function criar(Request $request)
     {
+        // Revisores não podem criar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+            return view('unauthorized');
+        }
+
         // Seleciona os dados necessários para o preenchimento dos dados do formulário de criação de obras (checkboxes, select, ...)
         $acervos = Acervos::select('id', 'nome_acervo');
 
@@ -148,6 +151,11 @@ class ObraController extends Controller
 
     public function adicionar(Request $request)
     {
+        // Revisores não podem criar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+            return view('unauthorized');
+        }
+
         // Descobre os limites superior e inferior para os anos referente ao século desejado
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_obra)->first();
 
@@ -455,6 +463,11 @@ class ObraController extends Controller
     }
 
     public function editar(Request $request, $id){
+        // Catalogadores não podem editar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+            return view('unauthorized');
+        }
+
         // Seleciona os dados de obras para edição
         $obra = Obras::select('obras.id', 'acervo_id', 'obras.created_at as criado_em', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'checkbox_especificacao_seguranca_obra', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id','obras.usuario_insercao_id', 'name as usuario_cadastrante', 'obra_temporaria')
             ->where('obras.id', '=', intval($id))
@@ -519,6 +532,11 @@ class ObraController extends Controller
 
     public function atualizar(Request $request, $id)
     {
+        // Catalogadores não podem editar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+            return view('unauthorized');
+        }
+        
         // Descobre quais anos são os limites do século escolhido
         $obra = Obras::select('seculo_id')->where('id', $id)->first();
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $obra['seculo_id'])->first();

@@ -67,6 +67,11 @@ class AcervoController extends Controller
 
     public function criar(Request $request)
     {
+        // Revisores não podem criar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+            return view('unauthorized');
+        }
+
         // Seleciona as especificações, estados, séculos e tombamentos para preencher os dados de uma ficha em branco (checkboxes, select, ...)
         $especificacoes = EspecificacaoAcervos::select('id', 'titulo_especificacao_acervo')->orderBy('titulo_especificacao_acervo', 'ASC')->get();
         $estados = EstadoConservacaoAcervos::select('id', 'titulo_estado_conservacao_acervo', 'is_default_estado_conservacao_acervo')->get();
@@ -84,6 +89,11 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
+        // Revisores não podem criar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+            return view('unauthorized');
+        }
+
         // Descobre quais anos são os limites do século escolhido
         $seculo = Seculos::select('ano_inicio_seculo', 'ano_fim_seculo')->where('id', $request->seculo_acervo)->first();
 
@@ -345,6 +355,11 @@ class AcervoController extends Controller
 
     public function editar(Request $request, $id)
     {
+        // Catalogadores não podem editar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+            return view('unauthorized');
+        }
+
         // Seleciona os dados de acervos para edição
         $acervo = Acervos::select('acervos.id', 'acervos.created_at as criado_em', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'foto_lateral_1_acervo', 'foto_lateral_2_acervo', 'foto_posterior_acervo', 'foto_cobertura_acervo', 'plantas_situacao_acervo', 'estado_conservacao_acervo_id', 'ano_construcao_acervo', 'tombamento_id', 'seculo_id', 'especificacao_acervo_id', 'checkbox_especificacao_acervo', 'name as usuario_cadastrante', 'usuario_atualizacao_id')
             ->where('acervos.id', '=', intval($id))
@@ -391,6 +406,11 @@ class AcervoController extends Controller
 
     public function atualizar(Request $request, $id)
     {
+        // Catalogadores não podem editar
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+            return view('unauthorized');
+        }
+        
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 

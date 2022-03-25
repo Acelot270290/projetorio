@@ -20,6 +20,12 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Detalhamento de acervo ID: {{ !is_null($acervo->id) ? $acervo->id : '-' }}</h3>
+                        @if(in_array(intval(auth()->user('id')['id_cargo']), [1, 2, 4, 5]))
+                        <div style="position: absolute; right: 0px; margin-right: 5%;">
+                            <a href="{{ route('editar_acervo', ['id' => $acervo->id]) }}" class="btn btn-outline-primary"><i
+                                class="fas fa-edit"></i>Editar acervo ID: {{ $acervo->id }}</a>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="form-row">
