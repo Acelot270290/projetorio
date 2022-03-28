@@ -674,7 +674,7 @@ class ObraController extends Controller
            $request->hasFile('foto_inferior_obra')){
            
             // Descobre qual é a obra que acabou de ser inserida
-            $atualizaObra = Obras::find($obraId);
+            $atualizaObra = Obras::find($id);
             // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
             $atualizaObra->timestamps = false;
 
