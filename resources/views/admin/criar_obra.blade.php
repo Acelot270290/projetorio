@@ -30,15 +30,15 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                    @if(old('obra_temporaria') == "1")
-                        <input name="obra_temporaria" type="checkbox" style="margin-top: 3px;"
-                              value="1" id="obra_temporaria" checked>
+                    @if(old('obra_provisoria') == "1")
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;"
+                              value="1" id="obra_provisoria" checked>
                       @else
-                        <input name="obra_temporaria" type="checkbox" style="margin-top: 3px;"
-                              value="1" id="obra_temporaria">
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;"
+                              value="1" id="obra_provisoria">
                       @endif
                     <div class="state p-success">
-                      <label style="margin-left: 10px;" for="obra_temporaria">Obra temporária</label>
+                      <label style="margin-left: 10px;" for="obra_provisoria">Obra provisória</label>
                     </div>
                   </div>
                 </div>

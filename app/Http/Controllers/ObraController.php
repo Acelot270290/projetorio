@@ -39,7 +39,7 @@ class ObraController extends Controller
     public function index()
     {
         // Seleciona os dados de obras para serem dispostas na listagem de obras
-        $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_temporaria');
+        $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_provisoria');
 
         $user = auth()->user('id_cargo');
 
@@ -245,7 +245,7 @@ class ObraController extends Controller
             'checkbox_especificacao_seguranca_obra' => $checkSeg,
             'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
             'observacoes_obra'=> $request->observacoes_obra,
-            'obra_temporaria' => isset($request->obra_temporaria) ? 1 : 0,
+            'obra_provisoria' => isset($request->obra_provisoria) ? 1 : 0,
         ]);
 
         /* Parametrização do caminho onde as imagens ficam. */
@@ -409,7 +409,7 @@ class ObraController extends Controller
 
     public function detalhar(Request $request, $id){
         // Seleciona os dados de obras para detalhamento (query completa com as devidas associações)
-        $obra = Obras::select('obras.id', 'acervo_id', 'nome_acervo', 'obras.created_at', 'obras.updated_at', 'categoria_id', 'titulo_categoria', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'titulo_tesauro', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra', 'diametro_obra', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'tecnica_id_1', 't1.titulo_tecnica as titulo_tecnica_1', 'tecnica_id_2', 't2.titulo_tecnica as titulo_tecnica_2', 'tecnica_id_3', 't3.titulo_tecnica as titulo_tecnica_3', 'obras.seculo_id', 'titulo_seculo', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'estado_conservacao_obra_id', 'titulo_estado_conservacao_obra', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'titulo_condicao_seguranca_obra', 'checkbox_especificacao_seguranca_obra','caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id', 'nome_localizacao', 'obras.usuario_insercao_id', 'u1.name as usuario_cadastrante', 'obras.usuario_atualizacao_id', 'u2.name as usuario_revisor', 'obra_temporaria')
+        $obra = Obras::select('obras.id', 'acervo_id', 'nome_acervo', 'obras.created_at', 'obras.updated_at', 'categoria_id', 'titulo_categoria', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'titulo_tesauro', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra', 'diametro_obra', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'tecnica_id_1', 't1.titulo_tecnica as titulo_tecnica_1', 'tecnica_id_2', 't2.titulo_tecnica as titulo_tecnica_2', 'tecnica_id_3', 't3.titulo_tecnica as titulo_tecnica_3', 'obras.seculo_id', 'titulo_seculo', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'estado_conservacao_obra_id', 'titulo_estado_conservacao_obra', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'titulo_condicao_seguranca_obra', 'checkbox_especificacao_seguranca_obra','caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id', 'nome_localizacao', 'obras.usuario_insercao_id', 'u1.name as usuario_cadastrante', 'obras.usuario_atualizacao_id', 'u2.name as usuario_revisor', 'obra_provisoria')
             ->where('obras.id', '=', intval($id))
             ->join('acervos as a', 'a.id', '=', 'acervo_id')
             ->join('categorias as c', 'c.id', '=', 'categoria_id')
@@ -469,7 +469,7 @@ class ObraController extends Controller
         }
 
         // Seleciona os dados de obras para edição
-        $obra = Obras::select('obras.id', 'acervo_id', 'obras.created_at as criado_em', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'checkbox_especificacao_seguranca_obra', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id','obras.usuario_insercao_id', 'name as usuario_cadastrante', 'obra_temporaria')
+        $obra = Obras::select('obras.id', 'acervo_id', 'obras.created_at as criado_em', 'categoria_id', 'titulo_obra', 'foto_frontal_obra', 'foto_lateral_esquerda_obra', 'foto_lateral_direita_obra', 'foto_posterior_obra', 'foto_superior_obra', 'foto_inferior_obra', 'tesauro_id', 'altura_obra', 'largura_obra', 'profundidade_obra', 'comprimento_obra',  'diametro_obra',  'material_id_1',  'material_id_2',  'material_id_3',  'tecnica_id_1',  'tecnica_id_2',  'tecnica_id_3', 'seculo_id', 'ano_obra', 'autoria_obra', 'procedencia_obra', 'tombamento_id', 'estado_conservacao_obra_id', 'checkbox_especificacao_obra', 'condicoes_de_seguranca_obra_id', 'checkbox_especificacao_seguranca_obra', 'caracteristicas_est_icono_orna_obra', 'observacoes_obra', 'localizacao_obra_id','obras.usuario_insercao_id', 'name as usuario_cadastrante', 'obra_provisoria')
             ->where('obras.id', '=', intval($id))
             ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
             ->first();
@@ -628,7 +628,7 @@ class ObraController extends Controller
                 'checkbox_especificacao_seguranca_obra'=> $checkSeg,
                 'caracteristicas_est_icono_orna_obra'=> $request->caracteristicas_estilisticas_obra,
                 'observacoes_obra'=> $request->observacoes_obra,
-                'obra_temporaria' => isset($request->obra_temporaria) ? 1 : 0,
+                'obra_provisoria' => isset($request->obra_provisoria) ? 1 : 0,
             ]);
             // Seta flag de sucesso
             $isSuccess = true;
