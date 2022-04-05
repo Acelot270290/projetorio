@@ -2,6 +2,11 @@
 
 @section('titulo', 'Usuários cadastrados')
 
+@php
+    $allowEdit = ['1', '2'];
+    $allowDelete = ['1', '2'];
+@endphp
+
 @section('content')
 <div class="main-content">
   <div class="row">
@@ -46,12 +51,14 @@
                     @if($usuario->estado == 1)
                     <div class="badge badge-success">Ativo</div>
                     @else
-                    <div class="badge badge-danger">Intaivo</div>
+                    <div class="badge badge-danger">Inativo</div>
                     @endif
                   </td>
                   <td>
-                    <button href="#" class="btn btn-outline-primary"><i class="fas fa-edit"></i></button>
+                    <button href="@if(!in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) # @else # @endif" class="btn btn-outline-primary" @if(!in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) disabled @endif><i class="fas fa-edit"></i></button>
+                    @if(in_array(strval(auth()->user('id')['id_cargo']), $allowDelete))
                     <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach

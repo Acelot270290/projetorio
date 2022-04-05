@@ -58,7 +58,7 @@
                   <td>
                     <a href="{{ route('detalhar_acervo', ['id' => $acervo->id]) }}" class="btn btn-outline-success"><i
                         class="far fa-eye"></i></a>
-                    <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_acervo', ['id' => $acervo->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView) disabled @endif)><i
+                    <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_acervo', ['id' => $acervo->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i
                         class="fas fa-edit"></i></a>
                     <a href="#" class="btn btn-outline-danger deletanovo" id="{{ $acervo->id }}"
                       name="{{ $acervo->nome_acervo }}"><i class="fas fa-trash"></i></a>

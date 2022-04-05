@@ -28,7 +28,7 @@
                         <h3>Detalhamento de acervo ID: {{ !is_null($acervo->id) ? $acervo->id : '-' }}</h3>
                         @if(in_array(intval(auth()->user('id')['id_cargo']), [1, 2, 4, 5]))
                         <div style="position: absolute; right: 0px; margin-right: 5%;">
-                            <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_acervo', ['id' => $acervo->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView) disabled @endif><i class="fas fa-edit"></i>Editar acervo ID: {{ $acervo->id }}</a>
+                            <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_acervo', ['id' => $acervo->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i class="fas fa-edit"></i>Editar acervo ID: {{ $acervo->id }}</a>
                         </div>
                         @endif
                     </div>
