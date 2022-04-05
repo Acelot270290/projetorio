@@ -4,6 +4,11 @@
 
 @section('content')
 
+@php
+    $allowEdit = ['1', '2', '3', '5'];
+    $canOnlyView = ['6'];
+@endphp
+
 <div class="main-content" style="min-height: 562px;">
   <section class="section">
     <div class="section-body">
@@ -20,9 +25,9 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{ route('adicionar_obra') }}" name="criar_obra" accept-charset="utf-8"
+            <form method="POST" action="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('adicionar_obra') }}@endif" name="criar_obra" accept-charset="utf-8"
               enctype="multipart/form-data">
-              @csrf
+              @if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) @csrf @endif
               <div class="card-header">
                 <h4> Adicionar Obra </h4>
               </div>
@@ -148,7 +153,6 @@
                         value="{{ old('profundidade_obra') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Comprimento</label>
@@ -162,7 +166,6 @@
                         value="{{ old('comprimento_obra') }}">
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-2">
                     <label>Diâmetro</label>
@@ -580,7 +583,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary" @if(in_array(auth()->user('id')['id_cargo']), $canOnlyView) disabled @endif>Salvar</button>
                 <a href="{{route('home')}}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
@@ -623,14 +626,14 @@
         if(e.keyCode !== 46 && e.keyCode !== 8 ){
             if (((parseInt($('input[name="ano_obra"]').val()) > window.max) || (parseInt($('input[name="ano_obra"]').val()) < window.min)) && ($('input[name="ano_obra"]').val() != "")) {
                 e.preventDefault();
-                var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+                var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
                     O ano não corresponde ao século selecionado.<br>
                     <span style="margin-left:10px;">Ano mínimo: <b>` + window.min + `</b></span><br>
-                    <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span> 
+                    <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div> 
+                </div>
                 <div id="notification-warn-mini"></div>`;
             $("#anoerror").html("");
             $("#anoerror").append(errorBox);
@@ -639,7 +642,7 @@
             }
         }
     });
-    
+
     function ajax_sub(control, image_holder){
         //Get count of selected files
         var countFiles = control[0].files.length;

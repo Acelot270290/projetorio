@@ -67,8 +67,8 @@ class AcervoController extends Controller
 
     public function criar(Request $request)
     {
-        // Revisores não podem criar
-        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+        // Revisores não podem criar, visitantes podem VER
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5', '6'])){
             return view('unauthorized');
         }
 
@@ -89,7 +89,7 @@ class AcervoController extends Controller
 
     public function adicionar(Request $request)
     {
-        // Revisores não podem criar
+        // Revisores e visitantes não podem criar
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
             return view('unauthorized');
         }
@@ -355,8 +355,8 @@ class AcervoController extends Controller
 
     public function editar(Request $request, $id)
     {
-        // Catalogadores não podem editar
-        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+        // Catalogadores não podem editar, visitantes podem VER
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5', '6'])){
             return view('unauthorized');
         }
 
@@ -406,11 +406,11 @@ class AcervoController extends Controller
 
     public function atualizar(Request $request, $id)
     {
-        // Catalogadores não podem editar
+        // Catalogadores e visitantes não podem editar
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
             return view('unauthorized');
         }
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -652,7 +652,7 @@ class AcervoController extends Controller
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2'])){
             return view('unauthorized');
         }
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -673,10 +673,10 @@ class AcervoController extends Controller
 
         // Descobre se existe alguma obra associada à esse acervo
         $obras = Obras::select()->where('acervo_id', '=', $id)->get();
-        
+
         // Se obra tiver algum resultado, significa de que existe pelo menos alguma obra associada com o acervo
         if ($obras->count() == 0) {
-            
+
             try{
                 // Deleta o acervo
                 $acervo = Acervos::select()->where('id', '=', $id)->delete();

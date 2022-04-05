@@ -82,8 +82,8 @@ class ObraController extends Controller
 
     public function criar(Request $request)
     {
-        // Revisores não podem criar
-        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
+        // Revisores não podem criar, vistantes podem VER
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5', '6'])){
             return view('unauthorized');
         }
 
@@ -134,24 +134,24 @@ class ObraController extends Controller
 
         // Retorna a view de criação de obras contendo os dados coletados
         return view('admin.criar_obra', [
-            'acervos' => $acervos, 
-            'categorias' => $categorias, 
-            'especificacoes' => $especificacoes, 
-            'estados' => $estados, 
-            'localizacoes' => $localizacoes, 
-            'seculos' => $seculos, 
-            'tombamentos' => $tombamentos, 
-            'condicoes' => $condicoes, 
-            'especificacoesSeg' => $especificacoesSeg, 
-            'materiais' => $materiais, 
-            'tecnicas' => $tecnicas, 
+            'acervos' => $acervos,
+            'categorias' => $categorias,
+            'especificacoes' => $especificacoes,
+            'estados' => $estados,
+            'localizacoes' => $localizacoes,
+            'seculos' => $seculos,
+            'tombamentos' => $tombamentos,
+            'condicoes' => $condicoes,
+            'especificacoesSeg' => $especificacoesSeg,
+            'materiais' => $materiais,
+            'tecnicas' => $tecnicas,
             'tesauros'=>$tesauros
         ]);
     }
 
     public function adicionar(Request $request)
     {
-        // Revisores não podem criar
+        // Revisores e visitantes não podem criar
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '3', '5'])){
             return view('unauthorized');
         }
@@ -281,13 +281,13 @@ class ObraController extends Controller
 
         /* Tratamento para inserção de fotos submetidas */
         // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
-        if($request->hasFile('foto_frontal_obra') or 
-           $request->hasFile('foto_lateral_esquerda_obra') or 
-           $request->hasFile('foto_lateral_direita_obra') or 
-           $request->hasFile('foto_posterior_obra') or 
-           $request->hasFile('foto_superior_obra') or 
+        if($request->hasFile('foto_frontal_obra') or
+           $request->hasFile('foto_lateral_esquerda_obra') or
+           $request->hasFile('foto_lateral_direita_obra') or
+           $request->hasFile('foto_posterior_obra') or
+           $request->hasFile('foto_superior_obra') or
            $request->hasFile('foto_inferior_obra')){
-           
+
             // Descobre qual é a obra que acabou de ser inserida
             $insereObra = Obras::find($obraId);
             // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
@@ -402,7 +402,7 @@ class ObraController extends Controller
             $alertMsg = 'Falha ao cadastrar a obra!';
             $alertType = 'danger';
         }
-      
+
         // Redireciona para a url de criação de obra passando o alerta de mensagem e o tipo de alerta
         return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
@@ -427,7 +427,7 @@ class ObraController extends Controller
             ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
             ->leftJoin('users as u2', 'u2.id', '=', 'obras.usuario_atualizacao_id')
             ->first();
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -456,15 +456,15 @@ class ObraController extends Controller
 
         // Retorna a visualização de detalhamento de obras com os dados coletados
         return view('admin.detalhar_obra', [
-            'obra' => $obra, 
-            'especificacoes' => $especificacoes, 
+            'obra' => $obra,
+            'especificacoes' => $especificacoes,
             'especificacoesSeg' => $especificacoesSeg
         ]);
     }
 
     public function editar(Request $request, $id){
-        // Catalogadores não podem editar
-        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
+        // Catalogadores não podem editar, visitantes podem VER
+        if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5', '6'])){
             return view('unauthorized');
         }
 
@@ -473,7 +473,7 @@ class ObraController extends Controller
             ->where('obras.id', '=', intval($id))
             ->join('users as u1', 'u1.id', '=', 'obras.usuario_insercao_id')
             ->first();
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -512,27 +512,27 @@ class ObraController extends Controller
 
         // Chama a view de edição de obras
         return view('admin.editar_obra', [
-            'obra' => $obra, 
-            'acervos' => $acervos, 
-            'categorias' => $categorias, 
-            'especificacoes' => $especificacoes, 
-            'check' => $check, 
-            'estados' => $estados, 
-            'localizacoes' => $localizacoes, 
-            'seculos' => $seculos, 
-            'tombamentos' => $tombamentos, 
-            'condicoes' => $condicoes, 
-            'especificacoesSeg' => $especificacoesSeg, 
-            'checkSeg' => $checkSeg, 
-            'materiais' => $materiais, 
-            'tecnicas' => $tecnicas, 
+            'obra' => $obra,
+            'acervos' => $acervos,
+            'categorias' => $categorias,
+            'especificacoes' => $especificacoes,
+            'check' => $check,
+            'estados' => $estados,
+            'localizacoes' => $localizacoes,
+            'seculos' => $seculos,
+            'tombamentos' => $tombamentos,
+            'condicoes' => $condicoes,
+            'especificacoesSeg' => $especificacoesSeg,
+            'checkSeg' => $checkSeg,
+            'materiais' => $materiais,
+            'tecnicas' => $tecnicas,
             'tesauros' => $tesauros
         ]);
     }
 
     public function atualizar(Request $request, $id)
     {
-        // Catalogadores não podem editar
+        // Catalogadores e visitantes não podem editar
         if(!in_array(strval(auth()->user('id')['id_cargo']), ['1', '2', '4', '5'])){
             return view('unauthorized');
         }
@@ -559,7 +559,7 @@ class ObraController extends Controller
 
         // Descobre qual user que fez a requisição
         $usuario = auth()->user('id');
-       
+
         try{
             // Se existe uma especificação de obra e ela não está vazia
             if(isset($request->especificacao_obra) and !empty($request->especificacao_obra)){
@@ -569,7 +569,7 @@ class ObraController extends Controller
                 // Já que não existe dado para especificação de acervo, marca como uma string vazia
                 $check = '';
             }
-    
+
             // Se existe uma especificação de segurança de obra e ela não está vazia
             if(isset($request->especificacao_seg_obra) and !empty($request->especificacao_seg_obra)){
                 // Concatena os elementos do array usando como separador uma ,
@@ -595,7 +595,7 @@ class ObraController extends Controller
                 // Se não estiver no array, o usuário não pode inserir nesse acervo
                 return view('unauthorized');
             }
-            
+
             // Edita a obra que possui o id igual ao id passado na url
             $atualizaObra = Obras::where('id', '=', $id)
                 ->update([
@@ -666,13 +666,13 @@ class ObraController extends Controller
 
         /* Tratamento para inserção de fotos submetidas */
         // Se houver alguma foto submetida na requisição (útil pra evitar processamento desnecessário)
-        if($request->hasFile('foto_frontal_obra') or 
-           $request->hasFile('foto_lateral_esquerda_obra') or 
-           $request->hasFile('foto_lateral_direita_obra') or 
-           $request->hasFile('foto_posterior_obra') or 
-           $request->hasFile('foto_superior_obra') or 
+        if($request->hasFile('foto_frontal_obra') or
+           $request->hasFile('foto_lateral_esquerda_obra') or
+           $request->hasFile('foto_lateral_direita_obra') or
+           $request->hasFile('foto_posterior_obra') or
+           $request->hasFile('foto_superior_obra') or
            $request->hasFile('foto_inferior_obra')){
-           
+
             // Descobre qual é a obra que acabou de ser inserida
             $atualizaObra = Obras::find($id);
             // Torna a inserção de timestamp como false (caso contrário a coluna UpdatedAt ganha um valor)
@@ -787,7 +787,7 @@ class ObraController extends Controller
             $alertMsg = 'Falha ao atualizada a obra!';
             $alertType = 'danger';
         }
-      
+
         // Redireciona para a url de edição de obra passando o alerta de mensagem e o tipo de alerta
         return redirect('/obra/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
@@ -804,7 +804,7 @@ class ObraController extends Controller
         }catch(Exception $e){
             return response()->json(['status' => 'error', 'msg' => 'Registro inexistente. Talvez ele já tenha sido deletado.']);
         }
-        
+
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
 
@@ -825,7 +825,7 @@ class ObraController extends Controller
         // Deleta a obra
         $obra = Obras::select()->where('id', '=', $id)->delete();
         //var_dump($obra);die;
-        
+
         try{
             /* Parametrização do caminho onde as imagens ficam. */
             // Nome do primeiro folder
@@ -835,7 +835,7 @@ class ObraController extends Controller
 
             // Parametrização do nome da pasta onde as imagens estão
             $imagemaobra =  $basePath . '/' . $id;
-            
+
             // Se a pasta existir
             if (is_dir($imagemaobra)) {
                 // Delete o seu conteúdo

@@ -4,6 +4,11 @@
 
 @section('content')
 
+@php
+    $allowEdit = ['1', '2', '4', '5'];
+    $canOnlyView = ['6'];
+@endphp
+
 @if(is_null(auth()->user('id')['acesso_acervos']))
   <script>window.location = "/unauthorized";</script>
 @else
@@ -29,9 +34,9 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form method="POST" action="{{ route('atualizar_acervo', ['id' => $acervo['id']]) }}"
+            <form method="POST" action="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('atualizar_acervo', ['id' => $acervo['id']]) }} @endif"
               name="atualizar_acervo" accept-charset="utf-8" enctype="multipart/form-data">
-              @csrf
+              @if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) @csrf @endif
               <div class="card-header">
                 <h4> Editar Acervo {{ $acervo['nome_acervo'] }}</h4>
               </div>
@@ -410,7 +415,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif>Salvar</button>
                 <a href="{{ route('home') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
@@ -504,14 +509,14 @@
         		){
    	    if (((parseInt($('input[name="ano_acervo"]').val()) > window.max) || (parseInt($('input[name="ano_acervo"]').val()) < window.min)) && ($('input[name="ano_acervo"]').val() != "")) {
           e.preventDefault();
-          var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+          var errorBox = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
           O ano não corresponde ao século selecionado.<br>
           <span style="margin-left:10px;">Ano mínimo: <b>` + window.min + `</b></span><br>
-          <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span> 
+          <span style="margin-left:10px;">Ano máximo: <b>` + window.max + `</b></span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-          </div> 
+          </div>
           <div id="notification-warn-mini"></div>`; @php #` @endphp
           $("#anoerror").html("");
           $("#anoerror").append(errorBox);
@@ -533,7 +538,7 @@
           if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
             if (typeof(FileReader) != "undefined") {
               //loop for each file selected for uploaded.
-              for (var i = 0; i < countFiles; i++) 
+              for (var i = 0; i < countFiles; i++)
               {
                 var reader = new FileReader();
                 reader.onload = function(e) {

@@ -2,6 +2,12 @@
 
 @section('titulo', 'Obras cadastradas')
 
+@php
+    $allowEdit = ['1', '2', '4', '5'];
+    $canOnlyView = ['6'];
+    $allowDelete = ['1', '2'];
+@endphp
+
 <div class="main-content">
   @section('content')
 
@@ -54,9 +60,8 @@
                   <td id="interacoes">
                     <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"><i
                         class="far fa-eye"></i></a>
-                    <a href="{{ route('editar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-primary"><i
-                        class="fas fa-edit"></i></a>
-                    @if(in_array(strval(auth()->user('id')['id_cargo']), ['1', '2']))
+                    <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_obra', ['id' => $obra->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i class="fas fa-edit"></i></a>
+                    @if(in_array(strval(auth()->user('id')['id_cargo']), $allowDelete))
                     <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"
                       name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
                     @endif
@@ -98,7 +103,7 @@
             botao.parent().parent().remove();
           }else{
             swal('Erro!', data.msg, 'error');
-          }  
+          }
         });
       }
     });
