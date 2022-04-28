@@ -312,7 +312,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary" @if(in_array(auth()->user('id')['id_cargo']), $canOnlyView) disabled @endif>Salvar</button>
+                <button type="submit" class="btn btn-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif>Salvar</button>
                 <a href="{{ route('home') }}" class=" btn btn-dark">voltar</a>
               </div>
             </form>
