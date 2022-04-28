@@ -58,9 +58,9 @@
                   <td>{{ $obra->titulo_material_1 }}</td>
                   <td>{{ $obra->titulo_seculo }}</td>
                   <td id="interacoes">
-                    <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"><i
+                    <a href="{{ route('detalhar_obra', ['id' => $obra->id]) }}" class="btn btn-outline-success"target="_blank"><i
                         class="far fa-eye"></i></a>
-                    <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_obra', ['id' => $obra->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i class="fas fa-edit"></i></a>
+                    <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_obra', ['id' => $obra->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif target="_blank"><i class="fas fa-edit"></i></a>
                     @if(in_array(strval(auth()->user('id')['id_cargo']), $allowDelete))
                     <a href="#" class="btn btn-danger deletanovo" id="{{ $obra->id }}"
                       name="{{ $obra->titulo_obra }}"><i class="fas fa-trash"></i></a>
