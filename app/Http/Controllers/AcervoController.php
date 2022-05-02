@@ -124,10 +124,12 @@ class AcervoController extends Controller
             // Já que não existe dado para especificação de acervo, marca como uma string vazia
             $check = '';
         }
-
+        $object = new Acervos();
         // Insere os dados em acervos e retorna o id do elemento inserido
+        $timestamp = $object->freshTimestampString();
         $acervoId = Acervos::insertGetId([
             'id' => $request->id,
+            'created_at'=>$timestamp,
             'nome_acervo' => $request->nome_acervo,
             'cep_acervo' => $request->cep_acervo,
             'endereco_acervo' => $request->endereco_acervo,
