@@ -33,7 +33,7 @@ class AcervoController extends Controller
     public function index()
     {
         // Seleciona os dados de acervos para serem mostrados na listagem de acervos
-        $acervos = Acervos::select('acervos.id', 'nome_acervo', 'cidade_acervo', 'UF_acervo', 'foto_frontal_acervo', 'seculo_id', 'titulo_seculo', 'ano_construcao_acervo');
+        $acervos = Acervos::select('acervos.id', 'nome_acervo', 'cidade_acervo', 'UF_acervo', 'foto_frontal_acervo', 'seculo_id', 'titulo_seculo','acervos.created_at', 'ano_construcao_acervo');
 
         // Descobre quais acervos que o usuário tem acesso
         $accesses = auth()->user('id')['acesso_acervos'];
@@ -127,6 +127,7 @@ class AcervoController extends Controller
         $object = new Acervos();
         // Insere os dados em acervos e retorna o id do elemento inserido
         $timestamp = $object->freshTimestampString();
+        
         $acervoId = Acervos::insertGetId([
             'id' => $request->id,
             'created_at'=>$timestamp,
@@ -314,7 +315,7 @@ class AcervoController extends Controller
     public function detalhar(Request $request, $id)
     {
         // Seleciona os dados de acervos para detalhamento (query completa com as devidas associações)
-        $acervo = Acervos::select('acervos.id', 'nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor', 'checkbox_especificacao_acervo',)
+        $acervo = Acervos::select('acervos.id', 'acervos.created_at','nome_acervo', 'cep_acervo', 'endereco_acervo', 'numero_endereco_acervo', 'bairro_acervo', 'cidade_acervo', 'UF_acervo', 'descricao_fachada_planta_acervo', 'foto_frontal_acervo', 'titulo_estado_conservacao_acervo', 'ano_construcao_acervo', 'tombamento_id', 'titulo_tombamento', 'seculo_id', 'titulo_seculo', 'especificacao_acervo_id', 'titulo_especificacao_acervo', 'usuario_insercao_id', 'u1.name as usuario_cadastrante', 'usuario_atualizacao_id', 'u2.name as usuario_revisor', 'checkbox_especificacao_acervo',)
             ->where('acervos.id', '=', intval($id))
             ->join('estado_conservacao_acervos as ec', 'ec.id', '=', 'estado_conservacao_acervo_id')
             ->join('tombamentos as t', 't.id', '=', 'tombamento_id')
