@@ -51,28 +51,44 @@ $accesses = explode(',', auth()->user('id')['acesso_acervos']);
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active">
-                                        </li>
-                                        <li data-target="#carouselExampleIndicators3" data-slide-to="1" class=""></li>
-                                        <li data-target="#carouselExampleIndicators3" data-slide-to="2" class=""></li>
-                                    </ol>
-                                    @if(!is_null($obra->foto_frontal_obra))
                                     <div class="carousel-inner">
+                                        @if(!is_null($obra->foto_frontal_obra))
                                         <div class="carousel-item active">
                                             <img class="d-block w-100" src="{{ asset($obra->foto_frontal_obra) }}"
                                                 alt="First slide">
                                         </div>
-                                    </div>
-                                    @endif
-                                    @if(!is_null($obra->foto_lateral_esquerda_obra))
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
+                                        @endif
+                                        @if(!is_null($obra->foto_lateral_esquerda_obra))
+                                        <div class="carousel-item">
                                             <img class="d-block w-100"
-                                                src="{{ asset($obra->foto_lateral_esquerda_obra) }}" alt="First slide">
+                                                src="{{ asset($obra->foto_lateral_esquerda_obra) }}" alt="Second slide">
                                         </div>
+                                        @endif
+                                        @if(!is_null($obra->foto_lateral_direita_obra))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($obra->foto_lateral_direita_obra) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($obra->foto_posterior_obra))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($obra->foto_posterior_obra) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($obra->foto_superior_obra))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($obra->foto_superior_obra) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($obra->foto_inferior_obra))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($obra->foto_inferior_obra) }}" alt="Second slide">
+                                        </div>
+                                        @endif
                                     </div>
-                                    @endif
                                     <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button"
                                         data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -83,75 +99,6 @@ $accesses = explode(',', auth()->user('id')['acesso_acervos']);
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
-                                </div>
-
-
-                                <div class="owl-carousel owl-theme slider owl-loaded owl-drag" id="slider1">
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage"
-                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0.25s ease 0s; width: 450px;">
-                                            @if(!is_null($obra->foto_frontal_obra))
-                                            <div class="owl-item active"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_frontal_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($obra->foto_lateral_esquerda_obra))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_lateral_esquerda_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($obra->foto_lateral_direita_obra))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_lateral_direita_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($obra->foto_posterior_obra))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_posterior_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($obra->foto_superior_obra))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_superior_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($obra->foto_inferior_obra))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($obra->foto_inferior_obra) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-7">
