@@ -5,20 +5,24 @@
 @section('content')
 
 @php
-    $allowEdit = ['1', '2', '4', '5'];
-    $canOnlyView = ['6'];
-    $allowDelete = ['1', '2'];
+$allowEdit = ['1', '2', '4', '5'];
+$canOnlyView = ['6'];
+$allowDelete = ['1', '2'];
 @endphp
 
 @if(is_null(auth()->user('id')['acesso_acervos']))
-  <script>window.location = "/unauthorized";</script>
+<script>
+    window.location = "/unauthorized";
+</script>
 @else
-  @php
-    $accesses = explode(',', auth()->user('id')['acesso_acervos']);
-  @endphp
-  @if(!in_array('0', $accesses) and !in_array(strval($obra['acervo_id']), $accesses))
-    <script>window.location = "/unauthorized";</script>
-  @else
+@php
+$accesses = explode(',', auth()->user('id')['acesso_acervos']);
+@endphp
+@if(!in_array('0', $accesses) and !in_array(strval($obra['acervo_id']), $accesses))
+<script>
+    window.location = "/unauthorized";
+</script>
+@else
 <div class="main-content">
     <div class="section-body">
         <div class="row">
@@ -27,19 +31,61 @@
                     <div class="card-header">
                         <h3>Detalhamento de obra ID: {{ !is_null($obra->id) ? $obra->id : '-' }}</h3>
                         @if($obra->obra_provisoria == 1)
-                        <div style="border-radius: 11px; border-color: rgb(255, 71, 111); background-color:rgb(255, 204, 215); border-width: 3px; border-style: dashed; margin-left: 5%; padding-left: 1%; padding-right: 1%;">
+                        <div
+                            style="border-radius: 11px; border-color: rgb(255, 71, 111); background-color:rgb(255, 204, 215); border-width: 3px; border-style: dashed; margin-left: 5%; padding-left: 1%; padding-right: 1%;">
                             Obra marcada como provisória!
                         </div>
                         @endif
                         @if(in_array(intval(auth()->user('id')['id_cargo']), [1, 2, 4, 5]))
                         <div style="position: absolute; right: 0px; margin-right: 5%;">
-                            <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_obra', ['id' => $obra->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i class="fas fa-edit"></i>Editar obra ID: {{ $obra->id }}</a>
+                            <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_obra', ['id' => $obra->id]) }} @else # @endif"
+                                class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']),
+                                $canOnlyView)) disabled @endif><i class="fas fa-edit"></i>Editar obra ID: {{ $obra->id
+                                }}</a>
                         </div>
                         @endif
                     </div>
+
+                    {{-- Implementar o Carrossel--}}
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-4">
+                                <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active">
+                                        </li>
+                                        <li data-target="#carouselExampleIndicators3" data-slide-to="1" class=""></li>
+                                        <li data-target="#carouselExampleIndicators3" data-slide-to="2" class=""></li>
+                                    </ol>
+                                    @if(!is_null($obra->foto_frontal_obra))
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100" src="{{ asset($obra->foto_frontal_obra) }}"
+                                                alt="First slide">
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if(!is_null($obra->foto_lateral_esquerda_obra))
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($obra->foto_lateral_esquerda_obra) }}" alt="First slide">
+                                        </div>
+                                    </div>
+                                    @endif
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+
+
                                 <div class="owl-carousel owl-theme slider owl-loaded owl-drag" id="slider1">
                                     <div class="owl-stage-outer">
                                         <div class="owl-stage"
@@ -136,7 +182,8 @@
                                         }}
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <b>Procedência:</b> {{ !is_null($obra->procedencia_obra) ? $obra->procedencia_obra : '-'
+                                        <b>Procedência:</b> {{ !is_null($obra->procedencia_obra) ?
+                                        $obra->procedencia_obra : '-'
                                         }}
                                     </div>
                                 </div>
@@ -249,7 +296,8 @@
                                         -
                                         @else
                                         @foreach($especificacoesSeg as $especificacaoSeg)
-                                        {{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}@if(!$loop->last),@endif
+                                        {{ $especificacaoSeg->titulo_especificacao_seguranca_obra
+                                        }}@if(!$loop->last),@endif
                                         @endforeach
                                         @endif
                                     </div>

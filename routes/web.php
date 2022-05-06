@@ -48,6 +48,9 @@ Route::post('/obra/adicionar', 'ObraController@adicionar')->name('adicionar_obra
 Route::post('/obra/atualizar/{id}', 'ObraController@atualizar')->name('atualizar_obra');
 Route::post('/obra/deletar/{id}', 'ObraController@deletar')->name('deletar_obra');
 
+//Busca Obras
+Route::get('/busca-obras', 'BuscaObrasController@index')->name('busca_obras');
+
 //Redefinição de senha
 Mail::to('reset@alandiniz.com.br')->send(new MensagemMail());
 
