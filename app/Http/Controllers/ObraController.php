@@ -646,7 +646,7 @@ class ObraController extends Controller
 
 
         // Se o primeiro folder não existir (é pra sempre existirem, mas, mais uma vez, checagem de segurança)
-        if (! Storage::exists($preBasePath)) {
+        if (!Storage::exists($preBasePath)) {
             // Ele será criado
             Storage::makeDirectory(public_path($preBasePath, 0755, true));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
