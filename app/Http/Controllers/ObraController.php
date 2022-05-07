@@ -644,7 +644,6 @@ class ObraController extends Controller
         // Nome do segundo folder
         $basePath =  $preBasePath . '/obras';
 
-        print_r($basePath);die;
 
         // Se o primeiro folder não existir (é pra sempre existirem, mas, mais uma vez, checagem de segurança)
         if (!is_dir($preBasePath)) {
