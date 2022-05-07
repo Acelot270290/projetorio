@@ -17,6 +17,7 @@ use App\Models\Tecnicas;
 use App\Models\Tesauros;
 use App\Models\Tombamentos;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Image;
 
 class ObraController extends Controller
@@ -644,10 +645,10 @@ class ObraController extends Controller
         $basePath =  $preBasePath . '/obras';
 
         // Se o primeiro folder não existir (é pra sempre existirem, mas, mais uma vez, checagem de segurança)
-        if (!is_dir($preBasePath)) {
+        if (!File::is_dir($preBasePath)) {
             // Ele será criado
-           // mkdir(public_path($preBasePath));
-            mkdir(public_path($preBasePath), 0755, true,true);
+            mkdir(public_path($preBasePath));
+            
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
         }else if (!is_dir($basePath)) {
