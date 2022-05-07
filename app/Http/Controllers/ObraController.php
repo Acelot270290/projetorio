@@ -647,7 +647,7 @@ class ObraController extends Controller
         if (!is_dir($preBasePath)) {
             // Ele será criado
            // mkdir(public_path($preBasePath));
-            mkdir(public_path($preBasePath), 0777, true);
+            mkdir(public_path($preBasePath), 0755, true);
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
             mkdir(public_path($basePath));
         }else if (!is_dir($basePath)) {
