@@ -257,7 +257,7 @@ class ObraController extends Controller
         $basePath =  $preBasePath . '/obras';
 
         // Se o primeiro folder não existir
-        if (! Storage::is_dir($preBasePath)) {
+        if (! Storage::exists($preBasePath)) {
             // Ele será criado
             Storage::mkdir(public_path($preBasePath, 0755, true));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
