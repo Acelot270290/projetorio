@@ -10,6 +10,7 @@ use App\Models\EstadoConservacaoAcervos;
 use App\Models\Obras;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
+use Illuminate\Support\Facades\Storage;
 use Image;
 
 class AcervoController extends Controller
@@ -462,11 +463,12 @@ class AcervoController extends Controller
         $basePath =  $preBasePath . '/acervos';
 
         // Se o primeiro folder não existir (é pra sempre existirem, mas, mais uma vez, checagem de segurança)
-        if (!is_dir($preBasePath)) {
+        if (!Storage::exists($preBasePath)) {
             // Ele será criado
-            mkdir(public_path($preBasePath));
+            Storage::makeDirectory(public_path($preBasePath, 0755, true));
+            // E o subfolder também (se o pré não existe, seus filhos também não 
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
-            mkdir(public_path($basePath));
+            Storage::makeDirectory(public_path($basePath));
         } else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
             // Se não existir, cria ele
             mkdir(public_path($basePath));
@@ -697,7 +699,7 @@ class AcervoController extends Controller
                 $imagemacervo =  $basePath . '/' . $id;
 
                 // Se a pasta existir
-                if (is_dir($imagemacervo)) {
+                if (!Storage::exists($imagemacervo)) {
                     // Delete o seu conteúdo
                     array_map('unlink', glob(public_path($imagemacervo) . "/*.*"));
                     // Apague a pasta
