@@ -261,6 +261,7 @@ class ObraController extends Controller
             // Ele será criado
             Storage::makeDirectory(public_path($preBasePath, 0755, true));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
+            Storage::makeDirectory(public_path($basePath,0755, true));
         }else if (!is_dir($basePath)) {
             // Se não existir, cria ele
             mkdir(public_path($basePath));
@@ -650,6 +651,7 @@ class ObraController extends Controller
             // Ele será criado
             Storage::makeDirectory(public_path($preBasePath, 0755, true));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
+            Storage::makeDirectory(public_path($basePath,0755, true));
         }else if (!is_dir($basePath)) {
             // Se não existir, cria ele
             mkdir(public_path($basePath));
