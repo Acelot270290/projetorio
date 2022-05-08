@@ -662,7 +662,7 @@ class ObraController extends Controller
         $imagemaobra =  $basePath . '/' . $id;
 
         // Se a pasta não existir
-        if (!is_dir($imagemaobra)) {
+        if (!Storage::exists($imagemaobra)) {
             // Já que ela não existe, cria
             mkdir(public_path($imagemaobra));
         }
