@@ -478,8 +478,6 @@ class AcervoController extends Controller
         // Parametrização do nome da pasta onde as imagens vão ficar
         $imagemacervo =  $basePath . '/' . $id;
 
-        if (!Storage::exists($preBasePath)) {
-            // Ele será criado
             
         // Se a pasta não existir
         if (!Storage::exists($imagemacervo)) {
