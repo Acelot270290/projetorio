@@ -155,11 +155,11 @@ class AcervoController extends Controller
         $basePath =  $preBasePath . '/acervos';
 
         // Se o primeiro folder não existir
-        if (!is_dir($preBasePath)) {
+        if (!Storage::exists($preBasePath)) {
             // Ele será criado
-            mkdir(public_path($preBasePath));
+            Storage::makeDirectory(public_path($preBasePath, 0755, true));
             // E o subfolder também (se o pré não existe, seus filhos também não existem)
-            mkdir(public_path($basePath));
+            Storage::makeDirectory(public_path($basePath,0755, true));
         } else if (!is_dir($basePath)) { // Caso o primeiro folder exista, checa se o segundo não existe
             // Se não existir, cria ele
             mkdir(public_path($basePath));
