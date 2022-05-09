@@ -33,6 +33,9 @@ return [
     |
     */
 
+    //Ping para manter a porta ativa smtp
+    
+
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -79,6 +82,7 @@ return [
             ],
         ],
     ],
+    'ping_threshold' => 10,
 
     /*
     |--------------------------------------------------------------------------
