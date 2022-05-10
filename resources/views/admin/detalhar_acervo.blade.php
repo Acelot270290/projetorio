@@ -35,72 +35,55 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <div class="owl-carousel owl-theme slider owl-loaded owl-drag" id="slider1">
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage"
-                                            style="transform: translate3d(0px, 0px, 0px); transition: all 0.25s ease 0s; width: 450px;">
-                                            @if(!is_null($acervo->foto_frontal_acervo))
-                                            <div class="owl-item active"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->foto_frontal_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($acervo->foto_lateral_1_acervo))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->foto_lateral_1_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($acervo->foto_lateral_2_acervo))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->foto_lateral_2_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($acervo->foto_posterior_acervo))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->foto_posterior_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($acervo->foto_cobertura_acervo))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->foto_cobertura_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(!is_null($acervo->plantas_situacao_acervo))
-                                            <div class="owl-item"
-                                                style="width: 450px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                                <div>
-                                                    <img alt="image"
-                                                        style="flex-shrink: 0; min-width: 100%; min-height: 100%"
-                                                        src="{{ asset($acervo->plantas_situacao_acervo) }}">
-                                                </div>
-                                            </div>
-                                            @endif
+                                <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @if(!is_null($acervo->foto_frontal_acervo))
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100" src="{{ asset($acervo->foto_frontal_acervo) }}"
+                                                alt="First slide">
                                         </div>
+                                        @endif
+                                        @if(!is_null($acervo->foto_lateral_1_acervo))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($acervo->foto_lateral_1_acervo) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($acervo->foto_lateral_2_acervo))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($acervo->foto_lateral_2_acervo) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($acervo->foto_posterior_acervo))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($acervo->foto_posterior_acervo) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($acervo->foto_cobertura_acervo))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($acervo->foto_cobertura_acervo) }}" alt="Second slide">
+                                        </div>
+                                        @endif
+                                        @if(!is_null($acervo->plantas_situacao_acervo))
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="{{ asset($acervo->plantas_situacao_acervo) }}" alt="Second slide">
+                                        </div>
+                                        @endif
                                     </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Anterior</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Próximo</span>
+                                    </a>
                                 </div>
                             </div>
                             <div class="form-group col-md-7">
