@@ -10,6 +10,7 @@ use App\Models\EstadoConservacaoAcervos;
 use App\Models\Obras;
 use App\Models\Seculos;
 use App\Models\Tombamentos;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -549,7 +550,11 @@ class AcervoController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
-
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_frontal_acervo como o caminho de onde a imagem está salva
                 $updateAcervo->foto_frontal_acervo = $imagemacervo . '/' . $imageName;
             }
@@ -566,6 +571,11 @@ class AcervoController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
 
                 // Seta a coluna foto_lateral_1_acervo como o caminho de onde a imagem está salva
                 $updateAcervo->foto_lateral_1_acervo = $imagemacervo . '/' . $imageName;
@@ -583,6 +593,11 @@ class AcervoController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_lateral_2_acervo como o caminho de onde a imagem está salva
                 $updateAcervo->foto_lateral_2_acervo = $imagemacervo . '/' . $imageName;
             }
@@ -599,6 +614,12 @@ class AcervoController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_acervo como o caminho de onde a imagem está salva
                 $updateAcervo->foto_posterior_acervo = $imagemacervo . '/' . $imageName;
             }
@@ -613,8 +634,15 @@ class AcervoController extends Controller
                 $img->resize(450, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+                
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_cobertura_acervo como o caminho de onde a imagem está salva
                 $updateAcervo->foto_cobertura_acervo = $imagemacervo . '/' . $imageName;
             }
@@ -623,7 +651,7 @@ class AcervoController extends Controller
             if ($request->file('plantas_situacao_acervo')) {
                 // Seta o nome da imagem como situação
                 $imageName = 'Plantas_Situacao_Acervo.webp';
-                // Cria um objeto de imagem com a imagem fornecida e marca a orientação
+
                 $img = Image::make($request->plantas_situacao_acervo)->orientate();
                 // Redimensiona pra 450px x auto mantendo a proporção
                 $img->resize(450, null, function ($constraint) {
@@ -631,8 +659,14 @@ class AcervoController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemacervo) . '/' . $imageName)->encode('webp', 90);
+                // Descobre o hash da imagem
+                $imgfile = fopen(public_path($imagemacervo) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemacervo) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
+
                 // Seta a coluna foto_cobertura_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->plantas_situacao_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->plantas_situacao_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
             // Salva as alterações feitas (evitando o timestamp)
             $updateAcervo->save();
@@ -650,6 +684,7 @@ class AcervoController extends Controller
         }
 
         // Redireciona para a url de edição de acervo passando o alerta de mensagem e o tipo de alerta
+       
         return redirect('/acervo/editar/' . $request->id)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
