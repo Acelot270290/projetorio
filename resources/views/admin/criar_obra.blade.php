@@ -81,12 +81,12 @@
                         <option value="">Selecione um Acervo</option>
                         @foreach ($acervos as $acervo)
                         @if($acervo->id == old('acervo_obra'))
-                        <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
+                        <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
                         @else
                         @if($acervo->is_default_acervo)
-                        <option value="{{ $acervo->id }}" selected>{{ $acervo->nome_acervo }}</option>
+                        <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
                         @else
-                        <option value="{{ $acervo->id }}">{{ $acervo->nome_acervo }}</option>
+                        <option value="{{ $acervo->id }}">{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
                         @endif
                         @endif
                         @endforeach
