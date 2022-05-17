@@ -59,11 +59,19 @@
                       </div>
                       <select name="categoria_obra" class="form-control">
                         @foreach ($categorias as $categoria)
-                        @if($categoria->is_default_categoria)
-                        <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
-                        @else
-                        <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
-                        @endif
+                          @if(array_key_exists('categoria_id', $repeat))
+                            @if ($categoria->id == $repeat['categoria_id'])
+                              <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                            @else
+                              <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
+                            @endif
+                          @else
+                            @if($categoria->is_default_categoria)
+                              <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
+                            @else
+                              <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
+                            @endif
+                          @endif
                         @endforeach
                       </select>
                     </div>
