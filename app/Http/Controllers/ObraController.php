@@ -134,6 +134,8 @@ class ObraController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->orderBy('titulo_tesauro', 'ASC')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
+        $repeat = [];
+
         // Retorna a view de criação de obras contendo os dados coletados
         return view('admin.criar_obra', [
             'acervos' => $acervos,
@@ -147,7 +149,8 @@ class ObraController extends Controller
             'especificacoesSeg' => $especificacoesSeg,
             'materiais' => $materiais,
             'tecnicas' => $tecnicas,
-            'tesauros'=>$tesauros
+            'tesauros'=>$tesauros,
+            'repeat'=>$repeat
         ]);
     }
 
