@@ -250,6 +250,37 @@ class ObraController extends Controller
             'obra_provisoria' => isset($request->obra_provisoria) ? 1 : 0,
         ]);
 
+        $repeat = [];
+
+        if($request->repete_obra == 1){ // ver checkbox
+            $repeat['categoria_id'] = $request->categoria_obra;
+            $repeat['altura_obra'] = $request->altura_obra;
+            $repeat['largura_obra'] = $request->largura_obra;
+            $repeat['profundidade_obra'] = $request->profundidade_obra;
+            $repeat['comprimento_obra'] = $request->comprimento_obra;
+            $repeat['diametro_obra'] = $request->diâmetro_obra;
+            $repeat['tesauro_id'] = $request->tesauro_obra;
+            $repeat['localizacao_obra_id'] = $request->localizacao_obra;
+            $repeat['condicoes_de_seguranca_obra_id'] = $request->condicao_seguranca_obra;
+            $repeat['procedencia_obra'] = $request->procedencia_obra;
+            $repeat['tombamento_id'] = $request->tombamento_obra;
+            $repeat['seculo_id'] = $request->seculo_obra;
+            $repeat['ano_obra'] = $request->ano_obra;
+            $repeat['autoria_obra'] = $request->autoria_obra;
+            $repeat['estado_conservacao_obra_id'] = $request->estado_de_conservacao_obra;
+            $repeat['material_id_1'] = $request->material_1_obra;
+            $repeat['material_id_2'] = $request->material_2_obra;
+            $repeat['material_id_3'] = $request->material_3_obra;
+            $repeat['tecnica_id_1'] = $request->tecnica_1_obra;
+            $repeat['tecnica_id_2'] = $request->tecnica_2_obra;
+            $repeat['tecnica_id_3'] = $request->tecnica_3_obra;
+            $repeat['checkbox_especificacao_obra'] = $check;
+            $repeat['checkbox_especificacao_seguranca_obra'] = $checkSeg;
+            $repeat['caracteristicas_est_icono_orna_obra'] = $request->caracteristicas_estilisticas_obra;
+            $repeat['observacoes_obra'] = $request->observacoes_obra;
+            $repeat['obra_provisoria'] = isset($request->obra_provisoria) ? "1" : "0";
+        }
+
         /* Parametrização do caminho onde as imagens ficam. */
         // Nome do primeiro folder
         $preBasePath =  'imagem';
@@ -307,8 +338,13 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
+                
                 // Seta a coluna foto_frontal_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
+                $insereObra->foto_frontal_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto lateral esquerda
@@ -323,8 +359,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_lateral_esquerda_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
+                $insereObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto lateral direita
@@ -339,8 +379,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_lateral_direita_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
+                $insereObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto posterior
@@ -355,8 +399,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_posterior_obra =$imagemaobra . '/' . $imageName;
+                $insereObra->foto_posterior_obra =$imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto superior
@@ -371,8 +419,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
+                $insereObra->foto_superior_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto inferior
@@ -387,8 +439,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $insereObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
+                $insereObra->foto_inferior_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
             // Salva as alterações feitas (evitando o timestamp)
             $insereObra->save();
@@ -406,7 +462,7 @@ class ObraController extends Controller
         }
 
         // Redireciona para a url de criação de obra passando o alerta de mensagem e o tipo de alerta
-        return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType);
+        return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType)->with('repeat', $repeat);
     }
 
     public function detalhar(Request $request, $id){
@@ -693,8 +749,13 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
+                
                 // Seta a coluna foto_frontal_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_frontal_obra = $imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_frontal_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto lateral esquerda
@@ -709,8 +770,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_lateral_esquerda_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_lateral_esquerda_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto lateral direita
@@ -725,8 +790,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_lateral_direita_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_lateral_direita_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto posterior
@@ -741,8 +810,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_posterior_obra =$imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_posterior_obra =$imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto superior
@@ -757,8 +830,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_superior_obra = $imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_superior_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
 
             // Se houver foto inferior
@@ -773,8 +850,12 @@ class ObraController extends Controller
                 });
                 // Salva a imagem com a codificação webp e dpi de 90
                 $img->save(public_path($imagemaobra) . '/' . $imageName)->encode('webp', 90);
+                $imgfile = fopen(public_path($imagemaobra) . '/' . $imageName, 'r');
+                $data = fread($imgfile, filesize(public_path($imagemaobra) . '/' . $imageName));
+                $md5 = md5($data); 
+                fclose($imgfile);
                 // Seta a coluna foto_posterior_obra como o caminho de onde a imagem está salva
-                $atualizaObra->foto_inferior_obra = $imagemaobra . '/' . $imageName;
+                $atualizaObra->foto_inferior_obra = $imagemaobra . '/' . $imageName.'?x=' . $md5;
             }
             // Salva as alterações feitas (evitando o timestamp)
             $atualizaObra->save();

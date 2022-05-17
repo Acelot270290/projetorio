@@ -604,7 +604,7 @@
                     <div class="form-group col-md-3">
                       <div id="box-foto-usuario">
                         <input type="hidden" name="user_foto">
-                        <div id="image_holder_lateral_esquerda_obra">
+                        <div id="foto_holder_lateral_esquerda_obra">
                           @if($obra['foto_lateral_esquerda_obra'])
                           <img src="{{ asset($obra['foto_lateral_esquerda_obra']) }}" class="thumb-image"
                             style="width:100px; max-height: 200px;">
@@ -628,7 +628,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <div id="box-foto-usuario">
-                        <div id="image_holder_lateral_direita_obra">
+                        <div id="foto_holder_lateral_direita_obra">
                           @if($obra['foto_lateral_direita_obra'])
                           <img src="{{ asset($obra['foto_lateral_direita_obra']) }}" class="thumb-image"
                             style="width:100px; max-height: 200px;">
@@ -650,7 +650,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <div id="box-foto-usuario">
-                        <div id="image_holder_posterior_obra">
+                        <div id="foto_holder_posterior_obra">
                           @if($obra['foto_posterior_obra'])
                           <img src="{{ asset($obra['foto_posterior_obra']) }}" class="thumb-image"
                             style="width:100px; max-height: 200px;">
@@ -671,7 +671,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <div id="box-foto-usuario">
-                        <div id="image_holder_superior_obra">
+                        <div id="foto_holder_superior_obra">
                           @if($obra['foto_superior_obra'])
                           <img src="{{ asset($obra['foto_superior_obra']) }}" class="thumb-image"
                             style="width:100px; max-height: 200px;">
@@ -692,7 +692,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <div id="box-foto-usuario">
-                        <div id="image_holder_inferior_obra">
+                        <div id="foto_holder_inferior_obra">
                           @if($obra['foto_inferior_obra'])
                           <img src="{{ asset($obra['foto_inferior_obra']) }}" class="thumb-image"
                             style="width:100px; max-height: 200px;">
@@ -855,23 +855,23 @@
             }
           }
 
-          $("input[name='foto_frontal_acervo']").on('change', function() {
-            ajax_sub($("input[name='foto_frontal_acervo']"), $("#image_holder_frontal_acervo"));
+          $("input[name='foto_frontal_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_frontal_obra']"), $("#image_holder_frontal_obra"));
           });
-          $("input[name='foto_lateral_1_acervo']").on('change', function() {
-            ajax_sub($("input[name='foto_lateral_1_acervo']"), $("#image_holder_lateral1_acervo"));
+          $("input[name='foto_lateral_esquerda_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_lateral_esquerda_obra']"), $("#foto_holder_lateral_esquerda_obra"));
           });
-           $("input[name='foto_lateral_2_acervo']").on('change', function() {
-            ajax_sub($("input[name='foto_lateral_2_acervo']"), $("#image_holder_lateral2_acervo"));
+           $("input[name='foto_lateral_direita_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_lateral_direita_obra']"), $("#foto_holder_lateral_direita_obra"));
           });
-           $("input[name='foto_posterior_acervo']").on('change', function() {
-            ajax_sub($("input[name='foto_posterior_acervo']"), $("#image_holder_posterior_acervo"));
+           $("input[name='foto_posterior_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_posterior_obra']"), $("#foto_holder_posterior_obra"));
           });
-          $("input[name='foto_cobertura_acervo']").on('change', function() {
-            ajax_sub($("input[name='foto_cobertura_acervo']"), $("#image_holder_cobertura_acervo"));
+          $("input[name='foto_superior_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_superior_obra']"), $("#foto_holder_superior_obra"));
           });
-           $("input[name='plantas_situacao_acervo']").on('change', function() {
-            ajax_sub($("input[name='plantas_situacao_acervo']"), $("#image_holder_plantas_situcao_acervo"));
+           $("input[name='foto_inferior_obra']").on('change', function() {
+            ajax_sub($("input[name='foto_inferior_obra']"), $("#foto_holder_inferior_obra"));
           });
         });
 

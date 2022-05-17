@@ -556,7 +556,7 @@ class AcervoController extends Controller
                 $md5 = md5($data); 
                 fclose($imgfile);
                 // Seta a coluna foto_frontal_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->foto_frontal_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->foto_frontal_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
 
             // Se houver foto lateral esquerda
@@ -578,7 +578,7 @@ class AcervoController extends Controller
                 fclose($imgfile);
 
                 // Seta a coluna foto_lateral_1_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->foto_lateral_1_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->foto_lateral_1_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
 
             // Se houver foto lateral direita
@@ -599,7 +599,7 @@ class AcervoController extends Controller
                 $md5 = md5($data); 
                 fclose($imgfile);
                 // Seta a coluna foto_lateral_2_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->foto_lateral_2_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->foto_lateral_2_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
 
             // Se houver foto posterior
@@ -621,7 +621,7 @@ class AcervoController extends Controller
                 $md5 = md5($data); 
                 fclose($imgfile);
                 // Seta a coluna foto_posterior_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->foto_posterior_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->foto_posterior_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
 
             // Se houver foto cobetura
@@ -644,7 +644,7 @@ class AcervoController extends Controller
                 $md5 = md5($data); 
                 fclose($imgfile);
                 // Seta a coluna foto_cobertura_acervo como o caminho de onde a imagem está salva
-                $updateAcervo->foto_cobertura_acervo = $imagemacervo . '/' . $imageName;
+                $updateAcervo->foto_cobertura_acervo = $imagemacervo . '/' . $imageName . '?x=' . $md5;
             }
 
             // Se houver foto situação
