@@ -7,6 +7,7 @@
 @php
     $allowEdit = ['1', '2', '3', '5'];
     $canOnlyView = ['6'];
+    $repeat = session()->has('repeat') ? session()->pull('repeat') : [];
 @endphp
 
 <div class="main-content" style="min-height: 562px;">
@@ -34,16 +35,32 @@
               <div class="card-body">
               <div class="form-row">
                 <div class="form-group col-md-12">
-                  <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                    @if(old('obra_provisoria') == "1")
-                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;"
-                              value="1" id="obra_provisoria" checked>
+                  <div class="pretty p-icon p-smooth" style="display: inline-flex; flex-wrap: wrap; margin-right: 10px;">
+                    @if(array_key_exists('obra_provisoria', $repeat))
+                      @if($repeat['obra_provisoria'] == "1")
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;" value="1" id="obra_provisoria" checked>
                       @else
-                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;"
-                              value="1" id="obra_provisoria">
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;" value="1" id="obra_provisoria">
                       @endif
+                    @else
+                      @if(old('obra_provisoria') == "1")
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;" value="1" id="obra_provisoria" checked>
+                      @else
+                        <input name="obra_provisoria" type="checkbox" style="margin-top: 3px;" value="1" id="obra_provisoria">
+                      @endif
+                    @endif
                     <div class="state p-success">
                       <label style="margin-left: 10px;" for="obra_provisoria">Obra provisória</label>
+                    </div>
+                  </div>
+                  <div class="pretty p-icon p-smooth" style="display: inline-flex; flex-wrap: wrap; margin-right: 10px; float: right;">
+                    @if(old('repete_obra') == "1")
+                      <input name="repete_obra" type="checkbox" style="margin-top: 3px;" value="1" id="repete_obra" checked>
+                    @else
+                      <input name="repete_obra" type="checkbox" style="margin-top: 3px;" value="1" id="repete_obra">
+                    @endif
+                    <div class="state p-success">
+                      <label style="margin-left: 10px;" for="repete_obra">Repetir obra</label>
                     </div>
                   </div>
                 </div>
@@ -60,7 +77,7 @@
                       <select name="categoria_obra" class="form-control">
                         @foreach ($categorias as $categoria)
                           @if(array_key_exists('categoria_id', $repeat))
-                            @if ($categoria->id == $repeat['categoria_id'])
+                            @if($categoria->id == $repeat['categoria_id'])
                               <option value="{{ $categoria->id }}" selected>{{ $categoria->titulo_categoria }}</option>
                             @else
                               <option value="{{ $categoria->id }}">{{ $categoria->titulo_categoria }}</option>
@@ -88,15 +105,23 @@
                       <select name="acervo_obra" class="form-control select2">
                         <option value="">Selecione um Acervo</option>
                         @foreach ($acervos as $acervo)
-                        @if($acervo->id == old('acervo_obra'))
-                        <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
-                        @else
-                        @if($acervo->is_default_acervo)
-                        <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
-                        @else
-                        <option value="{{ $acervo->id }}">{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
-                        @endif
-                        @endif
+                          @if(array_key_exists('acervo_id', $repeat))
+                            @if($acervo->id == $repeat['acervo_id'])
+                              <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
+                            @else
+                              <option value="{{ $acervo->id }}">{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
+                            @endif
+                          @else
+                            @if($acervo->id == old('acervo_obra'))
+                              <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
+                            @else
+                              @if($acervo->is_default_acervo)
+                                <option value="{{ $acervo->id }}" selected>{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
+                              @else
+                                <option value="{{ $acervo->id }}">{{$acervo->id.' - ' .$acervo->nome_acervo }}</option>
+                              @endif
+                            @endif
+                          @endif
                         @endforeach
                       </select>
                     </div>
@@ -131,10 +156,13 @@
                           <i class="fas fa-map-marker-alt text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="altura_obra" value="{{ old('altura_obra') }}">
+                      @if(array_key_exists('altura_obra', $repeat))
+                        <input type="number" class="form-control" name="altura_obra" value="{{ $repeat['altura_obra'] }}">
+                      @else
+                        <input type="number" class="form-control" name="altura_obra" value="{{ old('altura_obra') }}">
+                      @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('altura_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-2">
                     <label>Largura</label>
@@ -144,10 +172,13 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="largura_obra" value="{{ old('largura_obra') }}">
+                      @if(array_key_exists('largura_obra', $repeat))
+                        <input type="number" class="form-control" name="largura_obra" value="{{ $repeat['largura_obra'] }}">
+                      @else
+                        <input type="number" class="form-control" name="largura_obra" value="{{ old('largura_obra') }}">
+                      @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('largura_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Profundidade</label>
@@ -157,8 +188,11 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="profundidade_obra"
-                        value="{{ old('profundidade_obra') }}">
+                      @if(array_key_exists('profundidade_obra', $repeat))
+                        <input type="number" class="form-control" name="profundidade_obra" value="{{ $repeat['profundidade_obra'] }}">
+                      @else
+                        <input type="number" class="form-control" name="profundidade_obra" value="{{ old('profundidade_obra') }}">
+                      @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('profundidade_obra') }}</small>
                   </div>
@@ -170,8 +204,11 @@
                           <i class="fas fa-road text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="comprimento_obra"
-                        value="{{ old('comprimento_obra') }}">
+                      @if(array_key_exists('comprimento_obra', $repeat))
+                        <input type="number" class="form-control" name="comprimento_obra" value="{{ $repeat['comprimento_obra'] }}">
+                      @else
+                        <input type="number" class="form-control" name="comprimento_obra" value="{{ old('comprimento_obra') }}">
+                      @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('comprimento_obra') }}</small>
                   </div>
@@ -183,10 +220,13 @@
                           <i class="fas fa-street-view text-info"></i>
                         </div>
                       </div>
-                      <input type="number" class="form-control" name="diâmetro_obra" value='{{ old(' diâmetro_obra')
-                        }}'>
+                      @if(array_key_exists('diametro_obra', $repeat))
+                        <input type="number" class="form-control" name="diametro_obra" value="{{ $repeat['diametro_obra'] }}">
+                      @else
+                        <input type="number" class="form-control" name="diametro_obra" value='{{ old('diametro_obra') }}'>
+                      @endif
                     </div>
-                    <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
+                    <small class="text-danger">{{ $errors->first('diametro_obra') }}</small>
                   </div>
                 </div>
                 <div class="form-row">
@@ -195,16 +235,18 @@
                     <select name="tesauro_obra" class="form-control select2">
                       <option value="">Selecione um tesauro</option>
                       @foreach ($tesauros as $tesauro)
-                      @if(old('tesauro_obra') !== null)
-                      <option value="{{ $tesauro->id }}" {{ old("tesauro_obra")==$tesauro->id ? "selected" : "" }}>{{
-                        $tesauro->titulo_tesauro }}</option>
-                      @else
-                      <option value="{{ $tesauro->id }}">{{ $tesauro->titulo_tesauro }}</option>
-                      @endif
+                        @if(array_key_exists('tesauro_id', $repeat))
+                          <option value="{{ $tesauro->id }}" {{ $repeat['tesauro_id'] == $tesauro->id ? "selected" : "" }}>{{ $tesauro->titulo_tesauro }}</option>
+                        @else
+                          @if(old('tesauro_obra') !== null)
+                            <option value="{{ $tesauro->id }}" {{ old("tesauro_obra") == $tesauro->id ? "selected" : "" }}>{{ $tesauro->titulo_tesauro }}</option>
+                          @else
+                            <option value="{{ $tesauro->id }}">{{ $tesauro->titulo_tesauro }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tesauro_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-3">
                     <label>Localização da obra</label>
@@ -217,16 +259,19 @@
                       <select name="localizacao_obra" class="form-control select2">
                         <option value="">Selecione uma localização</option>
                         @foreach ($localizacoes as $localizacao)
-                        @if(old('localizacao_obra') !== null)
-                        <option value="{{ $localizacao->id }}" {{ old("localizacao_obra")==$localizacao->id ? "selected"
-                          : "" }}>{{ $localizacao->nome_localizacao }}</option>
-                        @else
-                        @if($localizacao->is_default_localizacao)
-                        <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
-                        @else
-                        <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
-                        @endif
-                        @endif
+                          @if(array_key_exists('localizacao_obra_id', $repeat))
+                            <option value="{{ $localizacao->id }}" {{ $repeat['localizacao_obra_id'] == $localizacao->id ? "selected" : "" }}>{{ $localizacao->nome_localizacao }}</option>
+                          @else
+                            @if(old('localizacao_obra') !== null)
+                              <option value="{{ $localizacao->id }}" {{ old("localizacao_obra") == $localizacao->id ? "selected" : "" }}>{{ $localizacao->nome_localizacao }}</option>
+                            @else
+                              @if($localizacao->is_default_localizacao)
+                                <option value="{{ $localizacao->id }}" selected>{{ $localizacao->nome_localizacao }}</option>
+                              @else
+                                <option value="{{ $localizacao->id }}">{{ $localizacao->nome_localizacao }}</option>
+                              @endif
+                            @endif
+                          @endif
                         @endforeach
                       </select>
                     </div>
@@ -236,24 +281,30 @@
                     <label>Condições de Segurança</label>
                     <select name="condicao_seguranca_obra" class="form-control">
                       @foreach ($condicoes as $condicao)
-                      @if(old('condicao_seguranca_obra') !== null)
-                      <option value="{{ $condicao->id }}" {{ old("condicao_seguranca_obra")==$condicao->id ? "selected"
-                        : "" }}>{{$condicao->titulo_condicao_seguranca_obra}}</option>
-                      @else
-                      @if($condicao->is_default_condicao_seguranca_obra)
-                      <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}
-                      </option>
-                      @else
-                      <option value="{{ $condicao->id }}">{{ $condicao->titulo_condicao_seguranca_obra }}</option>
-                      @endif
-                      @endif
+                        @if(array_key_exists('condicoes_de_seguranca_obra_id', $repeat))
+                            <option value="{{ $condicao->id }}" {{ $repeat['condicoes_de_seguranca_obra_id'] == $condicao->id ? "selected" : "" }}>{{ $condicao->titulo_condicao_seguranca_obra }}</option>
+                        @else
+                          @if(old('condicao_seguranca_obra') !== null)
+                            <option value="{{ $condicao->id }}" {{ old("condicao_seguranca_obra") == $condicao->id ? "selected" : "" }}>{{ $condicao->titulo_condicao_seguranca_obra }}</option>
+                          @else
+                            @if($condicao->is_default_condicao_seguranca_obra)
+                              <option value="{{ $condicao->id }}" selected>{{ $condicao->titulo_condicao_seguranca_obra }}</option>
+                            @else
+                              <option value="{{ $condicao->id }}">{{ $condicao->titulo_condicao_seguranca_obra }}</option>
+                            @endif
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Origem/Procedência</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="procedencia_obra" value="{{ old('procedencia_obra') }}">
+                      @if(array_key_exists('procedencia_obra', $repeat))
+                        <input type="text" class="form-control" name="procedencia_obra" value="{{ $repeat['procedencia_obra'] }}">
+                      @else
+                        <input type="text" class="form-control" name="procedencia_obra" value="{{ old('procedencia_obra') }}">
+                      @endif
                     </div>
                     <small class="text-danger">{{ $errors->first('procedencia_obra') }}</small>
                   </div>
@@ -263,16 +314,19 @@
                     <label>Tombamento</label>
                     <select name="tombamento_obra" class="form-control">
                       @foreach ($tombamentos as $tombamento)
-                      @if(old('tombamento_obra') !== null)
-                      <option value="{{ $tombamento->id }}" {{ old("tombamento_obra")==$tombamento->id ? "selected" : ""
-                        }}>{{ $tombamento->titulo_tombamento }}</option>
-                      @else
-                      @if($tombamento->is_default_tombamento)
-                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
-                      @else
-                      <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
-                      @endif
-                      @endif
+                        @if(array_key_exists('tombamento_id', $repeat))
+                          <option value="{{ $tombamento->id }}" {{ $repeat['tombamento_id'] == $tombamento->id ? "selected" : "" }}>{{ $tombamento->titulo_tombamento }}</option>
+                        @else
+                          @if(old('tombamento_obra') !== null)
+                            <option value="{{ $tombamento->id }}" {{ old("tombamento_obra") == $tombamento->id ? "selected" : "" }}>{{ $tombamento->titulo_tombamento }}</option>
+                          @else
+                            @if($tombamento->is_default_tombamento)
+                              <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                            @else
+                              <option value="{{ $tombamento->id }}" selected>{{ $tombamento->titulo_tombamento }}</option>
+                            @endif
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -280,16 +334,19 @@
                     <label>Século</label>
                     <select name="seculo_obra" class="form-control">
                       @foreach ($seculos as $seculo)
-                      @if(old('seculo_obra') !== null)
-                      <option value="{{ $seculo->id }}" {{ old("seculo_obra")==$seculo->id ? "selected" : "" }}>{{
-                        $seculo->titulo_seculo }}</option>
-                      @else
-                      @if($seculo->is_default_seculo)
-                      <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
-                      @else
-                      <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
-                      @endif
-                      @endif
+                        @if(array_key_exists('seculo_id', $repeat))
+                          <option value="{{ $seculo->id }}" {{ $repeat['seculo_id'] == $seculo->id ? "selected" : "" }}>{{ $seculo->titulo_seculo }}</option>
+                        @else
+                          @if(old('seculo_obra') !== null)
+                            <option value="{{ $seculo->id }}" {{ old("seculo_obra") == $seculo->id ? "selected" : "" }}>{{ $seculo->titulo_seculo }}</option>
+                          @else
+                            @if($seculo->is_default_seculo)
+                              <option value="{{ $seculo->id }}" selected>{{ $seculo->titulo_seculo }}</option>
+                            @else
+                              <option value="{{ $seculo->id }}">{{ $seculo->titulo_seculo }}</option>
+                            @endif
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('seculo_obra') }}</small>
@@ -302,24 +359,31 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
+                      @if(array_key_exists('ano_obra', $repeat))
+                      <input type="number" class="form-control" name="ano_obra" value="{{ $repeat['ano_obra'] }}">
+                      @else
                       <input type="number" class="form-control" name="ano_obra" value="{{ old('ano_obra') }}">
-                    </div>
+                      @endif
+                      </div>
                     <small class="text-danger">{{ $errors->first('ano_obra') }}</small>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Estado de Conservação</label>
                     <select name="estado_de_conservacao_obra" class="form-control">
                       @foreach ($estados as $estado)
-                      @if(old('estado_de_conservacao_obra') !== null)
-                      <option value="{{ $estado->id }}" {{ old("estado_de_conservacao_obra")==$estado->id ? "selected" :
-                        "" }}>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @else
-                      @if($estado->is_default_estado_conservacao_obra)
-                      <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @else
-                      <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
-                      @endif
-                      @endif
+                        @if(array_key_exists('estado_conservacao_obra_id', $repeat))
+                          <option value="{{ $estado->id }}" {{ $repeat['estado_conservacao_obra_id'] == $estado->id ? "selected" : "" }}>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                        @else
+                          @if(old('estado_de_conservacao_obra') !== null)
+                            <option value="{{ $estado->id }}" {{ old("estado_de_conservacao_obra") == $estado->id ? "selected" : "" }}>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                          @else
+                            @if($estado->is_default_estado_conservacao_obra)
+                              <option value="{{ $estado->id }}" selected>{{ $estado->titulo_estado_conservacao_obra }}</option>
+                            @else
+                              <option value="{{ $estado->id }}">{{ $estado->titulo_estado_conservacao_obra }}</option>
+                            @endif
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('estado_de_conservacao_obra') }}</small>
@@ -333,7 +397,11 @@
                           <i class="fas fa-check-circle text-info"></i>
                         </div>
                       </div>
-                      <input type="text" class="form-control" name="autoria_obra" value="{{ old('autoria_obra') }}">
+                      @if(array_key_exists('ano_obra', $repeat))
+                        <input type="text" class="form-control" name="autoria_obra" value="{{ $repeat['autoria_obra'] }}">
+                      @else
+                        <input type="text" class="form-control" name="autoria_obra" value="{{ old('autoria_obra') }}">
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -343,28 +411,33 @@
                     <select name="material_1_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                      @if(old('material_1_obra') !== null)
-                      <option value="{{ $material->id }}" {{ old("material_1_obra")==$material->id ? "selected" : ""
-                        }}>{{ $material->titulo_material }}</option>
-                      @else
-                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                      @endif
+                        @if(array_key_exists('material_id_1', $repeat))
+                          <option value="{{ $material->id }}" {{ $repeat['material_id_1'] == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                        @else
+                          @if(old('material_1_obra') !== null)
+                            <option value="{{ $material->id }}" {{ old("material_1_obra") == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                          @else
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('material_1_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-4">
                     <label>Material 2</label>
                     <select name="material_2_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                      @if(old('material_2_obra') !== null)
-                      <option value="{{ $material->id }}" {{ old("material_2_obra")==$material->id ? "selected" : ""
-                        }}>{{ $material->titulo_material }}</option>
-                      @else
-                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                      @endif
+                        @if(array_key_exists('material_id_2', $repeat))
+                          <option value="{{ $material->id }}" {{ $repeat['material_id_2'] == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                        @else
+                          @if(old('material_2_obra') !== null)
+                            <option value="{{ $material->id }}" {{ old("material_2_obra") == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                          @else
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -373,12 +446,15 @@
                     <select name="material_3_obra" class="form-control select2">
                       <option value="">Selecione um Material</option>
                       @foreach ($materiais as $material)
-                      @if(old('material_3_obra') !== null)
-                      <option value="{{ $material->id }}" {{ old("material_3_obra")==$material->id ? "selected" : ""
-                        }}>{{ $material->titulo_material }}</option>
-                      @else
-                      <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
-                      @endif
+                        @if(array_key_exists('material_id_3', $repeat))
+                          <option value="{{ $material->id }}" {{ $repeat['material_id_3'] == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                        @else
+                          @if(old('material_3_obra') !== null)
+                            <option value="{{ $material->id }}" {{ old("material_3_obra") == $material->id ? "selected" : "" }}>{{ $material->titulo_material }}</option>
+                          @else
+                            <option value="{{ $material->id }}">{{ $material->titulo_material }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -389,28 +465,33 @@
                     <select name="tecnica_1_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                      @if(old('tecnica_1_obra') !== null)
-                      <option value="{{ $tecnica->id }}" {{ old("tecnica_1_obra")==$tecnica->id ? "selected" : "" }}>{{
-                        $tecnica->titulo_tecnica }}</option>
-                      @else
-                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                      @endif
+                        @if(array_key_exists('tecnica_id_1', $repeat))
+                          <option value="{{ $tecnica->id }}" {{ $repeat['tecnica_id_1'] == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                        @else
+                          @if(old('tecnica_1_obra') !== null)
+                            <option value="{{ $tecnica->id }}" {{ old("tecnica_1_obra") == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tecnica_1_obra') }}</small>
-
                   </div>
                   <div class="form-group col-md-4">
                     <label>Técnica 2</label>
                     <select name="tecnica_2_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                      @if(old('tecnica_2_obra') !== null)
-                      <option value="{{ $tecnica->id }}" {{ (old("tecnica_2_obra")==$tecnica->id ? "selected" : "")
-                        }}>{{ $tecnica->titulo_tecnica }}</option>
-                      @else
-                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                      @endif
+                        @if(array_key_exists('tecnica_id_2', $repeat))
+                          <option value="{{ $tecnica->id }}" {{ $repeat['tecnica_id_2'] == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                        @else
+                          @if(old('tecnica_2_obra') !== null)
+                            <option value="{{ $tecnica->id }}" {{ old("tecnica_2_obra") == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -419,12 +500,15 @@
                     <select name="tecnica_3_obra" class="form-control select2">
                       <option value="">Selecione uma Técnica</option>
                       @foreach ($tecnicas as $tecnica)
-                      @if(old('tecnica_3_obra') !== null)
-                      <option value="{{ $tecnica->id }}" {{ old("tecnica_3_obra")==$tecnica->id ? "selected" : "" }}>{{
-                        $tecnica->titulo_tecnica }}</option>
-                      @else
-                      <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
-                      @endif
+                        @if(array_key_exists('tecnica_id_3', $repeat))
+                          <option value="{{ $tecnica->id }}" {{ $repeat['tecnica_id_3'] == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                        @else
+                          @if(old('tecnica_3_obra') !== null)
+                            <option value="{{ $tecnica->id }}" {{ old("tecnica_3_obra") == $tecnica->id ? "selected" : "" }}>{{ $tecnica->titulo_tecnica }}</option>
+                          @else
+                            <option value="{{ $tecnica->id }}">{{ $tecnica->titulo_tecnica }}</option>
+                          @endif
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -434,15 +518,16 @@
                     <label>Especificações</label>
                     <div style="display: flex; flex-wrap: wrap;">
                       @foreach ($especificacoes as $especificacao)
-                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                        <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;"
-                          value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" {{
-                          in_array($especificacao->id, old('especificacao_obra',[])) ? 'checked' : '' }}>
-                        <div class="state p-success">
-                          <label style="margin-left: 10px;" for="especificacao_obra_{{ $especificacao->id }}">{{
-                            $especificacao->titulo_especificacao_obra }}</label>
+                        <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                          @if(array_key_exists('checkbox_especificacao_obra', $repeat))
+                            <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" {{ in_array($especificacao->id, $repeat['checkbox_especificacao_obra']) ? 'checked' : '' }}>
+                          @else
+                            <input name="especificacao_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacao->id }}" id="especificacao_obra_{{ $especificacao->id }}" {{ in_array($especificacao->id, old('especificacao_obra',[])) ? 'checked' : '' }}>
+                          @endif
+                          <div class="state p-success">
+                            <label style="margin-left: 10px;" for="especificacao_obra_{{ $especificacao->id }}">{{ $especificacao->titulo_especificacao_obra }}</label>
+                          </div>
                         </div>
-                      </div>
                       @endforeach
                     </div>
                     <small class="text-danger">{{ $errors->first('especificacao_obra') }}</small>
@@ -453,34 +538,39 @@
                     <label>Especificações de segurança</label>
                     <div style="display: flex; flex-wrap: wrap;">
                       @foreach ($especificacoesSeg as $especificacaoSeg)
-                      <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
-                        <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;"
-                          value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" {{
-                          in_array($especificacaoSeg->id, old('especificacao_seg_obra',[])) ? 'checked' : '' }}>
-                        <div class="state p-success">
-                          <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{
-                            $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
+                        <div class="pretty p-icon p-smooth" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
+                          @if(array_key_exists('checkbox_especificacao_seguranca_obra', $repeat))
+                            <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" {{ in_array($especificacaoSeg->id,  $repeat['checkbox_especificacao_seguranca_obra']) ? 'checked' : '' }}>
+                          @else
+                            <input name="especificacao_seg_obra[]" type="checkbox" style="margin-top: 3px;" value="{{ $especificacaoSeg->id }}" id="especificacao_seg_obra_{{ $especificacaoSeg->id }}" {{ in_array($especificacaoSeg->id, old('especificacao_seg_obra',[])) ? 'checked' : '' }}>
+                          @endif
+                          <div class="state p-success">
+                            <label style="margin-left: 10px;" for="especificacao_seg_obra_{{ $especificacaoSeg->id }}">{{ $especificacaoSeg->titulo_especificacao_seguranca_obra }}</label>
+                          </div>
                         </div>
-                      </div>
                       @endforeach
                     </div>
                     <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
-
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Características estilísticas/iconográficas e ornamentais</label>
-                    <textarea class="form-control" name="caracteristicas_estilisticas_obra"
-                      style="min-height: 200px;">{{ old('caracteristicas_estilisticas_obra') }}</textarea>
+                    @if(array_key_exists('caracteristicas_est_icono_orna_obra', $repeat))
+                      <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{ $repeat['caracteristicas_est_icono_orna_obra'] }}</textarea>
+                    @else
+                      <textarea class="form-control" name="caracteristicas_estilisticas_obra" style="min-height: 200px;">{{ old('caracteristicas_estilisticas_obra') }}</textarea>
+                    @endif
                   </div>
-
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Observações</label>
-                    <textarea class="form-control" name="observacoes_obra"
-                      style="min-height: 200px;">{{ old('observacoes_obra') }}</textarea>
+                    @if(array_key_exists('observacoes_obra', $repeat))
+                      <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;">{{ $repeat['observacoes_obra'] }}</textarea>
+                    @else
+                      <textarea class="form-control" name="observacoes_obra" style="min-height: 200px;">{{ old('observacoes_obra') }}</textarea>
+                    @endif
                   </div>
                 </div>
                 <div class="form-row">
@@ -494,7 +584,6 @@
                       </div>
                       <input type="file" class="form-control" name="foto_frontal_obra">
                     </div>
-
                   </div>
                   <div class="form-group col-md-3">
                     <div id="box-foto-usuario">

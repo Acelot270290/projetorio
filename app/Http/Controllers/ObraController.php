@@ -134,8 +134,6 @@ class ObraController extends Controller
         $tesauros = Tesauros::select('id', 'titulo_tesauro')->orderBy('titulo_tesauro', 'ASC')->get();
         $tombamentos = Tombamentos::select('id', 'titulo_tombamento')->get();
 
-        $repeat = [];
-
         // Retorna a view de criação de obras contendo os dados coletados
         return view('admin.criar_obra', [
             'acervos' => $acervos,
@@ -149,8 +147,7 @@ class ObraController extends Controller
             'especificacoesSeg' => $especificacoesSeg,
             'materiais' => $materiais,
             'tecnicas' => $tecnicas,
-            'tesauros'=>$tesauros,
-            'repeat'=>$repeat
+            'tesauros'=>$tesauros
         ]);
     }
 
@@ -256,12 +253,13 @@ class ObraController extends Controller
         $repeat = [];
 
         if($request->repete_obra == 1){ // ver checkbox
+            $repeat['acervo_id'] = $request->acervo_obra;
             $repeat['categoria_id'] = $request->categoria_obra;
             $repeat['altura_obra'] = $request->altura_obra;
             $repeat['largura_obra'] = $request->largura_obra;
             $repeat['profundidade_obra'] = $request->profundidade_obra;
             $repeat['comprimento_obra'] = $request->comprimento_obra;
-            $repeat['diametro_obra'] = $request->diâmetro_obra;
+            $repeat['diametro_obra'] = $request->diametro_obra;
             $repeat['tesauro_id'] = $request->tesauro_obra;
             $repeat['localizacao_obra_id'] = $request->localizacao_obra;
             $repeat['condicoes_de_seguranca_obra_id'] = $request->condicao_seguranca_obra;
@@ -277,8 +275,8 @@ class ObraController extends Controller
             $repeat['tecnica_id_1'] = $request->tecnica_1_obra;
             $repeat['tecnica_id_2'] = $request->tecnica_2_obra;
             $repeat['tecnica_id_3'] = $request->tecnica_3_obra;
-            $repeat['checkbox_especificacao_obra'] = $check;
-            $repeat['checkbox_especificacao_seguranca_obra'] = $checkSeg;
+            $repeat['checkbox_especificacao_obra'] = explode(',', $check);
+            $repeat['checkbox_especificacao_seguranca_obra'] = explode(',', $checkSeg);
             $repeat['caracteristicas_est_icono_orna_obra'] = $request->caracteristicas_estilisticas_obra;
             $repeat['observacoes_obra'] = $request->observacoes_obra;
             $repeat['obra_provisoria'] = isset($request->obra_provisoria) ? "1" : "0";
@@ -463,9 +461,10 @@ class ObraController extends Controller
             $alertMsg = 'Falha ao cadastrar a obra!';
             $alertType = 'danger';
         }
+        //print_r($repeat); die();
 
         // Redireciona para a url de criação de obra passando o alerta de mensagem e o tipo de alerta
-        return redirect('/obra/criar')->with('alert_message', $alertMsg)->with('alert_type', $alertType)->with('repeat', $repeat);
+        return redirect('/obra/criar')->with('repeat', $repeat)->with('alert_message', $alertMsg)->with('alert_type', $alertType);
     }
 
     public function detalhar(Request $request, $id){
