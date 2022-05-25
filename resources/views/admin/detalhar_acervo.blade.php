@@ -30,6 +30,17 @@
                         <div style="position: absolute; right: 0px; margin-right: 5%;">
                             <a href="@if(in_array(strval(auth()->user('id')['id_cargo']), $allowEdit)) {{ route('editar_acervo', ['id' => $acervo->id]) }} @else # @endif" class="btn btn-outline-primary" @if(in_array(strval(auth()->user('id')['id_cargo']), $canOnlyView)) disabled @endif><i class="fas fa-edit"></i>Editar acervo ID: {{ $acervo->id }}</a>
                         </div>
+                        <div style="position: absolute; right: 170px; margin-right: 5%;">
+                            <a href="{{ route('acervo_obras', ['id' => $acervo->id]) }}" class="btn btn-outline-info" target="_blank">
+                                <i class="fas fa-camera"></i>Obras contidas em: {{ $acervo->id }}
+                            </a>
+                        </div>
+                        @else
+                        <div style="position: absolute; right: 0px; margin-right: 5%;">
+                            <a href="{{ route('acervo_obras', ['id' => $acervo->id]) }}" class="btn btn-outline-info">
+                                <i class="fas fa-camera"></i>Obras contidas em: {{ $acervo->id }}
+                            </a>
+                        </div>
                         @endif
                     </div>
                     <div class="card-body">

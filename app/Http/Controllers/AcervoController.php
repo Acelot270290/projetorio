@@ -763,4 +763,47 @@ class AcervoController extends Controller
         }
         return response()->json(['status' => 'error', 'msg' => 'Ops.. Não conseguimos deletar o acervo. Erro DESCONHECIDO']);;
     }
+
+    public function getObrasAcervo(Request $request, $id){
+        
+        // Descobre quais acervos que o usuário tem acesso
+        $accesses = auth()->user('id')['acesso_acervos'];
+
+        // Se o acesso não for nulo
+        if(!is_null($accesses)){
+            // Faz o split do acesso usando vírgulas
+            $accesses = explode(',', $accesses);
+
+            // Se não tiver acesso total (0) ou não tiver o acesso
+            if($accesses[0] != 0 and !in_array($id, $accesses)){
+                // Usuário não pode acessar
+                return view('unauthorized');
+            }
+        }else{
+            // Acesso nulo é sem acesso a nada
+            return view('unauthorized');
+        }
+
+        // Descobre se existe alguma obra associada à esse acervo
+        //$obras = Obras::select()->where('acervo_id', '=', $id)->get();
+
+        //print_r($obras);die;
+
+        // Seleciona os dados de obras para serem dispostas na listagem de obras
+        $obras = Obras::select('obras.id', 'titulo_obra', 'tesauro_id', 'titulo_tesauro', 'acervo_id', 'nome_acervo', 'material_id_1', 'm1.titulo_material as titulo_material_1', 'material_id_2', 'm2.titulo_material as titulo_material_2', 'material_id_3', 'm3.titulo_material as titulo_material_3', 'foto_frontal_obra', 'obras.seculo_id', 'titulo_seculo', 'obra_provisoria')
+            ->orwhere('acervo_id', '=', $id)
+            ->join('seculos as s', 's.id', '=', 'obras.seculo_id')
+            ->join('tesauros as t', 't.id', '=', 'tesauro_id')
+            ->join('acervos as a', 'a.id', '=', 'acervo_id')
+            ->leftjoin('materiais as m1', 'm1.id', '=', 'material_id_1')
+            ->leftjoin('materiais as m2', 'm2.id', '=', 'material_id_2')
+            ->leftjoin('materiais as m3', 'm3.id', '=', 'material_id_3')
+            ->orderBy('obras.id', 'ASC')
+            ->get();
+        
+        $user = auth()->user('id_cargo');
+
+        // Retorna a view de listagem de obras do acervo escolhido
+        return view('admin.acervo_obras', compact('obras','user'));
+    }
 }

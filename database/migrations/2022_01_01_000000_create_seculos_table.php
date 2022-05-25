@@ -19,7 +19,7 @@ class CreateSeculosTable extends Migration
             $table->string('titulo_seculo'); // O "nome" do século (Ex: XX)
             $table->unsignedSmallInteger('ano_inicio_seculo'); // Primeiro ano do século (Ex: 1901)
             $table->unsignedSmallInteger('ano_fim_seculo'); // Último ano do século (Ex: 2000)
-            $table->boolean('is_default_seculo'); // Se é ou não default (APENAS UM CAMPO)
+            $table->boolean('is_default_seculo')->default(0); // Se é ou não default (APENAS UM CAMPO)
         });
     }
 

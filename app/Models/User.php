@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\NovoCadastroNotification;
 use App\Notifications\RedefinirSenhaNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,9 +20,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'id_cargo,',
+        'image',
     ];
 
     /**
@@ -32,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
     ];
 
     /**
@@ -46,5 +51,10 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
+    }
+
+    public function sendCadastroNotification($token)
+    {
+        $this->notify(new NovoCadastroNotification($token, $this->email, $this->name, $this->pwd));
     }
 }

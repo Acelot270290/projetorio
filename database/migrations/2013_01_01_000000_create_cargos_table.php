@@ -17,6 +17,7 @@ class CreateCargosTable extends Migration
             $table->id()->unique();
             $table->string('nome_cargo');
             $table->timestamps();
+            $table->boolean('is_default_cargo')->default(0);
         });
     }
 

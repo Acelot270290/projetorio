@@ -79,21 +79,22 @@
               </div>
             </div>
           </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                src="{{ url('assets/img/users/'.Auth::user()->image) }}" class="user-img-radious-style"> <span
-                class="d-sm-none d-lg-inline-block"></span></a>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+              <img alt="image" src="@if(File::exists('./assets/img/users/'.Auth::user()->image)){{ url('assets/img/users/'.Auth::user()->image) }}@else{{ url('assets/img/users/semfoto.jpg') }}@endif" class="user-img-radious-style">
+              <span class="d-sm-none d-lg-inline-block"></span>
+            </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Olá {{ Auth::user()->name }}</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Perfil
-              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                Configurações
+              <a href="profile.html" class="dropdown-item has-icon">
+                <i class="far fa-user"></i> Perfil
+              </a>
+              <a href="#" class="dropdown-item has-icon">
+                <i class="fas fa-cog"></i> Configurações
               </a>
               <div class="dropdown-divider"></div>
-              <a href="{{ route('sair') }}" class="dropdown-item has-icon text-danger"> <i
-                  class="fas fa-sign-out-alt"></i>
-                Sair
+              <a href="{{ route('sair') }}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Sair
               </a>
             </div>
           </li>
@@ -123,7 +124,7 @@
                   data-feather="users"></i><span>Usuários</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('usuarios') }}">Listar usuários</a></li>
-                <li><a class="nav-link" href="alert.html">Adicionar usuário</a></li>
+                <li><a class="nav-link" href="{{ route('criar_usuario') }}">Adicionar usuário</a></li>
                 <li><a class="nav-link" href="alert.html">Listar cargos</a></li>
                 <li><a class="nav-link" href="alert.html">Adicionar cargo</a></li>
               </ul>

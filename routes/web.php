@@ -24,9 +24,9 @@ Route::get('/unauthorized', 'HomeController@unauthorized')->name('unauthorized')
 
 // Usuários
 Route::get('/usuarios', 'UserController@index')->name('usuarios');
-Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuarios');
+Route::get('/usuarios/criar', 'UserController@criar')->name('criar_usuario');
 
-Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuarios');
+Route::post('/usuarios/adicionar', 'UserController@adicionar')->name('adicionar_usuario');
 
 // Acervos
 Route::get('/acervo', 'AcervoController@index')->name('acervo');
@@ -37,6 +37,8 @@ Route::get('/acervo/editar/{id}', 'AcervoController@editar')->name('editar_acerv
 Route::post('/acervo/adicionar', 'AcervoController@adicionar')->name('adicionar_acervo');
 Route::post('/acervo/atualizar/{id}', 'AcervoController@atualizar')->name('atualizar_acervo');
 Route::post('/acervo/deletar/{id}', 'AcervoController@deletar')->name('deletar_acervo');
+
+Route::get('/acervo/{id}/obras', 'AcervoController@getObrasAcervo')->name('acervo_obras');
 
 // Obras
 Route::get('/obra', 'ObraController@index')->name('obra');
@@ -53,6 +55,10 @@ Route::get('/busca-obras', 'BuscaObrasController@index')->name('busca_obras');
 
 //Redefinição de senha
 Mail::to('reset@alandiniz.com.br')->send(new MensagemMail());
+
+//notificação de cadastro
+Mail::send(new MensagemMail());
+
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');
