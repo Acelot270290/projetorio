@@ -227,8 +227,8 @@
                             <i class="fas fa-street-view text-info"></i>
                           </div>
                         </div>
-                        <input type="number" class="form-control" name="diâmetro_obra" value='{{ old(' diâmetro_obra')
-                          !==null ? old('diâmetro_obra') : $obra['diâmetro_obra'] }}'>
+                        <input type="number" class="form-control" name="diametro_obra" value='{{ old(' diametro_obra')
+                          !==null ? old('diametro_obra') : $obra['diametro_obra'] }}'>
                       </div>
                       <small class="text-danger">{{ $errors->first('diâmetro_obra') }}</small>
                     </div>
