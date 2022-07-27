@@ -276,6 +276,8 @@
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalLocalicacao">Modal
+                      Adiconar Localização +</button>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Condições de Segurança</label>
@@ -691,6 +693,9 @@
     </div>
   </section>
 </div>
+
+@include('admin.modal.cadastroLocalicacaoObra')
+@include('sweetalert::alert')
 
 <script>
   // Parametrização de variáveis

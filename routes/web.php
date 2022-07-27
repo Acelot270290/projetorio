@@ -60,5 +60,10 @@ Mail::to('reset@alandiniz.com.br')->send(new MensagemMail());
 Mail::send(new MensagemMail());
 
 
+//Cadastro Localização Obas
+
+Route::post('/localicao-obras/adicionar', 'LocalizacoesObrasController@adicionar')->name('adicionar_localicacao');
+
+
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');
