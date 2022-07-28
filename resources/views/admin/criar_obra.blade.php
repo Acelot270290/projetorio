@@ -247,6 +247,8 @@
                       @endforeach
                     </select>
                     <small class="text-danger">{{ $errors->first('tesauro_obra') }}</small>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalTesauro" style="
+                    margin-top: 10px;" title="Adicionar Localização">+</button>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Localização da obra</label>
@@ -276,8 +278,8 @@
                       </select>
                     </div>
                     <small class="text-danger">{{ $errors->first('localizacao_obra') }}</small>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalLocalicacao">Modal
-                      Adiconar Localização +</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalLocalicacao" style="
+                    margin-top: 10px;" title="Adicionar Localização">+</button>
                   </div>
                   <div class="form-group col-md-3">
                     <label>Condições de Segurança</label>
@@ -694,7 +696,9 @@
   </section>
 </div>
 
+{{--}} Inclubde das modeais {{---}}
 @include('admin.modal.cadastroLocalicacaoObra')
+@include('admin.modal.cadastroTesauro')
 @include('sweetalert::alert')
 
 <script>

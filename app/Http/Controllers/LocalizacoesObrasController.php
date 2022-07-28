@@ -8,32 +8,36 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class LocalizacoesObrasController extends Controller
 {
-    public function adicionar(Request $request){
+    public function adicionar(Request $request)
+    {
+
+        //Atribuindo na variavel o input da localização
+
+        $nome_localicacao = $request->cadatro_nome_localicacao;
         //Verificação caso já exista o registro
+        $existe = LocalizacoesObras::select('id', 'nome_localizacao', 'descricao_localizacao')
+            ->where('nome_localizacao', $nome_localicacao)
+            ->get();
 
-        
-        $existe = LocalizacoesObras::select('id','nome_localizacao','descricao_localizacao')
-        ->where('nome_localizacao', $request->all())
-        ->get();
+        // print_r($existe);die;
 
-        if(count($existe)>0){
+        if (count($existe) > 0) {
 
-        Alert::error('Erro ao Cadastrar', 'Dados já Existente');
-        return back();
+            Alert::error('Dados já Existente', 'Localização ' . $nome_localicacao . '</b> já Existe');
+            return back();
+        } elseif (empty($nome_tesauro)) {
 
-        }else{
+            Alert::error('Erro', 'Precisa Digitar os dados');
+            return back();
+        } else {
 
-        $localicacaoObras = new LocalizacoesObras();
-        $localicacaoObras->nome_localizacao = $request->cadatro_nome_localicacao;
-        $localicacaoObras->save();
 
-        Alert::success('Localização Salva', 'Registro salvo com sucesso!');
-        return back();
+            $localicacaoObras = new LocalizacoesObras();
+            $localicacaoObras->nome_localizacao = $request->cadatro_nome_localicacao;
+            $localicacaoObras->save();
 
+            Alert::success('LTesauro Salvo', 'Registro salvo com sucesso!');
+            return back();
         }
-        
-
-        
-
     }
 }

@@ -61,8 +61,10 @@ Mail::send(new MensagemMail());
 
 
 //Cadastro Localização Obas
-
 Route::post('/localicao-obras/adicionar', 'LocalizacoesObrasController@adicionar')->name('adicionar_localicacao');
+
+//Cadastro Tesauro Obas
+Route::post('/tesauro/adicionar', 'TesauroObrasController@adicionar')->name('adicionar_tesauro');
 
 
 // Função sair
