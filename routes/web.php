@@ -66,6 +66,22 @@ Route::post('/localicao-obras/adicionar', 'LocalizacoesObrasController@adicionar
 //Cadastro Tesauro Obas
 Route::post('/tesauro/adicionar', 'TesauroObrasController@adicionar')->name('adicionar_tesauro');
 
+//Cadastro Material
+Route::post('/material/adicionar', 'MaterrialObrasController@adicionar')->name('adicionar_material');
+
+//Cadastro Material
+Route::post('/tecnica/adicionar', 'TecnicaslObrasController@adicionar')->name('adicionar_tecnica');
+
+//Cadastro Especificação de Obras
+Route::post('/especificacao-obras/adicionar', 'EspecificacaoObrasController@adicionar')->name('adicionar_especificacao_obras');
+
+//Cadastro Especificação de  Segurança Obras
+Route::post('/especificacao-seguranca-obras/adicionar', 'EspecificacaoSegurancaObrasController@adicionar')->name('adicionar_especificacao_seg_obras');
+
+//Cadastro Especificação de  Acervo
+Route::post('/especificacao-acervos/adicionar', 'EspecificacaoAcervosController@adicionar')->name('adicionar_especificacao_acervos');
+
+
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');

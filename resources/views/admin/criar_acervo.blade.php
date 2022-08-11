@@ -196,8 +196,11 @@
                               </div>
                           </div>
                          @endforeach
+                        
                          <small class="text-danger">{{ $errors->first('especificacao_acervo') }}</small>
                         </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalEspecificacaoAcervos" style="
+                        margin-top: 10px;" title="Adicionar Especificações Acervos">+</button>
                     </div>
                 </div>
                 <div class="form-row">
@@ -484,5 +487,6 @@
         });
       });
 </script>
-
+@include('sweetalert::alert')
+@include('admin.modal.cadastroEspecificacaoAcervos')
 @endsection

@@ -426,6 +426,8 @@
                         @endif
                       @endforeach
                     </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalMaterial" style="
+                    margin-top: 10px;" title="Adicionar Material">+</button>
                     <small class="text-danger">{{ $errors->first('material_1_obra') }}</small>
                   </div>
                   <div class="form-group col-md-4">
@@ -480,6 +482,8 @@
                         @endif
                       @endforeach
                     </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalTecnica" style="
+                    margin-top: 10px;" title="Adicionar Técnica">+</button>
                     <small class="text-danger">{{ $errors->first('tecnica_1_obra') }}</small>
                   </div>
                   <div class="form-group col-md-4">
@@ -534,6 +538,8 @@
                         </div>
                       @endforeach
                     </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalEspecificacaoObras" style="
+                    margin-top: 10px;" title="Adicionar Especificações e Obras">+</button>
                     <small class="text-danger">{{ $errors->first('especificacao_obra') }}</small>
                   </div>
                 </div>
@@ -554,6 +560,8 @@
                         </div>
                       @endforeach
                     </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalEspecificacaoSegurancaObras" style="
+                    margin-top: 10px;" title="Adicionar Especificações de seguranã de Obras">+</button>
                     <small class="text-danger">{{ $errors->first('especificacao_seg_obra') }}</small>
                   </div>
                 </div>
@@ -699,6 +707,10 @@
 {{--}} Inclubde das modeais {{---}}
 @include('admin.modal.cadastroLocalicacaoObra')
 @include('admin.modal.cadastroTesauro')
+@include('admin.modal.cadastroMaterial')
+@include('admin.modal.cadastroTecnica')
+@include('admin.modal.cadastroEspecificacaoObras')
+@include('admin.modal.cadastroEspecificacaoSegurancaObras')
 @include('sweetalert::alert')
 
 <script>
