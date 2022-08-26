@@ -101,6 +101,9 @@ class CreateObrasTable extends Migration
 
             // Obra provisoria
             $table->boolval('obra_provisoria')->default(0);
+
+            // Visibilidade
+            $table->boolval('obra_visibilidade')->default(0);
         });
     }
 

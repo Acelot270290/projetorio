@@ -1,6 +1,7 @@
 <?php
 
 use App\Mail\MensagemMail;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -81,7 +82,11 @@ Route::post('/especificacao-seguranca-obras/adicionar', 'EspecificacaoSegurancaO
 //Cadastro Especificação de  Acervo
 Route::post('/especificacao-acervos/adicionar', 'EspecificacaoAcervosController@adicionar')->name('adicionar_especificacao_acervos');
 
-
+//Lipando o cache do site
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
 // Função sair
 Route::get('sair', 'TopoController@sair')->name('sair');
