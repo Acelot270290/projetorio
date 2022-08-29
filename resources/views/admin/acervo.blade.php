@@ -21,7 +21,7 @@
         </div>
         <div class="card-body p-0">
           <div class="table-responsive">
-            <table class="table table-striped" id="table-acervo">
+            <table class="table table-striped" id="table-obras">
               <thead>
                 <tr>
                   <th style="padding-left:25px; text-align: center;">Id</th>
@@ -35,8 +35,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
                   @foreach ($acervos as $acervo)
+                  <tr>
                   <td style="padding-left:25px; text-align: center;">{{ $acervo->id }}</td>
                   <td class="align-middle text-center">
                     <a href="{{ route('detalhar_acervo', ['id' => $acervo->id]) }}">
@@ -70,10 +70,9 @@
                       <i class="fas fa-trash"></i>
                     </a>
                   </td>
-
                 </tr>
+                @endforeach
               </tbody>
-              @endforeach
             </table>
           </div>
         </div>

@@ -68,7 +68,7 @@ $("#table-obras").dataTable({
   "pageLength": 25
 });
 
-$("#table-acervo").dataTable({
+$(".table-acervo").dataTable({
   "language": {
 		"url": "//cdn.datatables.net/plug-ins/1.11.2/i18n/pt_br.json",
 	},
