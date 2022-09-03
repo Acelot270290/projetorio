@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'LoginController@index')->name('login');
+//Parte Publica do site
+
+
+Route::get('/', 'PortalController@index')->name('portal');
+
+
+//Admin do Site
+Route::get('/admin', 'LoginController@index')->name('login');
 
 Auth::routes();
 
