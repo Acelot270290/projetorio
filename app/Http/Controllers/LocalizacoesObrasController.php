@@ -25,7 +25,7 @@ class LocalizacoesObrasController extends Controller
 
             Alert::error('Dados já Existente', 'Localização ' . $nome_localicacao . '</b> já Existe');
             return back();
-        } elseif (empty($nome_tesauro)) {
+        } elseif (empty($nome_localicacao)) {
 
             Alert::error('Erro', 'Precisa Digitar os dados');
             return back();
