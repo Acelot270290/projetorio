@@ -36,7 +36,7 @@ class LocalizacoesObrasController extends Controller
             $localicacaoObras->nome_localizacao = $request->cadatro_nome_localicacao;
             $localicacaoObras->save();
 
-            Alert::success('LTesauro Salvo', 'Registro salvo com sucesso!');
+            Alert::success('Localização Salvo', 'Registro salvo com sucesso!');
             return back();
         }
     }
