@@ -12,8 +12,7 @@ class LoginController extends Controller
         // Authenticate
 
         //Verifica o Token do user antes de carregar a pagina, caso o user esteja logado joga pra home
-       
-       if(!empty(Auth::user()->remember_token)){
+       if(!empty(Auth::user())){
         return redirect('home');
        }
         
