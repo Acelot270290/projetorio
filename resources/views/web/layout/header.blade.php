@@ -34,13 +34,8 @@
 			  <header id="header" id="home">
 			  	<div class="container header-top">
 			  		<div class="row">
-				  		<div class="col-6 top-head-left">
-				  			<ul>
-				  				<li><a href="#">Visit Us</a></li>
-				  				<li><a href="#">Buy Ticket</a></li>
-				  			</ul>
-				  		</div>
-				  		<div class="col-6 top-head-right">
+				  		
+				  		<div class="col-12 top-head-right">
 				  			<ul>
 		  						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -59,7 +54,7 @@
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
 				          <li class="menu-active"><a href="index.html">Home</a></li>
-				          <li><a href="about.html">Sobre</a></li>
+				          <li><a href="{{url('/#sobre-nos')}}">Sobre</a></li>
 				          <li><a href="gallery.html">Galeria</a></li>
 				          <li><a href="event.html">Eventos</a></li>
 				          <li><a href="blog-home.html">Blog</a></li>
