@@ -355,20 +355,14 @@
 						</div>
 					</div>						
 					<div id="grid-container" class="row">
-						<a class="single-gallery" href="img/g1.jpg"><img class="grid-item" src="img/g1.jpg"></a>
-						<a class="single-gallery" href="img/g2.jpg"><img class="grid-item" src="img/g2.jpg"></a>
-						<a class="single-gallery" href="img/g3.jpg"><img class="grid-item" src="img/g3.jpg"></a>
-						<a class="single-gallery" href="img/g4.jpg"><img class="grid-item" src="img/g4.jpg"></a>
-						<a class="single-gallery" href="img/g5.jpg"><img class="grid-item" src="img/g5.jpg"></a>
-						<a class="single-gallery" href="img/g6.jpg"><img class="grid-item" src="img/g6.jpg"></a>
-						<a class="single-gallery" href="img/g7.jpg"><img class="grid-item" src="img/g7.jpg"></a>
-						<a class="single-gallery" href="img/g8.jpg"><img class="grid-item" src="img/g8.jpg"></a>
-						<a class="single-gallery" href="img/g9.jpg"><img class="grid-item" src="img/g9.jpg"></a>
-						<a class="single-gallery" href="img/g10.jpg"><img class="grid-item" src="img/g10.jpg"></a>
-						<a class="single-gallery" href="img/g11.jpg"><img class="grid-item" src="img/g11.jpg"></a>
-						<a class="single-gallery" href="img/g12.jpg"><img class="grid-item" src="img/g12.jpg"></a>
-						<a class="single-gallery" href="img/g4.jpg"><img class="grid-item" src="img/g4.jpg"></a>
-						<a class="single-gallery" href="img/g5.jpg"><img class="grid-item" src="img/g5.jpg"></a>						
+						<a class="single-gallery " href="{{url('galeria\Obra01.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra01.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra02.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra02.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra03.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra03.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra04.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra04.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra05.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra05.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra06.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra06.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra07.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra07.webp')}}"></a>
+						<a class="single-gallery" href="{{url('galeria\Obra08.webp')}}"><img class="grid-item border border-white" src="{{url('galeria\Obra08.webp')}}"></a>						
 					</div>	
 				</div>	
 			</section>
