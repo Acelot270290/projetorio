@@ -53,12 +53,10 @@
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
-				          <li class="menu-active"><a href="index.html">Home</a></li>
+				          <li class="menu-active"><a href="{{url('/#home')}}">Home</a></li>
 				          <li><a href="{{url('/#sobre-nos')}}">Sobre</a></li>
-				          <li><a href="gallery.html">Galeria</a></li>
-				          <li><a href="event.html">Eventos</a></li>
-				          <li><a href="blog-home.html">Blog</a></li>
-				          <li><a href="contact.html">Contato</a></li>
+				          <li><a href="{{url('/#galeria')}}">Galeria</a></li>
+				          <li><a href="{{url('/#blog')}}">Blog</a></li>
 				          <li><a href="{{url('login')}}">Login</a></li>	          
 				        </ul>
 				      </nav><!-- #nav-menu-container -->		    		
