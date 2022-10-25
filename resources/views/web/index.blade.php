@@ -26,58 +26,28 @@
 						<div class="col-lg-4">
 							<div class="single-service">
 							  <span class="lnr lnr-clock"></span>
-							  <h4>Openning Hours</h4>
+							  <h4>Iventário Digital</h4>
 							  <p>
-							  	Mon - Fri: 10.00am to 05.00pm
-								Sat: 12.00pm to 03.00 pm
-								Sunday Closed
+							  	Acesse Qualquer Horário 
 							  </p>						 	
-							  <div class="overlay">
-							    <div class="text">
-							    	<p>
-							    		Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features.that we use in life
-							    	</p>
-							    	<a href="#" class="text-uppercase primary-btn">Buy ticket</a>
-							    </div>
-							  </div>
 							</div>							
 						</div>
 						<div class="col-lg-4">
 							<div class="single-service">
-							  <span class="lnr lnr-rocket"></span>
-							  <h4>Ongoing Exhibitions</h4>
+								<span class="lnr lnr-smartphone"></span>
+							  <h4>Acesse</h4>
 							  <p>
-							  	Mon - Fri: 10.00am to 05.00pm
-								Sat: 12.00pm to 03.00 pm
-								Sunday Closed
+							  	Em todos os dispositivos
 							  </p>						 	
-							  <div class="overlay">
-							    <div class="text">
-							    	<p>
-							    		Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features.that we use in life
-							    	</p>
-							    	<a href="#" class="text-uppercase primary-btn">Buy ticket</a>
-							    </div>
-							  </div>
 							</div>							
 						</div>
 						<div class="col-lg-4">
 							<div class="single-service">
-							  <span class="lnr lnr-briefcase"></span>
-							  <h4>Openning Events</h4>
+								<span class="lnr lnr-earth"></span>
+							  <h4>Em Qualquer Lugar</h4>
 							  <p>
-							  	Mon - Fri: 10.00am to 05.00pm
-								Sat: 12.00pm to 03.00 pm
-								Sunday Closed
+							  	Sistema online totalmente
 							  </p>						 	
-							  <div class="overlay">
-							    <div class="text">
-							    	<p>
-							    		Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features that we use in life Here, I focus on a range of items and features.that we use in life
-							    	</p>
-							    	<a href="#" class="text-uppercase primary-btn">Buy ticket</a>
-							    </div>
-							  </div>
 							</div>							
 						</div>												
 					</div>
@@ -91,14 +61,14 @@
 					<div class="row">
 						<div class="col-lg-6 quote-left">
 							<h1>
-								<span>Music</span> gives soul to the universe, <br>
-								wings to the <span>mind</span>, flight <br>
-								to the <span>imagination</span>.
+								<span>Deus</span> é o pintor do <br>
+								<span>Universo</span> e faz do céu <br>
+								a sua galeria de <span>arte.</span>.
 							</h1>
 						</div>
 						<div class="col-lg-6 quote-right">
 							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+								A Arquidiocese do Rio de Janeiro foi criada em 16 de novembro de 1676 pela bula Romani Pontificis Pastoralis sollicitudo, do Papa Inocêncio XI, se desmembrando do Arcebispado da Bahia. Ao longo da História do Brasil, da Arquidiocese do Rio de Janeiro foram desmembradas 131 Arquidioceses e prelazias. Seu território atual abrange a cidade do Rio de Janeiro, capital do Estado homônimo. Geograficamente, está situada na região metropolitana do estado do Rio de Janeiro.
 							</p>
 						</div>
 					</div>
@@ -107,6 +77,7 @@
 			<!-- End quote Area -->
 
 			<!-- Start exibition Area -->
+			{{--}}
 			<section class="exibition-area section-gap" id="exhibitions">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
@@ -237,9 +208,11 @@
 					</div>
 				</div>	
 			</section>
+			{{--}}
 			<!-- End exibition Area -->			
 		
 			<!-- Start upcoming-event Area -->
+			{{--}}
 			<section class="upcoming-event-area section-gap" id="events">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
@@ -295,6 +268,7 @@
 					</div>
 				</div>	
 			</section>
+			{{--}}
 			<!-- End upcoming-event Area -->
 			
 			<!-- Start blog Area -->
@@ -303,85 +277,80 @@
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content pb-70 col-lg-8">
 							<div class="title text-center">
-								<h1 class="mb-10">Latest From Our Blog</h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
+								<h1 class="mb-10">Blog</h1>
+								<p>Fique por dentro das novidades</p>
 							</div>
 						</div>
 					</div>					
 					<div class="row">
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="img/b1.jpg" alt="">								
+								<img class="img-fluid" src="{{url('/noticias/noticia01.jpg')}}" alt="">								
 							</div>
-							<p class="date">10 Jan 2018</p>
-							<a href="#"><h4>Addiction When Gambling
-							Becomes A Problem</h4></a>
+							<p class="date"> 24/06/2022</p>
+							<a href="#"><h4>Inventário da ARQ-RIO é notícia nos veículos de comunicação!</h4></a>
 							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
+								Confira algumas matérias: Tribuna de Petrópolis BNDES O Povo Isto É Dinheiro UOL Agência Brasil…
 							</p>
 							<div class="meta-bottom d-flex justify-content-between">
 								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
+								<p><span class="lnr lnr-bubble"></span> 02 Comentários</p>
 							</div>									
-						</div>
+						</div>			
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="img/b2.jpg" alt="">								
+								<img class="img-fluid" src="{{url('/noticias/noticia02.jpg')}}" alt="">								
 							</div>
-							<p class="date">10 Jan 2018</p>
-							<a href="#"><h4>Addiction When Gambling
-							Becomes A Problem</h4></a>
+							<p class="date"> 24/06/2022</p>
+							<a href="#"><h4>Acompanhe também o Inventário da ARQ-RIO no Instagram</h4></a>
 							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
+								Siga nossas redes Sociais
 							</p>
 							<div class="meta-bottom d-flex justify-content-between">
 								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
 								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
 							</div>									
-						</div>
+						</div>	
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="img/b3.jpg" alt="">								
+								<img class="img-fluid" src="{{url('/noticias/noticia03.jpg')}}" alt="">								
 							</div>
-							<p class="date">10 Jan 2018</p>
-							<a href="#"><h4>Addiction When Gambling
-							Becomes A Problem</h4></a>
+							<p class="date"> 24/06/2022</p>
+							<a href="#"><h4>Preciosidades do Acervo da Zona Oeste Carioca – A Capela São Pedro</h4></a>
 							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
+								A equipe do Inventário dos Bens Culturais da Arquidiocese do Rio de Janeiro tem realizado…
 							</p>
 							<div class="meta-bottom d-flex justify-content-between">
 								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
 								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
 							</div>									
-						</div>
+						</div>	
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="img/b4.jpg" alt="">								
+								<img class="img-fluid" src="{{url('/noticias/noticia04.jpg')}}" alt="">								
 							</div>
-							<p class="date">10 Jan 2018</p>
-							<a href="#"><h4>Addiction When Gambling
-							Becomes A Problem</h4></a>
+							<p class="date"> 24/06/2022</p>
+							<a href="#"><h4>Início do Inventário dos Bens Culturais do Museu Arquidiocesano</h4></a>
 							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
-							</p>
+								A equipe esteve nas instalações do Museu Arquidiocesano de Arte Sacra do Rio de Janeiro…
 							<div class="meta-bottom d-flex justify-content-between">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
+								<p><span class="lnr lnr-heart"></span> 100 Likes</p>
+								<p><span class="lnr lnr-bubble"></span> 06 Comments</p>
 							</div>									
-						</div>							
+						</div>					
 					</div>
 				</div>	
 			</section>
 			<!-- End blog Area -->
 
 			<!-- Start gallery Area -->
-			<section class="gallery-area section-gap" id="gallery">
+			<section class="gallery-area section-gap" id="galeria">
 				<div class="container">
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content pb-70 col-lg-8">
 							<div class="title text-center">
-								<h1 class="mb-10 text-white">Our Exhibition Gallery</h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
+								<h1 class="mb-10 text-white">Nossa Galeria</h1>
+								<p>Confira nossas obras públicas.</p>
 							</div>
 						</div>
 					</div>						
